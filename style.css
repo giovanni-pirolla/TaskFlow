@@ -1,0 +1,316 @@
+@keyframes piscarBorda {
+
+  0%,
+  100% {
+    border-color: #007bff;
+    /* cor visível */
+  }
+
+  50% {
+    border-color: transparent;
+    /* cor invisível */
+  }
+}
+
+@keyframes highlight {
+  0%   { background-color: #ff9999; }
+  100% { background-color: #ffcccc; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%); /* vem da esquerda */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0); /* posição normal */
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0); /* posição normal */
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%); /* vem da esquerda */
+    opacity: 0;
+  }
+}
+
+#titulo:focus{
+  display: block;
+  width: fit-content;
+  border-bottom: 2px solid #007bff;
+  padding: 2px 4PX;
+  cursor: text;
+  animation: piscarBorda 1s infinite;
+  /* animação contínua */
+  outline: none;
+}
+
+.titulo-container{
+  display: inline-flex;
+  gap: 10px;
+}
+
+.titulo-container h1{
+  margin:0;
+}
+
+button.titleEdit {
+  width: 30px;  
+  height: 30px;
+  padding: 0;    
+  border: none;
+  background: none;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  display: flex;           
+  align-items: center;  
+  justify-content: center; 
+}
+
+button img {
+  width: 18px;   /* controla o tamanho do ícone */
+  height: 18px;
+}
+
+#taskInput {
+  width: 20%;
+  padding: 12px 15px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 16px;
+  transition: 0.3s;
+  background: transparent;
+  color: #222;
+  outline: none;
+}
+
+#taskInput:hover {
+  border-color: #007bff
+}
+
+#taskInput:focus {
+  border-bottom: 2px solid #007bff;
+
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  width:400px;
+  margin: 5px 0;
+  padding: 8px;
+  background: #f0f0f0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: #595858 2px 2px 5px;
+}
+
+#lista li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+
+  transition: background color 0.4s ease, border 0.4s ease;
+}
+
+#lista li.prioridade {
+  border: 2px solid red;
+  background-color: #ffcccc;
+  animation: highlight 0.6s ease;
+}
+
+#lista li.enter {
+  animation: slideIn 0.4s ease forwards;
+}
+
+#lista li.exit {
+  animation: slideOut 0.4s ease forwards;
+}
+
+#lista li.moving {
+  transition: transform 0.3s ease;
+}
+
+li span[contenteditable="true"]:focus {
+  display: block;
+  width: fit-content;
+  border-bottom: 2px solid #007bff;
+  padding: 2px 4PX;
+  cursor: text;
+  animation: piscarBorda 1s infinite;
+  outline: none;
+}
+
+
+.task-container {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.task-container span{
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.done {
+  text-decoration: line-through;
+  color:#595858;
+}
+
+button {
+  margin-left: auto;
+  background: #f0f0f0;
+  color:#222;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: #595858 2px 2px 5px;  
+}
+
+button:hover {
+  background-color: #007bff;
+  color:white;
+  transform: scale(1.15);
+}
+
+button.edit {
+  background: #007bff;
+  display: flex;
+}
+
+button.remove {
+  background: #dc3545;
+}
+
+.botoes {
+  display: flex;
+  flex-shrink: 0;
+  gap: 5px;
+}
+
+.botoes button {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  cursor:pointer;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+span[contenteditable="true"] {
+  outline: none;   
+}
+
+.prioridade-btn {
+  background-color: #f19494;       
+  border: none;          
+  cursor: pointer;        
+  padding: 0;             
+  width: 28px;           
+  height: 28px;         
+  display: flex;        
+  align-items: center;
+  justify-content: center;
+}
+
+.prioridade-btn img {
+  width: 20px;   /* tamanho da imagem */
+  height: 20px;
+  object-fit: contain; /* garante que a imagem não distorça */
+}
+
+.prioridade-btn:hover {
+  background-color: #fe4646; /* vermelho mais escuro */
+}
+
+#progress-container {
+  position: absolute;
+  top:20px;
+  right:20px;
+
+  background: #f0f0f0;
+  width: 250px;
+  height:400px;
+  padding: 10px;
+  border-radius: 12px;
+  text-align: center;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: #595858 2px 2px 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#progress-title {
+  margin: 0 0 10px 0;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+#progress-svg {
+  transform: rotate(-90deg); /* começa do topo */
+}
+
+circle {
+  fill: none;
+  stroke-width: 12;
+}
+
+.bg {
+  stroke: #ddd;
+}
+
+.progress {
+  stroke: #007bff;
+  stroke-dasharray: 339.292; /* comprimento total da circunferência (2πr) */
+  stroke-dashoffset: 339.292; /* começa vazio */
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+#progress-text {
+  position: fixed;
+  top: 190px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+p{
+  margin: 10px 0 1px 0;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
