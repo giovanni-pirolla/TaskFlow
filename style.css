@@ -229,7 +229,7 @@ span[contenteditable="true"] {
 }
 
 .prioridade-btn {
-  background-color: #f19494;       
+  background-color: #b71b1b;       
   border: none;          
   cursor: pointer;        
   padding: 0;             
@@ -247,7 +247,7 @@ span[contenteditable="true"] {
 }
 
 .prioridade-btn:hover {
-  background-color: #fe4646; /* vermelho mais escuro */
+  background-color: #b71b1b;
 }
 
 #progress-container {
