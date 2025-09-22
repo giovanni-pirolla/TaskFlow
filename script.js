@@ -1,6 +1,7 @@
 const input = document.getElementById("taskInput");
 const button = document.getElementById("addIt");
 const list = document.getElementById("lista");
+let priorities = 0;
 
 
 // Botão para editar o título
@@ -57,12 +58,13 @@ function updateProgress() {
     const progressCircle = document.querySelector(".progress");
     const progressText = document.getElementById("progress-text");
     const progression = document.getElementById("progressao");
-    const priorities = document.getElementById("prioridades");
+    const prioridades = document.getElementById("prioridades");
 
     progressCircle.style.strokeDashoffset = offset;
     progressText.textContent = `${percent}%`;
 
     progression.textContent=`Tarefas Concluídas: ${done}/${total}`;
+    prioridades.textContent=`Tarefas em Prioridade: ${priorities}`;
 }
 
 
@@ -150,23 +152,16 @@ function addTask() {
 
         if (viraPrioridade) {
             li.classList.add("prioridade");
-            li.style.transform = "translateY(-20px)";
-            setTimeout(() => {
-            list.insertBefore(li, list.firstChild); // move pro topo
-            li.style.transform = "translateY(0)";
-            }, 0);
+            priorities++;
         } else {
             li.classList.remove("prioridade");
-            li.style.transform = "translateY(20px)";
-            setTimeout(() => {
-            list.appendChild(li); // manda pro fim
-            li.style.transform = "translateY(0)";
-            }, 0);
+            priorities--;
         }
 
         li.addEventListener("transitionend", () => {
             li.classList.remove("moving");
         }, { once: true });
+        updateProgress();
         });
 
         btnContainer.appendChild(editBtn);
