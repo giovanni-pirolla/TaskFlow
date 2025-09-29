@@ -10,7 +10,7 @@ const tituloBtn = document.createElement("button");
 tituloBtn.classList.add("titleEdit");
 
 const tituloIcon = document.createElement("img");
-tituloIcon.src = "icone-removebg-preview.png";
+tituloIcon.src = "Imagens/icone-removebg-preview.png";
 tituloIcon.alt = "Editar Título";
 tituloBtn.appendChild(tituloIcon);
 
@@ -140,7 +140,7 @@ function addTask() {
 
         const prioridadeBtn = document.createElement("button");
         const prioridadeImg = document.createElement("img");
-        prioridadeImg.src = "alerta.webp";
+        prioridadeImg.src = "Imagens/alerta.webp";
         prioridadeBtn.alt = "Adicionar Prioridade";
         prioridadeBtn.classList.add("prioridade-btn");
         prioridadeBtn.appendChild(prioridadeImg);
