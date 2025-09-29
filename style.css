@@ -13,33 +13,74 @@
 }
 
 @keyframes highlight {
-  0%   { background-color: #ff9999; }
-  100% { background-color: #ffcccc; }
+  0% {
+    background-color: #ff9999;
+  }
+
+  100% {
+    background-color: #ffcccc;
+  }
 }
 
 @keyframes slideIn {
   from {
-    transform: translateX(-100%); /* vem da esquerda */
+    transform: translateX(-100%);
+    /* vem da esquerda */
     opacity: 0;
   }
+
   to {
-    transform: translateX(0); /* posição normal */
+    transform: translateX(0);
+    /* posição normal */
     opacity: 1;
   }
 }
 
 @keyframes slideOut {
   from {
-    transform: translateX(0); /* posição normal */
+    transform: translateX(0);
+    /* posição normal */
     opacity: 1;
   }
+
   to {
-    transform: translateX(-100%); /* vem da esquerda */
+    transform: translateX(-100%);
+    /* vem da esquerda */
     opacity: 0;
   }
 }
 
-#titulo:focus{
+@keyframes jelly {
+  from {
+    transform: scale(1, 1);
+  }
+
+  30% {
+    transform: scale(1.25, 0.75);
+  }
+
+  40% {
+    transform: scale(0.75, 1.25);
+  }
+
+  50% {
+    transform: scale(1.15, 0.85);
+  }
+
+  65% {
+    transform: scale(0.95, 1.05);
+  }
+
+  75% {
+    transform: scale(1.05, 0.95);
+  }
+
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+#titulo:focus {
   display: block;
   width: fit-content;
   border-bottom: 2px solid #007bff;
@@ -50,38 +91,40 @@
   outline: none;
 }
 
-.titulo-container{
+.titulo-container {
   display: inline-flex;
   gap: 10px;
 }
 
-.titulo-container h1{
-  margin:0;
+.titulo-container h1 {
+  margin: 0;
 }
 
 button.titleEdit {
-  width: 30px;  
+  width: 30px;
   height: 30px;
-  padding: 0;    
+  padding: 0;
   border: none;
   background: none;
   cursor: pointer;
   background-color: #f0f0f0;
-  display: flex;           
-  align-items: center;  
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button img {
-  width: 18px;   /* controla o tamanho do ícone */
+  width: 18px;
+  /* controla o tamanho do ícone */
   height: 18px;
 }
 
 #taskInput {
+  width: 30%;
   width: 20%;
-  padding: 12px 15px;
-  border: none;
-  border-bottom: 2px solid #ccc;
+  padding: 6px 8px;
+  border: solid #ccc;
+  border-radius: 10px;
   font-size: 16px;
   transition: 0.3s;
   background: transparent;
@@ -94,9 +137,42 @@ button img {
 }
 
 #taskInput:focus {
-  border-bottom: 2px solid #007bff;
-
+  border: solid #007bff;
 }
+
+#titulo {
+  margin-bottom: 10px;
+}
+
+#entrada {
+  display: flex;
+  align-items: center;
+}
+
+#entrada.input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#entrada.button {
+  margin-left: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+#titulo input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#titulo button {
+  margin-left: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
 
 body {
   font-family: Arial, sans-serif;
@@ -109,7 +185,7 @@ ul {
 }
 
 li {
-  width:400px;
+  width: 400px;
   margin: 5px 0;
   padding: 8px;
   background: #f0f0f0;
@@ -160,7 +236,6 @@ li span[contenteditable="true"]:focus {
   outline: none;
 }
 
-
 .task-container {
   display: flex;
   gap: 8px;
@@ -169,7 +244,7 @@ li span[contenteditable="true"]:focus {
   white-space: normal;
 }
 
-.task-container span{
+.task-container span {
   display: inline-block;
   max-width: 100%;
   word-wrap: break-word;
@@ -178,30 +253,30 @@ li span[contenteditable="true"]:focus {
 
 .done {
   text-decoration: line-through;
-  color:#595858;
+  color: #595858;
 }
 
 button {
   margin-left: auto;
   background: #f0f0f0;
-  color:#222;
+  color: #222;
+  font-size: large;
   border: none;
   padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  box-shadow: #595858 2px 2px 5px;  
+  box-shadow: #595858 2px 2px 5px;
 }
 
 button:hover {
   background-color: #007bff;
-  color:white;
+  color: white;
   transform: scale(1.15);
 }
 
 button.edit {
   background: #007bff;
-  display: flex;
 }
 
 button.remove {
@@ -217,7 +292,7 @@ button.remove {
 .botoes button {
   padding: 4px 8px;
   font-size: 0.9rem;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 button:active {
@@ -225,25 +300,27 @@ button:active {
 }
 
 span[contenteditable="true"] {
-  outline: none;   
+  outline: none;
 }
 
 .prioridade-btn {
-  background-color: #b71b1b;       
-  border: none;          
-  cursor: pointer;        
-  padding: 0;             
-  width: 28px;           
-  height: 28px;         
-  display: flex;        
+  background-color: #b71b1b;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .prioridade-btn img {
-  width: 20px;   /* tamanho da imagem */
+  width: 20px;
+  /* tamanho da imagem */
   height: 20px;
-  object-fit: contain; /* garante que a imagem não distorça */
+  object-fit: contain;
+  /* garante que a imagem não distorça */
 }
 
 .prioridade-btn:hover {
@@ -252,12 +329,12 @@ span[contenteditable="true"] {
 
 #progress-container {
   position: absolute;
-  top:20px;
-  right:20px;
+  top: 20px;
+  right: 20px;
 
   background: #f0f0f0;
   width: 250px;
-  height:400px;
+  height: 400px;
   padding: 10px;
   border-radius: 12px;
   text-align: center;
@@ -280,7 +357,8 @@ span[contenteditable="true"] {
 }
 
 #progress-svg {
-  transform: rotate(-90deg); /* começa do topo */
+  transform: rotate(-90deg);
+  /* começa do topo */
 }
 
 circle {
@@ -294,20 +372,41 @@ circle {
 
 .progress {
   stroke: #007bff;
-  stroke-dasharray: 339.292; /* comprimento total da circunferência (2πr) */
-  stroke-dashoffset: 339.292; /* começa vazio */
+  stroke-dasharray: 339.292;
+  /* comprimento total da circunferência (2πr) */
+  stroke-dashoffset: 339.292;
+  /* começa vazio */
   transition: stroke-dashoffset 0.5s ease;
 }
 
-#progress-text {
-  position: fixed;
-  top: 190px;
-  font-weight: bold;
-  font-size: 18px;
-  color: #333;
+#progress-title {
+  overflow: auto;
+  max-width: 100%;
+  /* não passa da largura da div */
+  word-wrap: break-word;
+  /* força a quebra quando necessário */
+  overflow-wrap: break-word;
+  text-align: center;
+  /* centraliza dentro da div */
 }
 
-p{
+.progress-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  pointer-events: none;
+}
+
+p {
   margin: 10px 0 1px 0;
   font-size: 15px;
   font-weight: bold;
