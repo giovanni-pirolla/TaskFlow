@@ -19,7 +19,7 @@ titulo.insertAdjacentElement("afterend", tituloBtn);
 tituloBtn.addEventListener("click", () => {
     titulo.contentEditable=true;
     titulo.focus();
-
+ 
     const rangeTitle=document.createRange();
     rangeTitle.selectNodeContents(titulo);
 
@@ -161,9 +161,11 @@ function addTask() {
 
         if (viraPrioridade) {
             li.classList.add("prioridade");
+            list.prepend(li)
             priorities++;
         } else {
             li.classList.remove("prioridade");
+            list.append(li)
             priorities--;
         }
 
