@@ -1,24 +1,9 @@
 # 🗂️ TaskFlow — Lista de Afazeres (To-Do List)
 
-![Logotipo](./Imagens/icone-removebg-preview.png)
-
 O **TaskFlow** é um site para organização de tarefas por meio de uma **To-Do List (Lista de Afazeres)**, com uma interface moderna, minimalista e responsiva.  
 Seu objetivo é ajudar pessoas a gerenciarem suas atividades domésticas, profissionais e pessoais de forma prática e eficiente.
 
 ---
-
-## 📑 Índice
-
-- [Instalação](#instalação)  
-- [Utilização](#utilização)  
-- [Funcionalidades](#funcionalidades)  
-- [Estrutura do Projeto](#estrutura-do-projeto)  
-- [Como Contribuir](#como-contribuir)  
-- [Créditos](#créditos)  
-- [Licença](#licença)
-
----
-
 ## ⚙️ Instalação
 
 O código-fonte do TaskFlow está disponível no GitHub e é composto por **HTML**, **CSS** e **JavaScript**.
@@ -28,6 +13,7 @@ O código-fonte do TaskFlow está disponível no GitHub e é composto por **HTML
 ```bash
 git clone https://github.com/SEU-USUARIO/taskflow.git
 cd taskflow
+```
 
 ---
 ## 💡 Utilização
@@ -45,6 +31,7 @@ Passos básicos:
 4 Marque tarefas concluídas e acompanhe o progresso em tempo real.
 
 5 Edite ou exclua listas e tarefas quando quiser.
+
 ---
 ## 🚀 Funcionalidades
 
@@ -63,6 +50,7 @@ Passos básicos:
 ✅ Interface responsiva e minimalista.
 
 ✅ Edição de nomes das listas e exclusão total das mesmas.
+
 ---
 ### 👨‍💻 Créditos
 
