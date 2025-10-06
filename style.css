@@ -383,3 +383,50 @@ p {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
+
+/* navbar */
+nav h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  text-align: center;
+  width: 100%;
+  border-bottom: 2px solid #444;
+  padding-bottom: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 5px 0;
+  transition: background 0.3s;
+}
+
+nav a:hover {
+  background-color: #444;
+}
+
+/* ======== LAYOUT GERAL ======== */
+.layout {
+  display: flex;          /* Deixa o nav e o main lado a lado */
+  min-height: 100vh;      /* Faz ocupar toda a altura da tela */
+}
+
+nav {
+  width: 150px;
+  background-color: #222;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px;
+  flex-shrink: 0;         /* Impede o nav de encolher */
+}
+
+main {
+  flex: 1;                /* Ocupa o restante da largura */
+  padding: 20px;
+  background: #fafafa;
+}
