@@ -8,24 +8,28 @@
     <link rel="icon" href="Imagens/lista.png" type="image/png">
 </head>
 <body>
-    <div class="titulo-container">
-        <h1 id="titulo">To-do List...</h1>
-    </div>
+    <div class="to-do-list">
+        <div class="titulo-container">
+            <h1 id="titulo">To-do List...</h1>
+        </div> 
 
-    <div class="entrada">
-        <input id="taskInput" type="text" placeholder="Digite uma tarefa">
-        <button id="addIt">+</button>
-    </div>
+        <div class="entrada">
+            <input id="taskInput" type="text" placeholder="Digite uma tarefa...">
+            <button id="addIt">+</button>
+        </div>
 
-    <ol id="lista"></ol>
+        <ol id="lista"></ol>
+    </div>
 
     <div id="progress-container">
-        <h3 id="progress-title">Progresso das Tarefas</h3>
-        <svg id="progress-svg" width="200" height="200" viewBox="0 0 120 120">
-            <circle class="bg" cx="60" cy="60" r="50"/>
-            <circle class="progress" cx="60" cy="60" r="50"/>
-        </svg>
-        <div id="progress-text">0%</div>
+        <h3 id="progress-title">Progresso de To-Do List</h3>
+        <div class="progress-wrapper">
+            <svg id="progress-svg" width="200" height="200" viewBox="0 0 120 120">
+                <circle class="bg" cx="60" cy="60" r="50"/>
+                <circle class="progress" cx="60" cy="60" r="50"/>
+            </svg>
+            <div id="progress-text">0%</div>
+        </div>
         <br>
         <p id="progressao">Tarefas Concluídas: 0/0</p>
         <p id="prioridades">Tarefas em Prioridade: 0</p>

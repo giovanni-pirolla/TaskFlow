@@ -19,7 +19,7 @@ titulo.insertAdjacentElement("afterend", tituloBtn);
 tituloBtn.addEventListener("click", () => {
     titulo.contentEditable=true;
     titulo.focus();
-
+ 
     const rangeTitle=document.createRange();
     rangeTitle.selectNodeContents(titulo);
 
@@ -28,7 +28,8 @@ tituloBtn.addEventListener("click", () => {
     selectionTitle.addRange(rangeTitle);
 
     titulo.addEventListener("blur", ()=>{
-        titulo.contentEditable=false
+        titulo.contentEditable=false;
+        atualizarTituloProgressao();
     })
 
     titulo.addEventListener("keypress", (e) => {
@@ -36,9 +37,16 @@ tituloBtn.addEventListener("click", () => {
             e.preventDefault();
             titulo.contentEditable = false;
             titulo.blur();
+            atualizarTituloProgressao();
         }
     })
 })
+
+// Função só para atualizar o título da progressão
+function atualizarTituloProgressao() {
+    const progressTitle = document.getElementById("progress-title");
+    progressTitle.textContent = `Progresso de ${titulo.textContent}`;
+}
 
 //Funções para medir progresso de tarefas
 
@@ -82,6 +90,7 @@ function addTask() {
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.className = "checkbox"
 
         const span = document.createElement("span");
         span.textContent = taskText;
@@ -152,9 +161,11 @@ function addTask() {
 
         if (viraPrioridade) {
             li.classList.add("prioridade");
+            list.prepend(li)
             priorities++;
         } else {
             li.classList.remove("prioridade");
+            list.append(li)
             priorities--;
         }
 
