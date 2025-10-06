@@ -3,7 +3,7 @@ const button = document.getElementById("addIt");
 const list = document.getElementById("lista");
 let priorities = 0;
 
-
+ 
 // Botão para editar o título
 const titulo = document.getElementById("titulo");
 const tituloBtn = document.createElement("button");
@@ -87,6 +87,8 @@ function addTask() {
         // Container para checkbox + texto
         const taskContainer = document.createElement("div");
         taskContainer.classList.add("task-container");
+        const taskContent = document.createElement("div");
+        taskContent.classList.add("task-content");
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -100,8 +102,16 @@ function addTask() {
             updateProgress();
         });
 
+        const data = document.createElement("input");
+        data.type = "date";
+        data.className = "data"
+
         taskContainer.appendChild(checkbox);
-        taskContainer.appendChild(span);
+
+        taskContent.appendChild(span);
+        taskContent.appendChild(data);
+
+        taskContainer.appendChild(taskContent);
 
         // Container para os botões
         const btnContainer = document.createElement("div");
