@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="styleIndex.css">
+    <link rel="icon" href="Imagens/lista.png" type="image/png">
+</head>
+<body>
+    <div class="layout">
+      <nav>
+        <h2>TASKFLOW</h2><br>
+        <a href="#">Criar Lista</a><br><br>
+        <a href="#">Calendario</a><br><br>
+        <a href="#">Cadastro</a><br><br>
+        <a href="#">Sobre</a><br><br>
+      </nav>
+  
+      <main>
+        <div class="to-do-list">
+          <div class="titulo-container">
+            <h1 id="titulo">To-do List...</h1>
+          </div>
+  
+          <div class="entrada">
+            <input id="taskInput" type="text" placeholder="Digite uma tarefa...">
+            <button id="addIt">+</button>
+          </div>
+  
+          <ol id="lista"></ol>
+        </div>
+  
+        <div id="progress-container">
+          <h3 id="progress-title">Progresso de To-Do List</h3>
+          <div class="progress-wrapper">
+            <svg id="progress-svg" width="200" height="200" viewBox="0 0 120 120">
+              <circle class="bg" cx="60" cy="60" r="50"/>
+              <circle class="progress" cx="60" cy="60" r="50"/>
+            </svg>
+            <div id="progress-text">0%</div>
+          </div>
+          <br>
+          <p id="progressao">Tarefas Concluídas: 0/0</p>
+          <p id="prioridades">Tarefas em Prioridade: 0</p>
+        </div>
+      </main>
+    </div>
+  
+    <script src="script.js"></script>
+  </body>
+  
+</html>
