@@ -234,7 +234,7 @@ li span[contenteditable="true"]:focus {
   border: none;
 }
 
-.data {
+.prazo {
   font-size: 0.7rem;
   opacity: 0.8;
   background-color: #f0f0f0;
@@ -255,7 +255,7 @@ input[type="date"]:hover {
 input[type="date"]:focus {
   background-color: #007bff;
   color: white;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
 input[type="date"] {
@@ -475,4 +475,26 @@ main {
   flex: 1;                /* Ocupa o restante da largura */
   padding: 20px;
   background: #fafafa;
+}
+
+#proximas-tarefas{
+  position: absolute;
+  top: 480px;
+  right: 20px;
+
+  background: #f0f0f0;
+  width: 250px;
+  height: 200px;
+  padding: 10px;
+  border-radius: 12px;
+  text-align: center;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: #595858 2px 2px 5px;
+  color: #333;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }

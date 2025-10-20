@@ -102,14 +102,14 @@ function addTask() {
             updateProgress();
         });
 
-        const data = document.createElement("input");
-        data.type = "date";
-        data.className = "data"
+        const prazo = document.createElement("input");
+        prazo.type = "date";
+        prazo.className = "prazo"
 
         taskContainer.appendChild(checkbox);
 
         taskContent.appendChild(span);
-        taskContent.appendChild(data);
+        taskContent.appendChild(prazo);
 
         taskContainer.appendChild(taskContent);
 
