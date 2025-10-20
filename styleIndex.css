@@ -1,6 +1,6 @@
 @keyframes piscarBorda {
 
-  0%,
+  0%, 
   100% {
     border-color: #007bff;
     /* cor visível */
@@ -172,6 +172,7 @@ li {
   justify-content: space-between;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 12px;
   padding: 5px;
   border-bottom: 1px solid #ddd;
 
@@ -209,7 +210,8 @@ li span[contenteditable="true"]:focus {
 .task-container {
   display: flex;
   gap: 8px;
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   word-break: break-word;
   white-space: normal;
 }
@@ -219,6 +221,46 @@ li span[contenteditable="true"]:focus {
   max-width: 100%;
   word-wrap: break-word;
   white-space: normal;
+}
+
+.task-content {
+  display: flex;
+  flex-direction: column; 
+  gap: 4px; 
+  min-width: 0;
+}
+
+.task-content date:focus{
+  border: none;
+}
+
+.data {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  background-color: #f0f0f0;
+  border: none;
+}
+
+input[type="date"]:focus {
+  outline: none; /* sombra leve azul */
+}
+
+input[type="date"]:hover {
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 5px;
+}
+
+input[type="date"]:focus {
+  background-color: #007bff;
+  color: white;
+  border-radius: 15px;
+}
+
+input[type="date"] {
+  padding-right: 5px; /* diminui o espaço para o ícone */
+  font-size: 16px;
 }
 
 .done {
