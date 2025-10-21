@@ -3,7 +3,7 @@ const button = document.getElementById("addIt");
 const list = document.getElementById("lista");
 let priorities = 0;
 
-  
+
 // Botão para editar o título
 const titulo = document.getElementById("titulo");
 const tituloBtn = document.createElement("button");
@@ -17,18 +17,18 @@ tituloBtn.appendChild(tituloIcon);
 titulo.insertAdjacentElement("afterend", tituloBtn);
 
 tituloBtn.addEventListener("click", () => {
-    titulo.contentEditable=true;
+    titulo.contentEditable = true;
     titulo.focus();
- 
-    const rangeTitle=document.createRange();
+
+    const rangeTitle = document.createRange();
     rangeTitle.selectNodeContents(titulo);
 
-    const selectionTitle= window.getSelection();
+    const selectionTitle = window.getSelection();
     selectionTitle.removeAllRanges();
     selectionTitle.addRange(rangeTitle);
 
-    titulo.addEventListener("blur", ()=>{
-        titulo.contentEditable=false;
+    titulo.addEventListener("blur", () => {
+        titulo.contentEditable = false;
         atualizarTituloProgressao();
     })
 
@@ -41,6 +41,13 @@ tituloBtn.addEventListener("click", () => {
         }
     })
 })
+
+function capitalize(str) {
+    return str
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+}
 
 // Função só para atualizar o título da progressão
 function atualizarTituloProgressao() {
@@ -71,8 +78,8 @@ function updateProgress() {
     progressCircle.style.strokeDashoffset = offset;
     progressText.textContent = `${percent}%`;
 
-    progression.textContent=`✅Tarefas Concluídas: ${done}/${total}`;
-    prioridades.textContent=`⚠️Tarefas em Prioridade: ${priorities}`;
+    progression.textContent = `✅Tarefas Concluídas: ${done}/${total}`;
+    prioridades.textContent = `⚠️Tarefas em Prioridade: ${priorities}`;
 }
 
 //função para atualizar as tarefas exibidas em "próximas tarefas"
@@ -140,11 +147,11 @@ function atualizarProximasTarefas() {
 }
 //Função para adicionar tarefa
 function addTask() {
-    const taskText = input.value.trim();
+    const taskText = capitalize(input.value.trim());
     if (taskText === "") return;
 
     const li = document.createElement("li");
-    li.dataset.id = Date.now().toString(); 
+    li.dataset.id = Date.now().toString();
 
     // Container para checkbox + texto
     const taskContainer = document.createElement("div");
@@ -204,6 +211,8 @@ function addTask() {
 
         nome.addEventListener("blur", () => {
             nome.contentEditable = false;
+            nome.textContent = capitalize(nome.textContent.trim());
+            atualizarProximasTarefas();
         });
 
         nome.addEventListener("keypress", (e) => {
@@ -240,8 +249,6 @@ function addTask() {
 
     prioridadeBtn.addEventListener("click", () => {
         const viraPrioridade = !li.classList.contains("prioridade");
-
-        li.classList.add("moving");
 
         if (viraPrioridade) {
             li.classList.add("prioridade");
