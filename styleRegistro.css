@@ -14,10 +14,44 @@
     cursor: pointer;
 }
 
-.container {
-    width: 80%;           /* largura máxima */
-    margin: 0 auto;        /* centraliza horizontalmente */
-    background-color: #f1f1f1;
-    padding: 20px;
-    border-radius: 8px;
-  }
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px #ccc;
+}
+
+div{
+    text-align: center;
+}
+
+#Registro{
+    background-color: rgb(56, 63, 64);
+    padding: 30px;
+    border-radius: 10px;
+    width: 200px;
+}
+
+main {
+    color: #f0f0f0;
+
+    display: flex;              /* ativa o flexbox */
+    justify-content: center;    /* centraliza na horizontal */
+    align-items: center;        /* centraliza na vertical */
+    flex-direction: column;     /* mantém o título acima da div */
+}
+
+hr {
+    border: none;             /* remove o estilo padrão */
+    height: 2px;              /* espessura */
+    background-color: #000000;   /* cor da linha — branca */
+    width: 60%;               /* largura opcional */
+    margin: 10px auto;        /* centraliza e dá espaçamento */
+    border-radius: 2px;       /* deixa a linha mais suave */
+}
+
