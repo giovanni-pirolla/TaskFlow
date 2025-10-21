@@ -121,7 +121,7 @@ function atualizarProximasTarefas() {
         const nome = tarefa.elemento.querySelector(".nome").textContent;
         const prazo = tarefa.prazo.toLocaleDateString("pt-BR");
 
-        listaProximas.textContent = `${nome} — Prazo: ${prazo}`;
+        listaProximas.textContent = `${nome} | Prazo: ${prazo}`;
         listaProximas.title = nome; // tooltip para ver o nome completo
         listaProximas.tabIndex = 0;
 
