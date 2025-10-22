@@ -3,7 +3,7 @@ const button = document.getElementById("addIt");
 const list = document.getElementById("lista");
 let priorities = 0;
 
- 
+
 // Botão para editar o título
 const titulo = document.getElementById("titulo");
 const tituloBtn = document.createElement("button");
@@ -17,18 +17,18 @@ tituloBtn.appendChild(tituloIcon);
 titulo.insertAdjacentElement("afterend", tituloBtn);
 
 tituloBtn.addEventListener("click", () => {
-    titulo.contentEditable=true;
+    titulo.contentEditable = true;
     titulo.focus();
- 
-    const rangeTitle=document.createRange();
+
+    const rangeTitle = document.createRange();
     rangeTitle.selectNodeContents(titulo);
 
-    const selectionTitle= window.getSelection();
+    const selectionTitle = window.getSelection();
     selectionTitle.removeAllRanges();
     selectionTitle.addRange(rangeTitle);
 
-    titulo.addEventListener("blur", ()=>{
-        titulo.contentEditable=false;
+    titulo.addEventListener("blur", () => {
+        titulo.contentEditable = false;
         atualizarTituloProgressao();
     })
 
@@ -41,6 +41,13 @@ tituloBtn.addEventListener("click", () => {
         }
     })
 })
+
+function capitalize(str) {
+    return str
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+}
 
 // Função só para atualizar o título da progressão
 function atualizarTituloProgressao() {
@@ -71,140 +78,218 @@ function updateProgress() {
     progressCircle.style.strokeDashoffset = offset;
     progressText.textContent = `${percent}%`;
 
-    progression.textContent=`Tarefas Concluídas: ${done}/${total}`;
-    prioridades.textContent=`Tarefas em Prioridade: ${priorities}`;
+    progression.textContent = `✅Tarefas Concluídas: ${done}/${total}`;
+    prioridades.textContent = `⚠️Tarefas em Prioridade: ${priorities}`;
 }
 
+//função para atualizar as tarefas exibidas em "próximas tarefas"
+function atualizarProximasTarefas() {
+    const tarefas = list.querySelectorAll("li");
+    const tarefasComPrazo = [];
 
+    tarefas.forEach(tarefa => {
+        const inputPrazo = tarefa.querySelector(".prazo");
+        if (!inputPrazo || !inputPrazo.value) return;
 
+        // Extrai ano, mês e dia da string do input para criar data sem fuso
+        const [ano, mes, dia] = inputPrazo.value.split("-").map(Number);
+        const dataPrazo = new Date(ano, mes - 1, dia); // mes-1 pois JS usa 0-11
+
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
+        const diferencaDias = Math.ceil((dataPrazo - hoje) / (1000 * 60 * 60 * 24));
+        if (diferencaDias < 0) return;
+
+        tarefasComPrazo.push({
+            elemento: tarefa,
+            prazo: dataPrazo,
+            diferenca: diferencaDias
+        });
+    });
+
+    // Ordena pelas datas mais próximas
+    tarefasComPrazo.sort((a, b) => a.prazo - b.prazo);
+
+    const proximasTres = tarefasComPrazo.slice(0, 3);
+    const proximasContainer = document.getElementById("lista-proximas");
+    proximasContainer.innerHTML = "";
+
+    proximasTres.forEach(tarefa => {
+        const listaProximas = document.createElement("li");
+
+        const nome = tarefa.elemento.querySelector(".nome").textContent;
+        const prazo = tarefa.prazo.toLocaleDateString("pt-BR");
+
+        listaProximas.textContent = `${nome} | Prazo: ${prazo}`;
+        listaProximas.title = nome; // tooltip para ver o nome completo
+        listaProximas.tabIndex = 0;
+
+        // Garante ID único seguro
+        listaProximas.dataset.ref = tarefa.elemento.dataset.id;
+
+        // Clique para highlight
+        listaProximas.addEventListener("click", () => {
+            const original = document.querySelector(`[data-id='${listaProximas.dataset.ref}']`);
+            if (!original) return;
+
+            document.querySelectorAll('li.highlight').forEach(el => el.classList.remove('highlight'));
+            original.classList.add('highlight');
+            original.scrollIntoView({ behavior: "smooth", block: "center" });
+
+            // Remove highlight após 2s
+            setTimeout(() => original.classList.remove('highlight'), 2000);
+        });
+
+        listaProximas.title = `Tarefa: ${nome} \nPrazo: ${prazo}`;
+        proximasContainer.appendChild(listaProximas);
+    });
+}
 //Função para adicionar tarefa
 function addTask() {
-    const taskText = input.value.trim();
+    const taskText = capitalize(input.value.trim());
+    if (taskText === "") return;
 
-    if (taskText !== "") {
-        const li = document.createElement("li");
+    const li = document.createElement("li");
+    li.dataset.id = Date.now().toString();
 
-        // Container para checkbox + texto
-        const taskContainer = document.createElement("div");
-        taskContainer.classList.add("task-container");
-        const taskContent = document.createElement("div");
-        taskContent.classList.add("task-content");
+    // Container para checkbox + texto
+    const taskContainer = document.createElement("div");
+    taskContainer.classList.add("task-container");
 
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "checkbox"
+    const taskContent = document.createElement("div");
+    taskContent.classList.add("task-content");
 
-        const span = document.createElement("span");
-        span.textContent = taskText;
+    // Checkbox
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "checkbox";
 
-        checkbox.addEventListener("change", () => {
-            span.classList.toggle("done", checkbox.checked);
+    // Nome da tarefa
+    const nome = document.createElement("span");
+    nome.classList.add("nome");
+    nome.textContent = taskText;
+
+    checkbox.addEventListener("change", () => {
+        nome.classList.toggle("done", checkbox.checked);
+        updateProgress();
+    });
+
+    // Input de prazo
+    const prazo = document.createElement("input");
+    prazo.type = "date";
+    prazo.className = "prazo";
+
+    // Atualiza próximas tarefas quando a data muda
+    prazo.addEventListener("change", () => {
+        atualizarProximasTarefas();
+    });
+
+    taskContent.appendChild(nome);
+    taskContent.appendChild(prazo);
+    taskContainer.appendChild(checkbox);
+    taskContainer.appendChild(taskContent);
+
+    // Container de botões
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("botoes");
+
+    // Botão editar
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Editar";
+    editBtn.classList.add("edit");
+
+    editBtn.addEventListener("click", () => {
+        nome.contentEditable = true;
+        nome.focus();
+
+        const range = document.createRange();
+        range.selectNodeContents(nome);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        nome.addEventListener("blur", () => {
+            nome.contentEditable = false;
+            nome.textContent = capitalize(nome.textContent.trim());
+            atualizarProximasTarefas();
+        });
+
+        nome.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                nome.contentEditable = false;
+                nome.blur();
+                atualizarProximasTarefas();
+            }
+        });
+    });
+
+    // Botão remover
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remover";
+    removeBtn.classList.add("remove");
+
+    removeBtn.addEventListener("click", () => {
+        li.classList.add("exit");
+        li.addEventListener("animationend", () => {
+            list.removeChild(li);
             updateProgress();
-        });
+            atualizarProximasTarefas();
+        }, { once: true });
+    });
 
-        const data = document.createElement("input");
-        data.type = "date";
-        data.className = "data"
+    // Botão prioridade
+    const prioridadeBtn = document.createElement("button");
+    const prioridadeImg = document.createElement("img");
+    prioridadeImg.src = "Imagens/alerta.webp";
+    prioridadeBtn.alt = "Adicionar Prioridade";
+    prioridadeBtn.classList.add("prioridade-btn");
+    prioridadeBtn.appendChild(prioridadeImg);
 
-        taskContainer.appendChild(checkbox);
-
-        taskContent.appendChild(span);
-        taskContent.appendChild(data);
-
-        taskContainer.appendChild(taskContent);
-
-        // Container para os botões
-        const btnContainer = document.createElement("div");
-        btnContainer.classList.add("botoes");
-
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "Editar";
-        editBtn.classList.add("edit");
-
-        editBtn.addEventListener("click", () => {
-            span.contentEditable = true;
-            span.focus();
-
-            const range = document.createRange();
-            range.selectNodeContents(span);
-
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            span.addEventListener("blur", () => {
-                span.contentEditable = false;
-            });
-
-            span.addEventListener("keypress", (e) => {
-                if (e.key === "Enter") {
-                    e.preventDefault();
-                    span.contentEditable = false;
-                    span.blur();
-                }
-            });
-        });
-
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remover";
-        removeBtn.classList.add("remove");
-
-        removeBtn.addEventListener("click", () => {
-            li.classList.add("exit");
-            li.addEventListener("animationend", () => {
-                list.removeChild(li);
-                updateProgress();
-            }, { once: true });
-        });
-
-        const prioridadeBtn = document.createElement("button");
-        const prioridadeImg = document.createElement("img");
-        prioridadeImg.src = "Imagens/alerta.webp";
-        prioridadeBtn.alt = "Adicionar Prioridade";
-        prioridadeBtn.classList.add("prioridade-btn");
-        prioridadeBtn.appendChild(prioridadeImg);
-
-        prioridadeBtn.addEventListener("click", () => {
+    prioridadeBtn.addEventListener("click", () => {
         const viraPrioridade = !li.classList.contains("prioridade");
-
-        li.classList.add("moving");
 
         if (viraPrioridade) {
             li.classList.add("prioridade");
-            list.prepend(li)
+            list.prepend(li);
             priorities++;
         } else {
             li.classList.remove("prioridade");
-            list.append(li)
+            list.append(li);
             priorities--;
         }
 
         li.addEventListener("transitionend", () => {
             li.classList.remove("moving");
         }, { once: true });
+
         updateProgress();
-        });
+        atualizarProximasTarefas();
+    });
 
-        btnContainer.appendChild(editBtn);
-        btnContainer.appendChild(removeBtn);
-        btnContainer.appendChild(prioridadeBtn);
+    btnContainer.appendChild(editBtn);
+    btnContainer.appendChild(removeBtn);
+    btnContainer.appendChild(prioridadeBtn);
 
-        // Monta o li final
-        li.appendChild(taskContainer);
-        li.appendChild(btnContainer);
+    // Monta o li final
+    li.appendChild(taskContainer);
+    li.appendChild(btnContainer);
 
-        list.appendChild(li);
+    list.appendChild(li);
 
-        li.classList.add("enter");
-        li.addEventListener("animationend", () => {
+    li.classList.add("enter");
+    li.addEventListener("animationend", () => {
         li.classList.remove("enter");
-        }, { once: true });
+    }, { once: true });
 
-        input.value = "";
-        input.focus();
+    // Limpa input
+    input.value = "";
+    input.focus();
 
-        updateProgress();
-    }
+    // Atualiza progresso e próximas tarefas
+    updateProgress();
+    atualizarProximasTarefas();
 }
 
 
