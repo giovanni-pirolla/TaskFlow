@@ -144,6 +144,7 @@ button img {
 }
 
 #taskInput {
+  margin-left: 0px;
   width: 30%;
   width: 20%;
   padding: 6px 8px;
@@ -197,6 +198,16 @@ button img {
   font-size: 16px;
 }
 
+.separador{
+  width: 880px;
+  border: none;
+  height: 2px;              /* altura da linha */
+  background-color: #ababab; /* cor da linha */
+  margin-left: -10px;
+  margin-top: 15px;          
+  margin-bottom: 15px;  
+  border-radius: 2px;       /* linha com cantos arredondados */
+}
 
 body {
   font-family: Arial, sans-serif;
@@ -209,7 +220,7 @@ ul {
 }
 
 li {
-  width: 400px;
+  width: 860px;
   margin: 5px 0;
   padding: 8px;
   background: #f0f0f0;
@@ -223,6 +234,8 @@ li {
 }
 
 #lista li {
+  margin-left: -40px;
+  margin-bottom: 10px;;
   box-sizing: border-box;
   position: relative;
   display: flex;
