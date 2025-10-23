@@ -60,6 +60,7 @@ function atualizarTituloProgressao() {
 function updateProgress() {
     const tasks = list.querySelectorAll("li");
     const doneTasks = list.querySelectorAll("li .done");
+    const prioritietasks = list.querySelectorAll("li .prioridade");
 
     const total = tasks.length;
     const done = doneTasks.length;
@@ -237,6 +238,10 @@ function addTask() {
             updateProgress();
             atualizarProximasTarefas();
         }, { once: true });
+    
+    if (li.classList.contains("prioridade")) {
+        priorities--;
+    }
     });
 
     // Botão prioridade
