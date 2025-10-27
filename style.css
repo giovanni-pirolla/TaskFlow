@@ -263,7 +263,7 @@ li {
 
 #lista li.prioridade .checkbox:focus {
   box-shadow: 0 0 0 3px #ff9999;
-  border-color: #ff9999;
+  border-color: red;
 }
 
 #lista li.prioridade .checkbox:checked {
@@ -571,6 +571,18 @@ nav a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+nav p{
+  text-decoration: none;
+  color: white;
+  width: 80%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 5px 0;
+  transition: background 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: normal;
+}
+
 nav a:hover {
   background-color: #444;
 }
@@ -703,4 +715,43 @@ li.prioridade.highlight::after{
   pointer-events: none; /* não bloqueia cliques */
   z-index: 10; /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
+}
+
+.alerta {
+  position: fixed;
+  top: 20px;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+  font-weight: 500;
+}
+
+.alerta.mostrar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tipos de alerta opcionais */
+.alerta.sucesso {
+  background-color: #4CAF50;
+  right: 610px;
+}
+.alerta.aviso {
+  background-color: #ff9800;
+  right: 560px;
+}
+.alerta.erro {
+  right: 630px;
+  background-color: #f44336;
+}
+
+nav .minhas_listas a{
+  margin-left: 20px;
+  width: 100%;
 }

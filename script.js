@@ -78,8 +78,8 @@ function updateProgress() {
     progressCircle.style.strokeDashoffset = offset;
     progressText.textContent = `${percent}%`;
 
-    progression.textContent = `✅Tarefas Concluídas: ${done}/${total}`;
-    prioridades.textContent = `⚠️Tarefas em Prioridade: ${priorities}`;
+    progression.textContent = `Tarefas Concluídas: ${done}/${total}`;
+    prioridades.textContent = `Tarefas em Prioridade: ${priorities}`;
 }
 
 //função para atualizar as tarefas exibidas em "próximas tarefas"
@@ -145,10 +145,47 @@ function atualizarProximasTarefas() {
         proximasContainer.appendChild(listaProximas);
     });
 }
+
+function tarefaExiste(nome) {
+    const tarefas = list.querySelectorAll(".nome");
+    return Array.from(tarefas).some(tarefa =>
+        tarefa.textContent.trim().toLowerCase() === nome.toLowerCase()
+    );
+}
+
+function showAlert(mensagem, tipo = "erro") {
+  // Verifica se já existe um alerta ativo e remove antes de criar outro
+  const alertaExistente = document.querySelector(".alerta");
+  if (alertaExistente) alertaExistente.remove();
+
+  const alerta = document.createElement("div");
+  alerta.className = `alerta ${tipo}`;
+  alerta.textContent = mensagem;
+
+  document.body.appendChild(alerta);
+
+  // Animação de entrada
+  setTimeout(() => alerta.classList.add("mostrar"), 10);
+
+  // Remove automaticamente após 3 segundos
+  setTimeout(() => {
+    alerta.classList.remove("mostrar");
+    alerta.addEventListener("transitionend", () => alerta.remove());
+  }, 3000);
+}
+
 //Função para adicionar tarefa
 function addTask() {
     const taskText = capitalize(input.value.trim());
-    if (taskText === "") return;
+    if (taskText === ""){
+        showAlert("Insira o nome de uma tarefa para adicioná-la!", "aviso");
+        return;
+    };
+
+    if (tarefaExiste(taskText)) {
+        showAlert("Essa tarefa já foi adicionada!");
+        return;
+    }
 
     const li = document.createElement("li");
     li.dataset.id = Date.now().toString();
@@ -200,6 +237,7 @@ function addTask() {
     editBtn.classList.add("edit");
 
     editBtn.addEventListener("click", () => {
+        const textoOriginal = nome.textContent.trim();
         nome.contentEditable = true;
         nome.focus();
 
@@ -218,6 +256,21 @@ function addTask() {
         nome.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 e.preventDefault();
+                const novoTexto = capitalize(nome.textContent.trim());
+
+                // Verifica se já existe uma tarefa com o mesmo nome
+                const tarefas = document.querySelectorAll("#lista .nome");
+                const nomes = Array.from(tarefas).map(t => t.textContent.toLowerCase());
+
+                if (nomes.includes(novoTexto.toLowerCase()) && novoTexto !== textoOriginal.toLowerCase()) {
+                    showAlert("Essa tarefa já foi adicionada!");
+                    nome.textContent = textoOriginal; // restaura o nome original
+                    nome.blur(); // sai do modo de edição
+                    return;
+                }
+
+                // Atualiza normalmente se for válido
+                nome.textContent = novoTexto;
                 nome.contentEditable = false;
                 nome.blur();
                 atualizarProximasTarefas();
@@ -233,11 +286,12 @@ function addTask() {
     removeBtn.addEventListener("click", () => {
         li.classList.add("exit");
         li.addEventListener("animationend", () => {
+            showAlert("Tarefa removida com sucesso!", "sucesso");
             list.removeChild(li);
             updateProgress();
             atualizarProximasTarefas();
         }, { once: true });
-    
+
         if (li.classList.contains("prioridade")) {
             priorities--;
         }
@@ -281,6 +335,7 @@ function addTask() {
     li.appendChild(btnContainer);
 
     list.appendChild(li);
+    showAlert("Tarefa adicionada com sucesso!", "sucesso");
 
     li.classList.add("enter");
     li.addEventListener("animationend", () => {
