@@ -286,7 +286,7 @@ function addTask() {
     removeBtn.addEventListener("click", () => {
         li.classList.add("exit");
         li.addEventListener("animationend", () => {
-            showAlert("Tarefa removida com sucesso!", "sucesso");
+            showAlert("Tarefa removida com sucesso!", "erro");
             list.removeChild(li);
             updateProgress();
             atualizarProximasTarefas();
