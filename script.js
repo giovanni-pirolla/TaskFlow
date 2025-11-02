@@ -212,6 +212,8 @@ function addTask() {
         updateProgress();
     });
 
+
+
     // Input de prazo
     const prazo = document.createElement("input");
     prazo.type = "date";
@@ -219,6 +221,7 @@ function addTask() {
 
     // Atualiza próximas tarefas quando a data muda
     prazo.addEventListener("change", () => {
+        prazo.classList.toggle("done", checkbox.checked);
         atualizarProximasTarefas();
     });
 
