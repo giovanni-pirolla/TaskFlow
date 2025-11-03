@@ -1,0 +1,125 @@
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --accent:#2b8cff;
+    --muted:#6b7280;
+    --today-border: #ff7a18;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(130deg,#411478 80%,var(--bg) 100%);
+    padding:24px;
+  }
+  .calendar {
+    width:340px;
+    background:var(--card);
+    border-radius:12px;
+    box-shadow: 0 6px 20px rgba(15,23,42,0.08);
+    padding:16px;
+  }
+
+  .header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:12px;
+  }
+  .month-title{
+    font-weight:600;
+    font-size:1.05rem;
+  }
+  .controls{
+    display:flex;
+    gap:6px;
+    align-items:center;
+  }
+  button.btn{
+    border:0;
+    background:transparent;
+    padding:6px 8px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  button.btn:hover{ background:#f3f4f6 }
+  button.primary{
+    background:var(--accent);
+    color:white;
+    padding:6px 10px;
+    border-radius:8px;
+  }
+
+  .weekdays {
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    text-align:center;
+    font-size:0.8rem;
+    color:var(--muted);
+    margin-bottom:6px;
+    user-select:none;
+  }
+
+  .days {
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;
+  }
+  .day {
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    cursor:default;
+  }
+  .other-month{
+    color:#4a3570;
+    background:transparent;
+  }
+  .day:hover{ transform:translateY(-2px); transition:all .12s ease }
+  .day.selected{
+    background:rgba(43,140,255,0.12);
+    border:1px solid rgba(43,140,255,0.25);
+    color:var(--accent);
+    font-weight:700;
+  }
+  .day.today{
+    border:2px solid var(--today-border);
+    box-shadow: 0 2px 8px rgba(255,122,24,0.12);
+    font-weight:700;
+  }
+
+  .footer{
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+    font-size:0.85rem;
+    color:var(--muted);
+    align-items:center;
+  }
+
+  @media (max-width:380px){
+    .calendar{ width:100%; padding:12px }
+    .day{ height:40px; font-size:0.95rem }
+  }
+
+  .close-btn{
+    position:absolute;
+    top:12px;
+    right:12px;
+    background:transparent;
+    border:none;
+    font-size:2rem;
+    cursor:pointer;
+    color:var(--muted);
+  }
+
+  .close-btn:hover{
+    color:var(--accent);
+  }

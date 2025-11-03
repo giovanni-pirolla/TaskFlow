@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calendário</title>
+<link rel="stylesheet" href="styleCalendar.css" />
+<link rel="icon" href="Imagens/???².png" type="image/png">
+</head>
+<body>
+  <div class="calendar" id="calendar">
+    <div class="header">
+      <div class="month-title" id="monthTitle">—</div>
+      <div class="controls">
+        <button class="btn" id="prevBtn" title="Mês anterior">◀</button>
+        <button class="btn" id="nextBtn" title="Próximo mês">▶</button>
+        <button class="btn primary" id="todayBtn" title="Hoje">Hoje</button>
+      </div>
+    </div>
+
+    <div class="weekdays" id="weekdays">
+      <!-- preenchido por JS -->
+    </div>
+
+    <div class="days" id="daysGrid">
+      <!-- preenchido por JS -->
+    </div>
+
+    <div class="footer">
+      <div id="selectedInfo">Nenhuma data selecionada</div>
+      <div id="helpText">Clique em um dia</div>
+    </div>
+    <button class="close-btn" title="Fechar calendário" onclick="window.location.href='index.html'">✖</button>
+  </div>
+    <script src="flowCalendar.js"></script>
+</body>
+</html>
