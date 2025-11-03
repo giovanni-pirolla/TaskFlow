@@ -363,5 +363,3 @@ input.addEventListener("keypress", function (e) {
         addTask();
     }
 });
-
-
