@@ -303,7 +303,7 @@ function addTask() {
     // Botão prioridade
     const prioridadeBtn = document.createElement("button");
     const prioridadeImg = document.createElement("img");
-    prioridadeImg.src = "Imagens/alerta.webp";
+    prioridadeImg.src = "Imagens/alerta2.png";
     prioridadeBtn.alt = "Adicionar Prioridade";
     prioridadeBtn.classList.add("prioridade-btn");
     prioridadeBtn.appendChild(prioridadeImg);

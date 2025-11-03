@@ -65,7 +65,7 @@
   -webkit-appearance: none;
   width: 22px;
   height: 22px;
-  border: 2px solid #6495ff;
+  border: 2px solid #6366F1;
   border-radius: 6px;
   background-color: #273043;
   cursor: pointer;
@@ -78,12 +78,12 @@
 /* Efeito de foco no teclado (acessibilidade) */
 .checkbox:focus {
   box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.4);
-  border-color: #6495ff;
+  border-color: #6366F1;
 }
 
 /* Quando o mouse passa por cima */
 .checkbox:hover {
-  border-color: #4e78d3;
+  border-color: #6366F1;
   background-color: #273043;
 }
 
@@ -247,9 +247,9 @@ ul {
 }
 
 li {
-  width: 860px;
+  width: 40rem;
   margin: 5px 0;
-  padding: 8px;
+  padding: 13px;
   color: #E2E8F0;
   background: #1E293B;
   border-radius: 5px;
@@ -279,18 +279,18 @@ li {
 
 #lista li.prioridade {
   color:#222;
-  border-left: 10px solid #FACC15;
+  border-left: 10px solid #ffcc00;
   background-color: #ffe186;
   animation: highlight 0.6s ease;
 }
 
 #lista li.prioridade .checkbox {
-  background-color: #ffe186; /* muda fundo do checkbox */
-  border-color: #FACC15;
+  background-color: #ffcf3e; /* muda fundo do checkbox */
+  border-color: #CA8A04;
 }
 
 #lista li.prioridade .checkbox:focus {
-  box-shadow: 0 0 0 3px #EAB308;
+  box-shadow: 0 0 0 3px #ffbf00;
   border-color: #FACC15;
 }
 
@@ -306,10 +306,10 @@ li {
 }
 
 #lista li.prioridade input.prazo:hover {
-  background-color: #FACC15;
+  background-color: #ffcc00;
   border-radius: 5px;
   transition: background-color 0.2s ease-in-out;
-  color: #222;
+  color: #000000;
 }
 
 #lista li.prioridade button.edit{
@@ -330,6 +330,10 @@ li {
 
 #lista li.moving {
   transition: transform 0.3s ease;
+}
+
+#lista li.prioridade button.remove{
+  background-color: #CA8A04;
 }
 
 li span[contenteditable="true"]:focus {
@@ -376,21 +380,18 @@ li span[contenteditable="true"]:focus {
   border: none;
 }
 
-input[type="date"]:focus {
-  outline: none; /* sombra leve azul */
-}
-
 input[type="date"]:hover {
   background-color: #6366F1;
-  color: #475569;
+  color: #E2E8F0;
   transition: background-color 0.2s ease-in-out;
   border-radius: 5px;
 }
 
 input[type="date"]:focus {
   background-color: #6366F1;
-  color: #475569;
+  color: #E2E8F0;
   border-radius: 5px;
+  outline: none;
 }
 
 input[type="date"] {
@@ -454,7 +455,7 @@ span[contenteditable="true"] {
 }
 
 .prioridade-btn {
-  background-color: #b71b1b;
+  background-color: #CA8A04;
   border: none;
   cursor: pointer;
   padding: 0;
@@ -466,15 +467,15 @@ span[contenteditable="true"] {
 }
 
 .prioridade-btn img {
-  width: 20px;
+  width: 25px;
   /* tamanho da imagem */
-  height: 20px;
+  height: 25px;
   object-fit: contain;
   /* garante que a imagem não distorça */
 }
 
 .prioridade-btn:hover {
-  background-color: #b71b1b;
+  background-color: #CA8A04;
 }
 
 #progress-container {
@@ -774,14 +775,14 @@ li.prioridade.highlight::after{
 /* Tipos de alerta opcionais */
 .alerta.sucesso {
   background-color: #4CAF50;
-  right: 50%;
+  right: 27.5rem;
 }
 .alerta.aviso {
   background-color: #ff9800;
-  right: 70%;
+  right: 26rem;
 }
 .alerta.erro {
-  right: 70%;
+  right: 30rem;
   background-color: #f44336;
 }
 
