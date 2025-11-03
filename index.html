@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br"> 
+<html lang="en"> 
 <head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +11,13 @@
     <div class="layout">
       <nav>
         <h2>TASKFLOW</h2><br>
-        <a href="#">Criar Lista</a><br><br>
-        <a href="#" onclick="window.location.href='FlowCalendar.html'">Calendario</a><br><br>
-        <a href="#" onclick="window.location.href='Registro.html'">Cadastro</a><br><br>
-        <a href="#">Sobre</a><br><br>
+        <div class="minhas_listas">
+          <p>Minhas Listas:</p><br><br>
+          <a href="#">To-Do List</a><br><br>
+        </div>
+        <a href="#">Flow Calendar</a><br><br>
+        <a href="#">Flow RoadMap</a><br><br>
+        <a href="#">Conta</a><br><br>
       </nav>
   
       <main>
@@ -27,6 +30,8 @@
             <input id="taskInput" type="text" placeholder="Digite uma tarefa...">
             <button id="addIt">+</button>
           </div>
+
+          <!-- <hr class="separador"> -->
   
           <ol id="lista"></ol>
         </div>
@@ -35,14 +40,14 @@
           <h3 id="progress-title">Progresso de To-Do List</h3>
           <div class="progress-wrapper">
             <svg id="progress-svg" width="200" height="200" viewBox="0 0 120 120">
-              <circle class="bg" cx="60" cy="60" r="50"/>
-              <circle class="progress" cx="60" cy="60" r="50"/>
+              <circle class="bg" cx="60" cy="60" r="47"/>
+              <circle class="progress" cx="60" cy="60" r="47"/>
             </svg>
             <div id="progress-text">0%</div>
           </div>
           <br>
-          <p id="progressao">✅Tarefas Concluídas: 0/0</p>
-          <p id="prioridades">⚠️Tarefas em Prioridade: 0</p>
+          <p id="progressao">Tarefas Concluídas: 0/0</p>
+          <p id="prioridades">Tarefas em Prioridade: 0</p>
         </div>
       </main>
     </div>
