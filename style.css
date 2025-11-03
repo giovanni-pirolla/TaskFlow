@@ -2,7 +2,7 @@
 
   0%, 
   100% {
-    border-color: #007bff;
+    border-color: #6366F1;
     /* cor visível */
   }
 
@@ -14,11 +14,11 @@
 
 @keyframes highlight { 
   0% {
-    background-color: #ff9999;
+    background-color: #f5cc50;
   }
 
   100% {
-    background-color: #ffcccc;
+    background-color: #ffe186;
   }
 }
 
@@ -50,15 +50,24 @@
   }
 }
 
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.6));
+  }
+}
+
 /* Estilo base */
 .checkbox {
   appearance: none;
   -webkit-appearance: none;
   width: 22px;
   height: 22px;
-  border: 2px solid #888;
+  border: 2px solid #6495ff;
   border-radius: 6px;
-  background-color: white;
+  background-color: #273043;
   cursor: pointer;
   position: relative;
   transition: all 0.25s ease;
@@ -74,14 +83,14 @@
 
 /* Quando o mouse passa por cima */
 .checkbox:hover {
-  border-color: #444;
-  background-color: #f5f5f5;
+  border-color: #4e78d3;
+  background-color: #273043;
 }
 
 /* Quando marcada */
 .checkbox:checked {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #6366F1;
+  border-color: #6366F1;
   transform: scale(1.05);
 }
 
@@ -93,7 +102,7 @@
   top: 2px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid #273043;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -107,7 +116,7 @@
 #titulo:focus {
   display: block;
   width: fit-content;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #6366F1;
   padding: 2px 4PX;
   cursor: text;
   animation: piscarBorda 1s infinite;
@@ -131,7 +140,7 @@ button.titleEdit {
   border: none;
   background: none;
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: #1E293B;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,61 +153,90 @@ button img {
 }
 
 #taskInput {
+  margin-left: 0px;
   width: 30%;
   width: 20%;
   padding: 6px 8px;
-  border: solid #ccc;
+  border: solid #273043;
   border-radius: 10px;
   font-size: 16px;
   transition: 0.3s;
   background: transparent;
   color: #222;
   outline: none;
+  box-shadow: #595858;
 }
 
 #taskInput:hover {
-  border-color: #007bff
+  border-color: #6366F1;
 }
 
 #taskInput:focus {
-  border: solid #007bff;
+  border: solid #6366F1;
+  color: #E2E8F0;
 }
 
 #titulo {
+  color: #E2E8F0;
   margin-bottom: 10px;
 }
 
 #entrada {
+  color: #E2E8F0;
   display: flex;
   align-items: center;
 }
 
 #entrada.input {
+  color: #E2E8F0;
   flex: 1;
   padding: 8px;
   font-size: 16px;
 }
 
+#entrada.input::placeholder {
+  color: #475569;
+  opacity: 1;
+}
+
 #entrada.button {
+  color: #E2E8F0;
   margin-left: 5px;
   padding: 8px 12px;
   font-size: 16px;
 }
 
+#addIt{
+  color: #E2E8F0
+}
+
 #titulo input {
+  color: #E2E8F0;
   flex: 1;
   padding: 8px;
   font-size: 16px;
 }
 
 #titulo button {
+  color: #E2E8F0;
   margin-left: 5px;
   padding: 8px 12px;
   font-size: 16px;
 }
 
+.separador{
+  width: 880px;
+  border: none;
+  height: 2px;              /* altura da linha */
+  background-color: #ababab; /* cor da linha */
+  margin-left: -10px;
+  margin-top: 15px;          
+  margin-bottom: 15px;  
+  border-radius: 2px;       /* linha com cantos arredondados */
+}
 
 body {
+  background-color: #111827;
   font-family: Arial, sans-serif;
   margin: 20px;
 }
@@ -209,20 +247,23 @@ ul {
 }
 
 li {
-  width: 400px;
+  width: 860px;
   margin: 5px 0;
   padding: 8px;
-  background: #f0f0f0;
+  color: #E2E8F0;
+  background: #1E293B;
   border-radius: 5px;
   display: flex;
   align-items: center;
   gap: 8px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: #595858 2px 2px 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 
 }
 
 #lista li {
+  margin-left: -40px;
+  margin-bottom: 10px;;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -231,54 +272,53 @@ li {
   justify-content: space-between;
   gap: 12px;
   padding: 5px;
-  border-bottom: 1px solid #ddd;
-  border-left: 10px solid #007bff;
+  border-left: 10px solid #6366F1;
 
   transition: background color 0.4s ease, border 0.4s ease;
 }
 
 #lista li.prioridade {
-  border-left: 10px solid red;
-  background-color: #ffcccc;
+  color:#222;
+  border-left: 10px solid #FACC15;
+  background-color: #ffe186;
   animation: highlight 0.6s ease;
 }
 
 #lista li.prioridade .checkbox {
-  background-color: #ff9999; /* muda fundo do checkbox */
-  border-color: red;
+  background-color: #ffe186; /* muda fundo do checkbox */
+  border-color: #FACC15;
 }
 
 #lista li.prioridade .checkbox:focus {
-  box-shadow: 0 0 0 3px #ff9999;
-  border-color: #ff9999;
+  box-shadow: 0 0 0 3px #EAB308;
+  border-color: #FACC15;
 }
 
 #lista li.prioridade .checkbox:checked {
-  background-color: red;
-  border-color: red;
+  background-color: #FACC15;
+  border-color: #FACC15;
   transform: scale(1.05);
 }
 
 #lista li.prioridade input.prazo {
-  background-color: #ffcccc; /* muda fundo do input de data */
+  background-color: #ffe186; /* muda fundo do input de data */
   color: #222;
 }
 
 #lista li.prioridade input.prazo:hover {
-  background-color: red;
+  background-color: #FACC15;
   border-radius: 5px;
   transition: background-color 0.2s ease-in-out;
   color: #222;
 }
 
 #lista li.prioridade button.edit{
-  background-color: rgb(213, 30, 30);
+  background-color: #CA8A04;
 }
 
 #lista li.prioridade button.edit:hover{
-  background-color: rgb(213, 30, 30);
+  background-color: #CA8A04;
 }
-
 
 #lista li.enter {
   animation: slideIn 0.4s ease forwards;
@@ -295,7 +335,7 @@ li {
 li span[contenteditable="true"]:focus {
   display: block;
   width: fit-content;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #6366F1;
   padding: 2px 4PX;
   cursor: text;
   animation: piscarBorda 1s infinite;
@@ -332,7 +372,7 @@ li span[contenteditable="true"]:focus {
 .prazo {
   font-size: 0.7rem;
   opacity: 0.8;
-  background-color: #f0f0f0;
+  background-color: #1E293B;
   border: none;
 }
 
@@ -341,31 +381,33 @@ input[type="date"]:focus {
 }
 
 input[type="date"]:hover {
-  background-color: #007bff;
-  color: white;
+  background-color: #6366F1;
+  color: #475569;
   transition: background-color 0.2s ease-in-out;
   border-radius: 5px;
 }
 
 input[type="date"]:focus {
-  background-color: #007bff;
-  color: white;
+  background-color: #6366F1;
+  color: #475569;
   border-radius: 5px;
 }
 
 input[type="date"] {
+  color: #475569;
   padding-right: 5px; /* diminui o espaço para o ícone */
   font-size: 16px;
 }
 
 .done {
   text-decoration: line-through;
-  color: #595858;
+  color: #475569;
 }
 
 button {
+  color: #E2E8F0;
   margin-left: auto;
-  background: #f0f0f0;
+  background: #1E293B;
   color: #222;
   font-size: large;
   border: none;
@@ -373,17 +415,17 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  box-shadow: #595858 2px 2px 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 button:hover {
-  background-color: #007bff;
-  color: white;
+  background-color: #6366F1;
+  color: #E2E8F0;
   transform: scale(1.15);
 }
 
 button.edit {
-  background: #007bff;
+  background: #6366F1;
 }
 
 button.remove {
@@ -440,7 +482,7 @@ span[contenteditable="true"] {
   top: 1px;
   right: 20px;
 
-  background: #f0f0f0;
+  background: #1E293B;
   width: 250px;
   height: 400px;
   padding: 10px;
@@ -448,12 +490,13 @@ span[contenteditable="true"] {
   text-align: center;
   border-radius: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: #595858 2px 2px 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  overflow: visible;
 }
 
 #progress-title {
@@ -461,7 +504,7 @@ span[contenteditable="true"] {
   font-size: 25px;
   font-weight: bold;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: #E2E8F0;
 }
 
 #progress-svg {
@@ -470,35 +513,39 @@ span[contenteditable="true"] {
 }
 
 #progressao{
-  background-color: #ccc;
-  box-shadow: #595858 2px 2px 5px;
+  background-color: #273043;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
   border-radius: 5px;
   padding: 5px;
 }
 
 #prioridades{
-  background-color: #ccc;
-  box-shadow: #595858 2px 2px 5px;
+  background-color: #273043;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
   border-radius: 5px;
   padding: 5px;
 }
 
 circle {
   fill: none;
-  stroke-width: 12;
+  stroke-width: 8;
 }
 
 .bg {
-  stroke: #ccc;
+  stroke: #273043;
 }
 
 .progress {
-  stroke: #007bff;
+  stroke: #6366F1;
   stroke-dasharray: 339.292;
   /* comprimento total da circunferência (2πr) */
   stroke-dashoffset: 339.292;
   /* começa vazio */
   transition: stroke-dashoffset 0.5s ease;
+
+  /* EFEITO DE BRILHO */
+  filter: drop-shadow(0 0 3px #818CF8);
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
 #progress-title {
@@ -524,7 +571,7 @@ circle {
   transform: translate(-50%, -50%);
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: #E2E8F0;
   pointer-events: none;
 }
 
@@ -533,7 +580,7 @@ p {
   font-size: 15px;
   font-weight: bold;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: #E2E8F0;
 }
 
 /* navbar */
@@ -549,7 +596,7 @@ nav h2 {
 
 nav a {
   text-decoration: none;
-  color: white;
+  color: #E2E8F0;
   width: 80%;
   padding: 10px 15px;
   border-radius: 8px;
@@ -558,8 +605,20 @@ nav a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+nav p{
+  text-decoration: none;
+  color: #E2E8F0;
+  width: 80%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 5px 0;
+  transition: background 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: normal;
+}
+
 nav a:hover {
-  background-color: #444;
+  background-color: #6366F1;
 }
 
 /* ======== LAYOUT GERAL ======== */
@@ -575,8 +634,8 @@ nav {
   left: 0;
   width: 220px;
   height: 100vh;
-  background-color: #222;
-  color: white;
+  background-color: #1E293B;
+  color: #E2E8F0;
   padding: 20px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -598,7 +657,7 @@ main {
   top: 460px;
   right: 40px;
 
-  background: #f0f0f0;
+  background: #1E293B;
   width: 250px;
   height: 230px;
   padding: 10px;
@@ -606,8 +665,8 @@ main {
   text-align: center;
   border-radius: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: #595858 2px 2px 5px;
-  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  color: #E2E8F0;
 
   display: flex;
   flex-direction: column;
@@ -618,7 +677,7 @@ main {
 #proximas-tarefas h3 {
   margin-bottom: 10px;
   font-size: 1.1rem;
-  color: #333;
+  color: #E2E8F0;
   border-bottom: 2px solid #eee;
   padding-bottom: 5px;
   background-color: #ccc;
@@ -631,13 +690,13 @@ main {
 }
 
 #lista-proximas li {
-  background-color: #d5d5d5;
+  background-color: #273043;
   border-radius: 10px;
   margin-bottom: 15px;
   padding: 10px 12px;
   font-size: 0.95rem;
-  color: #222;
-  box-shadow: #595858 2px 2px 5px;
+  color: #E2E8F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
   transition: all 0.2s ease;
   width: 230px;
   font-weight: bold;
@@ -652,9 +711,9 @@ main {
 }
 
 #lista-proximas li:hover {
-  background-color: #eaeaea;
+  background-color: #6366F1;
   transform: translateY(-2px);
-  box-shadow: #595858 2px 2px 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 li.highlight {
@@ -669,9 +728,9 @@ li.highlight::after {
   left: -12px;
   right: -2px;
   bottom: -2px;
-  border:4px solid #007bff;
+  border:4px solid #6366F1;
   border-radius: 8px;
-  box-shadow: 0 0 10px #007bff;
+  box-shadow: 0 0 10px #6366F1;
   pointer-events: none; /* não bloqueia cliques */
   z-index: 10; /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
@@ -684,10 +743,68 @@ li.prioridade.highlight::after{
   left: -12px;
   right: -2px;
   bottom: -2px;
-  border:4px solid red;
+  border:4px solid #FACC15;
   border-radius: 8px;
-  box-shadow: 0 0 10px red;
+  box-shadow: 0 0 10px #FACC15;
   pointer-events: none; /* não bloqueia cliques */
   z-index: 10; /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
+}
+
+.alerta {
+  position: fixed;
+  top: 20px;
+  background-color: #ff4d4d;
+  color: #E2E8F0;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+  font-weight: 500;
+}
+
+.alerta.mostrar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tipos de alerta opcionais */
+.alerta.sucesso {
+  background-color: #4CAF50;
+  right: 50%;
+}
+.alerta.aviso {
+  background-color: #ff9800;
+  right: 70%;
+}
+.alerta.erro {
+  right: 70%;
+  background-color: #f44336;
+}
+
+nav .minhas_listas a{
+  margin-left: 20px;
+  width: 100%;
+}
+
+.prazo-tarefa {
+  position: relative;
+  display: inline-block;
+}
+
+/* Quando estiver concluída */
+.prazo.done::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background-color: #14B8A6; /* cor da linha — pode trocar por roxo ou turquesa */
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.8;
 }
