@@ -809,3 +809,12 @@ nav .minhas_listas a{
   pointer-events: none;
   opacity: 0.8;
 }
+
+.botao-arredondado {
+  background-color:#1E293B; /* Cor de fundo */
+  color: white; /* Cor do texto */
+  width: 40px; /* Largura do botão */
+  height: 35px; /* Altura do botão */
+  border: none; /* Remove a borda padrão */
+  border-radius: 15px; /* Valor para arredondar as bordas */
+}
