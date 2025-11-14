@@ -22,15 +22,19 @@ O TaskFlow foi desenvolvido para que qualquer pessoa possa organizar e acompanha
 
 Passos básicos:
 
-1 Crie uma nova lista (exemplo: “Casa”, “Trabalho”, “Estudos”).
+1 Faça seu registro.
 
-2 Adicione tarefas com título, descrição, data de vencimento e prioridade.
+2 Crie uma nova lista (exemplo: “Casa”, “Trabalho”, “Estudos”).
 
-3 Use o botão do calendário para visualizar suas tarefas ao longo dos dias.
+3 Adicione tarefas com título, descrição, data de vencimento e prioridade.
 
-4 Marque tarefas concluídas e acompanhe o progresso em tempo real.
+4 Use o botão do calendário para visualizar suas tarefas ao longo dos dias.
 
-5 Edite ou exclua listas e tarefas quando quiser.
+5 Marque tarefas concluídas e acompanhe o progresso em tempo real.
+
+6 Veja as tarefas que ja foram concluidas.
+
+7 Edite, adicione ou exclua listas e tarefas quando quiser.
 
 ---
 ## 🚀 Funcionalidades
