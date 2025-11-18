@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registre-se</title>
-    <link rel="stylesheet" href="styleRegistro.css">
-    <link rel="icon" href="Imagens/Registro.png" type="image/png">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="styleRegistro.css" />
+<img rel="icon" type="image/png" href="Imagens/Registro.png" />
+<title>Registro</title>
 </head>
 <body>
-    <main>
-        <h1>REGISTRE-SE EM NOSSO SITE</h1><hr><br><br>
-        <div id="Registro">
-                <input type="text" placeholder="Nome Completo" class="input-field"><br>
-                <input type="email" placeholder="Email" class="input-field"><br>
-                <input type="password" placeholder="Senha" class="input-field"><br>
-                <input type="password" placeholder="Confirme a Senha" class="input-field"><br>
-                <button class="register-button">Registrar</button>
-        </div>
 
-        <button class="close-btn" title="Sair do Registro" onclick="window.location.href='index.html'">✖</button>
+<div class="card">
+    <button class="close-btn" onclick="window.location.href='index.html'">✖</button>
+    <h1>Registre-se</h1>
+    <hr />
 
+    <input type="text" placeholder="Nome Completo" class="input-field" />
+    <input type="email" placeholder="Email" class="input-field" />
+    <input type="password" placeholder="Senha" class="input-field" />
+    <input type="password" placeholder="Confirmar Senha" class="input-field" />
 
+    <button class="register-button">Registrar</button>
+</div>
 
-
-
-    </main>
+<script src="scriptRegistro.js"></script>
 </body>
 </html>
