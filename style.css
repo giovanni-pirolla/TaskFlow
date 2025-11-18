@@ -247,7 +247,7 @@ ul {
 }
 
 li {
-  width: 40rem;
+  width: 70%;
   margin: 5px 0;
   padding: 13px;
   color: #E2E8F0;
@@ -755,21 +755,29 @@ li.prioridade.highlight::after{
 .alerta {
   position: fixed;
   top: 20px;
-  background-color: #ff4d4d;
-  color: #E2E8F0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: #ff4444;
+  color: white;
+
   padding: 12px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border-radius: 6px;
+
+  font-size: 1rem;
+  text-align: center;
+
+  z-index: 9999;
+
   opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.3s ease-in-out;
-  z-index: 1000;
-  font-weight: 500;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
 }
 
 .alerta.mostrar {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(5px);
+  pointer-events: auto;
 }
 
 /* Tipos de alerta opcionais */
@@ -796,25 +804,84 @@ nav .minhas_listas a{
   display: inline-block;
 }
 
-/* Quando estiver concluída */
-.prazo.done::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 8px;
-  right: 8px;
-  height: 2px;
-  background-color: #14B8A6; /* cor da linha — pode trocar por roxo ou turquesa */
-  transform: translateY(-50%);
-  pointer-events: none;
-  opacity: 0.8;
-}
-
 .botao-arredondado {
   background-color:#1E293B; /* Cor de fundo */
   color: white; /* Cor do texto */
-  width: 40px; /* Largura do botão */
-  height: 35px; /* Altura do botão */
+  width: 30px; /* Largura do botão */
+  height: 30px; /* Altura do botão */
   border: none; /* Remove a borda padrão */
-  border-radius: 15px; /* Valor para arredondar as bordas */
+  border-radius: 5px; /* Valor para arredondar as bordas */
+}
+
+.concluido-btn img{
+  width: 20px;
+  /* tamanho da imagem */
+  height: 20px;
+  object-fit: contain;
+  /* garante que a imagem não distorça */
+}
+
+.botao-arredondado,
+.concluido-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.25s ease;
+}
+
+.concluido-btn-active{
+  background-color: yellow !important;
+  transform: scale(1.25);
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none;
+}
+
+.confirm-box {
+  background: #273043;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.confirm-buttons button {
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 14px;
+  cursor: pointer;
+  align-items: center;
+}
+
+#confirm-ok:hover{
+  background-color: #4CAF50;
+}
+
+#confirm-cancel:hover{
+  background-color:#f44336;
 }

@@ -24,7 +24,7 @@
         <div class="to-do-list">
           <div class="titulo-container">
             <h1 id="titulo">To-do List</h1>
-          <button class="botao-arredondado">✔️</button>
+          <button class="botao-arredondado"></button>
           </div>
   
           <div class="entrada">
@@ -58,6 +58,16 @@
     </div>
   
     <script src="script.js"></script>
+
+    <div id="confirm-overlay" class="confirm-overlay hidden">
+      <div class="confirm-box">
+        <p id="confirm-text"></p>
+        <div class="confirm-buttons">
+          <button id="confirm-ok">Confirmar</button>
+          <button id="confirm-cancel">Cancelar</button>
+        </div>
+      </div>
+    </div>
   </body>
   
 </html>

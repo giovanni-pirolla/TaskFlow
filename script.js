@@ -3,6 +3,77 @@ const button = document.getElementById("addIt");
 const list = document.getElementById("lista");
 let priorities = 0;
 
+// Botão de lista concluída
+const botaoConcluido = document.querySelector(".botao-arredondado");
+
+if (botaoConcluido) {
+    const concluidoImg = document.createElement("img");
+    concluidoImg.src = "Imagens/concluido.png";
+    concluidoImg.alt = "Marcar Lista como Concluída";
+    concluidoImg.classList.add("icone-concluido");
+
+    botaoConcluido.classList.add("concluido-btn");
+    botaoConcluido.appendChild(concluidoImg);
+}
+
+function customConfirm(message, callback) {
+    const overlay = document.getElementById("confirm-overlay");
+    const text = document.getElementById("confirm-text");
+    const okBtn = document.getElementById("confirm-ok");
+    const cancelBtn = document.getElementById("confirm-cancel");
+
+    text.textContent = message;
+    overlay.classList.remove("hidden");
+
+    const limpar = () => {
+        overlay.classList.add("hidden");
+        okBtn.onclick = null;
+        cancelBtn.onclick = null;
+    };
+
+    okBtn.onclick = () => {
+        limpar();
+        callback(true);
+    };
+
+    cancelBtn.onclick = () => {
+        limpar();
+        callback(false);
+    };
+}
+
+botaoConcluido.addEventListener("click", () => {
+    const checkboxes = document.querySelectorAll("#lista .checkbox");
+    const nomes = document.querySelectorAll("#lista .nome");
+
+    const existeNaoConcluida = Array.from(checkboxes).some(cb => !cb.checked);
+
+    const mensagem = existeNaoConcluida
+        ? "Deseja marcar TODAS as tarefas como concluídas?"
+        : "Deseja desmarcar TODAS as tarefas?";
+
+    customConfirm(mensagem, (confirma) => {
+        if (!confirma) return;
+
+        if (existeNaoConcluida) {
+            checkboxes.forEach((cb, i) => {
+                cb.checked = true;
+                nomes[i].classList.add("done");
+            });
+            showAlert("Todas as tarefas foram marcadas como concluídas!", "sucesso");
+        } else {
+            checkboxes.forEach((cb, i) => {
+                cb.checked = false;
+                nomes[i].classList.remove("done");
+            });
+            showAlert("Todas as tarefas foram desmarcadas.", "aviso");
+        }
+
+        updateProgress();
+        atualizarProximasTarefas();
+    });
+});
+
 
 // Botão para editar o título
 const titulo = document.getElementById("titulo");
@@ -260,25 +331,27 @@ function addTask() {
             if (e.key === "Enter") {
                 e.preventDefault();
                 const novoTexto = capitalize(nome.textContent.trim());
-
-                // Verifica se já existe uma tarefa com o mesmo nome
+        
                 const tarefas = document.querySelectorAll("#lista .nome");
-                const nomes = Array.from(tarefas).map(t => t.textContent.toLowerCase());
-
-                if (nomes.includes(novoTexto.toLowerCase()) && novoTexto !== textoOriginal.toLowerCase()) {
+                
+                // lista com todos os nomes, exceto o próprio elemento
+                const nomes = Array.from(tarefas)
+                    .filter(t => t !== nome)
+                    .map(t => t.textContent.toLowerCase());
+        
+                if (nomes.includes(novoTexto.toLowerCase())) {
                     showAlert("Essa tarefa já foi adicionada!");
-                    nome.textContent = textoOriginal; // restaura o nome original
-                    nome.blur(); // sai do modo de edição
+                    nome.textContent = textoOriginal;
+                    nome.blur();
                     return;
                 }
-
-                // Atualiza normalmente se for válido
+        
                 nome.textContent = novoTexto;
                 nome.contentEditable = false;
                 nome.blur();
                 atualizarProximasTarefas();
             }
-        });
+        });        
     });
 
     // Botão remover
