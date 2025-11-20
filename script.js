@@ -268,6 +268,16 @@ function addTask() {
     const taskContent = document.createElement("div");
     taskContent.classList.add("task-content");
 
+    // Campo de descrição (inicialmente escondido)
+    const descContainer = document.createElement("div");
+    descContainer.classList.add("descricao-container");
+    const descInput = document.createElement("textarea");
+    descInput.placeholder = "Descrição da tarefa...";
+    descInput.classList.add("descricao-input");
+
+descContainer.appendChild(descInput);
+descContainer.style.display = "none"; // começa fechado
+
     // Checkbox
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -298,12 +308,23 @@ function addTask() {
 
     taskContent.appendChild(nome);
     taskContent.appendChild(prazo);
+    taskContent.appendChild(descContainer);
     taskContainer.appendChild(checkbox);
     taskContainer.appendChild(taskContent);
 
     // Container de botões
     const btnContainer = document.createElement("div");
     btnContainer.classList.add("botoes");
+
+    // Botão para abrir/fechar descrição
+    const descBtn = document.createElement("button");
+    descBtn.textContent = "Descrição";
+    descBtn.classList.add("desc-btn");
+
+    descBtn.addEventListener("click", () => {
+    descContainer.style.display =
+        descContainer.style.display === "none" ? "block" : "none";
+    });
 
     // Botão editar
     const editBtn = document.createElement("button");
@@ -405,6 +426,8 @@ function addTask() {
     btnContainer.appendChild(editBtn);
     btnContainer.appendChild(removeBtn);
     btnContainer.appendChild(prioridadeBtn);
+    btnContainer.appendChild(descBtn);
+
 
     // Monta o li final
     li.appendChild(taskContainer);

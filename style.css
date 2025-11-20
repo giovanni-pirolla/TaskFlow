@@ -895,3 +895,35 @@ nav .minhas_listas a{
 #confirm-cancel:hover{
   background-color:#f44336;
 }
+
+.descricao-container {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.descricao-input {
+  width: 100%;
+  min-height: 60px;
+  resize: vertical;
+  background-color: #1E293B;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 6px;
+  color: #E2E8F0;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.descricao-input:focus {
+  border-color: #6366F1;
+}
+
+.desc-btn {
+  background: #4B5563;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.desc-btn:hover {
+  background: #6366F1;
+}
