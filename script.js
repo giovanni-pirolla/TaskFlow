@@ -318,7 +318,7 @@ descContainer.style.display = "none"; // começa fechado
 
     // Botão para abrir/fechar descrição
     const descBtn = document.createElement("button");
-    descBtn.textContent = "Descrição";
+    descBtn.textContent = "+";
     descBtn.classList.add("desc-btn");
 
     descBtn.addEventListener("click", () => {
@@ -377,7 +377,7 @@ descContainer.style.display = "none"; // começa fechado
 
     // Botão remover
     const removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remover";
+    removeBtn.textContent = "-";
     removeBtn.classList.add("remove");
 
     removeBtn.addEventListener("click", () => {
