@@ -346,6 +346,12 @@ li {
   background-color: #CA8A04;
 }
 
+button.remove img{
+  width: 20px;
+  /* tamanho da imagem */
+  height: 20px;
+}
+
 li span[contenteditable="true"]:focus {
   display: block;
   width: fit-content;
@@ -902,28 +908,54 @@ nav .minhas_listas a{
 }
 
 .descricao-input {
-  width: 100%;
+  width: 200px;
   min-height: 60px;
   resize: vertical;
-  background-color: #1E293B;
-  border: 1px solid #475569;
-  border-radius: 6px;
-  padding: 6px;
+  border: solid #273043;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: 0.3s;
+  background: transparent;
   color: #E2E8F0;
-  font-size: 0.9rem;
   outline: none;
+  box-shadow: #595858;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 .descricao-input:focus {
-  border-color: #6366F1;
+  border: solid #6366F1;
+  color: #E2E8F0;
 }
 
 .desc-btn {
-  background: #4B5563;
+  background: #6366F1;
   color: white;
   font-size: 0.8rem;
 }
 
 .desc-btn:hover {
   background: #6366F1;
+}
+
+/* Quando TODAS as tarefas estão concluídas */
+body.tudo-concluido .botao-arredondado{
+  background-color: #ffd900;  /* amarelo */
+  transform: scale(1.25);     /* aumenta o botão */
+}
+
+/* Quando desmarca tudo */
+body.tudo-desmarcado .botao-arredondado {     
+  transform: scale(1);
+}
+
+#taskInput {
+
+  border: solid #273043;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: 0.3s;
+  background: transparent;
+  color: #222;
+  outline: none;
+  box-shadow: #595858;
 }

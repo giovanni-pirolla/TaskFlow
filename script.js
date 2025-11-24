@@ -45,7 +45,6 @@ function customConfirm(message, callback) {
 botaoConcluido.addEventListener("click", () => {
     const checkboxes = document.querySelectorAll("#lista .checkbox");
     const nomes = document.querySelectorAll("#lista .nome");
-
     const existeNaoConcluida = Array.from(checkboxes).some(cb => !cb.checked);
 
     const mensagem = existeNaoConcluida
@@ -56,16 +55,29 @@ botaoConcluido.addEventListener("click", () => {
         if (!confirma) return;
 
         if (existeNaoConcluida) {
+            //Marca tudo
             checkboxes.forEach((cb, i) => {
                 cb.checked = true;
                 nomes[i].classList.add("done");
             });
+
+            //Adiciona classe global do estado "tudo concluído"
+            document.body.classList.add("tudo-concluido");
+            document.body.classList.remove("tudo-desmarcado");
+
             showAlert("Todas as tarefas foram marcadas como concluídas!", "sucesso");
+
         } else {
+            //Desmarca tudo
             checkboxes.forEach((cb, i) => {
                 cb.checked = false;
                 nomes[i].classList.remove("done");
             });
+
+            // Adiciona classe global do estado "tudo desmarcado"
+            document.body.classList.remove("tudo-concluido");
+            document.body.classList.add("tudo-desmarcado");
+
             showAlert("Todas as tarefas foram desmarcadas.", "aviso");
         }
 
@@ -159,12 +171,14 @@ function atualizarProximasTarefas() {
     const tarefasComPrazo = [];
 
     tarefas.forEach(tarefa => {
+        // Ignora tarefas concluídas
+
         const inputPrazo = tarefa.querySelector(".prazo");
         if (!inputPrazo || !inputPrazo.value) return;
 
-        // Extrai ano, mês e dia da string do input para criar data sem fuso
+        // Extrai ano, mês, dia
         const [ano, mes, dia] = inputPrazo.value.split("-").map(Number);
-        const dataPrazo = new Date(ano, mes - 1, dia); // mes-1 pois JS usa 0-11
+        const dataPrazo = new Date(ano, mes - 1, dia);
 
         const hoje = new Date();
         hoje.setHours(0, 0, 0, 0);
@@ -179,7 +193,6 @@ function atualizarProximasTarefas() {
         });
     });
 
-    // Ordena pelas datas mais próximas
     tarefasComPrazo.sort((a, b) => a.prazo - b.prazo);
 
     const proximasTres = tarefasComPrazo.slice(0, 3);
@@ -193,26 +206,24 @@ function atualizarProximasTarefas() {
         const prazo = tarefa.prazo.toLocaleDateString("pt-BR");
 
         listaProximas.textContent = `${nome} | Prazo: ${prazo}`;
-        listaProximas.title = nome; // tooltip para ver o nome completo
+        listaProximas.title = nome;
         listaProximas.tabIndex = 0;
 
-        // Garante ID único seguro
         listaProximas.dataset.ref = tarefa.elemento.dataset.id;
 
-        // Clique para highlight
         listaProximas.addEventListener("click", () => {
             const original = document.querySelector(`[data-id='${listaProximas.dataset.ref}']`);
             if (!original) return;
 
-            document.querySelectorAll('li.highlight').forEach(el => el.classList.remove('highlight'));
-            original.classList.add('highlight');
+            document.querySelectorAll("li.highlight")
+                .forEach(el => el.classList.remove("highlight"));
+
+            original.classList.add("highlight");
             original.scrollIntoView({ behavior: "smooth", block: "center" });
 
-            // Remove highlight após 2s
-            setTimeout(() => original.classList.remove('highlight'), 2000);
+            setTimeout(() => original.classList.remove("highlight"), 2000);
         });
 
-        listaProximas.title = `Tarefa: ${nome} \nPrazo: ${prazo}`;
         proximasContainer.appendChild(listaProximas);
     });
 }
@@ -275,8 +286,8 @@ function addTask() {
     descInput.placeholder = "Descrição da tarefa...";
     descInput.classList.add("descricao-input");
 
-descContainer.appendChild(descInput);
-descContainer.style.display = "none"; // começa fechado
+    descContainer.appendChild(descInput);
+    descContainer.style.display = "none"; // começa fechado
 
     // Checkbox
     const checkbox = document.createElement("input");
@@ -290,10 +301,11 @@ descContainer.style.display = "none"; // começa fechado
 
     checkbox.addEventListener("change", () => {
         nome.classList.toggle("done", checkbox.checked);
+        li.classList.toggle("concluida", checkbox.checked);
+
         updateProgress();
+        atualizarProximasTarefas();
     });
-
-
 
     // Input de prazo
     const prazo = document.createElement("input");
@@ -377,7 +389,11 @@ descContainer.style.display = "none"; // começa fechado
 
     // Botão remover
     const removeBtn = document.createElement("button");
-    removeBtn.textContent = "-";
+    const removerImg = document.createElement("img");
+    removerImg.src = "Imagens/lixeira.png";
+    removeBtn.alt = "Remover Tarefa";
+    removeBtn.classList.add("prioridade-btn");
+    removeBtn.appendChild(removerImg);
     removeBtn.classList.add("remove");
 
     removeBtn.addEventListener("click", () => {
