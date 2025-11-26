@@ -4,25 +4,27 @@
   height: auto;
   margin-bottom: 20px;
 }
+
 #logo:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
 }
+
 @keyframes piscarBorda {
 
-  0%, 
+  0%,
   100% {
     border-color: #6366F1;
     /* cor visível */
   }
 
   50% {
-    border-color: transparent; 
+    border-color: transparent;
     /* cor invisível */
   }
 }
 
-@keyframes highlight { 
+@keyframes highlight {
   0% {
     background-color: #f5cc50;
   }
@@ -61,9 +63,12 @@
 }
 
 @keyframes glowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     filter: drop-shadow(0 0 3px rgba(99, 102, 241, 0.4));
   }
+
   50% {
     filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.6));
   }
@@ -216,7 +221,7 @@ button img {
   font-size: 16px;
 }
 
-#addIt{
+#addIt {
   color: #E2E8F0
 }
 
@@ -234,15 +239,18 @@ button img {
   font-size: 16px;
 }
 
-.separador{
+.separador {
   width: 880px;
   border: none;
-  height: 2px;              /* altura da linha */
-  background-color: #ababab; /* cor da linha */
+  height: 2px;
+  /* altura da linha */
+  background-color: #ababab;
+  /* cor da linha */
   margin-left: -10px;
-  margin-top: 15px;          
-  margin-bottom: 15px;  
-  border-radius: 2px;       /* linha com cantos arredondados */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 2px;
+  /* linha com cantos arredondados */
 }
 
 body {
@@ -257,7 +265,7 @@ ul {
 }
 
 li {
-  width: 70%;
+  width: 78%;
   margin: 5px 0;
   padding: 13px;
   color: #E2E8F0;
@@ -271,9 +279,19 @@ li {
 
 }
 
+li:hover{
+  background-color: #2f415f;
+  transition: background-color 0.3s ease;
+  input[type="date"] {
+    background-color: #2f415f;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 5px;
+  }
+}
+
 #lista li {
   margin-left: -40px;
-  margin-bottom: 10px;;
+  margin-bottom: 10px;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -288,14 +306,27 @@ li {
 }
 
 #lista li.prioridade {
-  color:#222;
+  color: #222;
   border-left: 10px solid #ffcc00;
   background-color: #ffe186;
   animation: highlight 0.6s ease;
 }
 
+#lista li.prioridade:hover {
+  color: #222;
+  border-left: 10px solid #ffcc00;
+  background-color: #ddba2f;
+  animation: highlight 0.6s ease;
+  input[type="date"] {
+    background-color: #ddba2f;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 5px;
+  }
+}
+
 #lista li.prioridade .checkbox {
-  background-color: #ffcf3e; /* muda fundo do checkbox */
+  background-color: #ffcf3e;
+  /* muda fundo do checkbox */
   border-color: #CA8A04;
 }
 
@@ -311,22 +342,20 @@ li {
 }
 
 #lista li.prioridade input.prazo {
-  background-color: #ffe186; /* muda fundo do input de data */
+  background-color: #ffe186;
+  /* muda fundo do input de data */
   color: #222;
 }
 
-#lista li.prioridade input.prazo:hover {
-  background-color: #ffcc00;
-  border-radius: 5px;
-  transition: background-color 0.2s ease-in-out;
-  color: #000000;
-}
-
-#lista li.prioridade button.edit{
+#lista li.prioridade button{
   background-color: #CA8A04;
 }
 
-#lista li.prioridade button.edit:hover{
+#lista li.prioridade button.edit {
+  background-color: #CA8A04;
+}
+
+#lista li.prioridade button.edit:hover {
   background-color: #CA8A04;
 }
 
@@ -342,14 +371,14 @@ li {
   transition: transform 0.3s ease;
 }
 
-#lista li.prioridade button.remove{
+#lista li.prioridade button.remove {
   background-color: #CA8A04;
 }
 
-button.remove img{
-  width: 20px;
+button.remove img {
+  width: 16px;
   /* tamanho da imagem */
-  height: 20px;
+  height: 16.5px;
 }
 
 li span[contenteditable="true"]:focus {
@@ -380,12 +409,12 @@ li span[contenteditable="true"]:focus {
 
 .task-content {
   display: flex;
-  flex-direction: column; 
-  gap: 4px; 
+  flex-direction: column;
+  gap: 4px;
   min-width: 0;
 }
 
-.task-content date:focus{
+.task-content date:focus {
   border: none;
 }
 
@@ -397,7 +426,6 @@ li span[contenteditable="true"]:focus {
 }
 
 input[type="date"]:hover {
-  background-color: #6366F1;
   color: #E2E8F0;
   transition: background-color 0.2s ease-in-out;
   border-radius: 5px;
@@ -412,8 +440,15 @@ input[type="date"]:focus {
 
 input[type="date"] {
   color: #475569;
-  padding-right: 5px; /* diminui o espaço para o ícone */
+  padding-right: 5px;
+  /* diminui o espaço para o ícone */
   font-size: 16px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }
 
 .done {
@@ -529,14 +564,14 @@ span[contenteditable="true"] {
   /* começa do topo */
 }
 
-#progressao{
+#progressao {
   background-color: #273043;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
   border-radius: 5px;
   padding: 5px;
 }
 
-#prioridades{
+#prioridades {
   background-color: #273043;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
   border-radius: 5px;
@@ -601,6 +636,31 @@ p {
 }
 
 /* navbar */
+
+/* Estilo dos ícones SVG na nav */
+nav a,
+.minhas_listas p {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.1em;
+  padding: 8px 0;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: white;
+}
+
+nav svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 nav h2 {
   margin-bottom: 20px;
   font-size: 22px;
@@ -622,7 +682,7 @@ nav a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-nav p{
+nav p {
   text-decoration: none;
   color: #E2E8F0;
   width: 80%;
@@ -640,9 +700,11 @@ nav a:hover {
 
 /* ======== LAYOUT GERAL ======== */
 .layout {
-  display: flex;          /* Deixa o nav e o main lado a lado */
+  display: flex;
+  /* Deixa o nav e o main lado a lado */
   flex-direction: row;
-  min-height: 100vh;      /* Faz ocupar toda a altura da tela */
+  min-height: 100vh;
+  /* Faz ocupar toda a altura da tela */
 }
 
 nav {
@@ -659,17 +721,19 @@ nav {
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  z-index: 10; /* garante que fique acima do conteúdo */
+  z-index: 10;
+  /* garante que fique acima do conteúdo */
 }
 
 main {
-  margin-left: 240px; /* espaço igual ou um pouco maior que a largura da nav */
+  margin-left: 240px;
+  /* espaço igual ou um pouco maior que a largura da nav */
   padding: 20px;
   flex: 1;
   position: relative;
 }
 
-#proximas-tarefas{
+#proximas-tarefas {
   position: absolute;
   top: 460px;
   right: 40px;
@@ -734,8 +798,10 @@ main {
 }
 
 li.highlight {
-  position: relative; /* cria contexto para o pseudo-elemento */
-  overflow: visible; /* garante que a borda não seja cortada */
+  position: relative;
+  /* cria contexto para o pseudo-elemento */
+  overflow: visible;
+  /* garante que a borda não seja cortada */
 }
 
 li.highlight::after {
@@ -745,26 +811,30 @@ li.highlight::after {
   left: -12px;
   right: -2px;
   bottom: -2px;
-  border:4px solid #6366F1;
+  border: 4px solid #6366F1;
   border-radius: 8px;
   box-shadow: 0 0 10px #6366F1;
-  pointer-events: none; /* não bloqueia cliques */
-  z-index: 10; /* garante que fique acima do conteúdo */
+  pointer-events: none;
+  /* não bloqueia cliques */
+  z-index: 10;
+  /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
 }
 
-li.prioridade.highlight::after{
+li.prioridade.highlight::after {
   content: "";
   position: absolute;
   top: -2px;
   left: -12px;
   right: -2px;
   bottom: -2px;
-  border:4px solid #FACC15;
+  border: 4px solid #FACC15;
   border-radius: 8px;
   box-shadow: 0 0 10px #FACC15;
-  pointer-events: none; /* não bloqueia cliques */
-  z-index: 10; /* garante que fique acima do conteúdo */
+  pointer-events: none;
+  /* não bloqueia cliques */
+  z-index: 10;
+  /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
 }
 
@@ -801,16 +871,18 @@ li.prioridade.highlight::after{
   background-color: #4CAF50;
   right: 27.5rem;
 }
+
 .alerta.aviso {
   background-color: #ff9800;
   right: 26rem;
 }
+
 .alerta.erro {
   right: 30rem;
   background-color: #f44336;
 }
 
-nav .minhas_listas a{
+nav .minhas_listas a {
   margin-left: 20px;
   width: 100%;
 }
@@ -821,15 +893,21 @@ nav .minhas_listas a{
 }
 
 .botao-arredondado {
-  background-color:#1E293B; /* Cor de fundo */
-  color: white; /* Cor do texto */
-  width: 30px; /* Largura do botão */
-  height: 30px; /* Altura do botão */
-  border: none; /* Remove a borda padrão */
-  border-radius: 5px; /* Valor para arredondar as bordas */
+  background-color: #1E293B;
+  /* Cor de fundo */
+  color: white;
+  /* Cor do texto */
+  width: 30px;
+  /* Largura do botão */
+  height: 30px;
+  /* Altura do botão */
+  border: none;
+  /* Remove a borda padrão */
+  border-radius: 5px;
+  /* Valor para arredondar as bordas */
 }
 
-.concluido-btn img{
+.concluido-btn img {
   width: 20px;
   /* tamanho da imagem */
   height: 20px;
@@ -839,21 +917,21 @@ nav .minhas_listas a{
 
 .botao-arredondado,
 .concluido-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease;
 }
 
-.concluido-btn-active{
-  background-color: yellow !important;
+.concluido-btn-active {
+  background-color: #ffe186 !important;
   transform: scale(1.25);
 }
 
 .confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -894,12 +972,12 @@ nav .minhas_listas a{
   align-items: center;
 }
 
-#confirm-ok:hover{
+#confirm-ok:hover {
   background-color: #4CAF50;
 }
 
-#confirm-cancel:hover{
-  background-color:#f44336;
+#confirm-cancel:hover {
+  background-color: #f44336;
 }
 
 .descricao-container {
@@ -908,13 +986,14 @@ nav .minhas_listas a{
 }
 
 .descricao-input {
-  width: 200px;
+  width: 650px;
   min-height: 60px;
   resize: vertical;
   border: solid #273043;
   border-radius: 10px;
   font-size: 16px;
-  transition: 0.3s;
+  transition: 0.5s;
+  animation: normal;
   background: transparent;
   color: #E2E8F0;
   outline: none;
@@ -938,13 +1017,15 @@ nav .minhas_listas a{
 }
 
 /* Quando TODAS as tarefas estão concluídas */
-body.tudo-concluido .botao-arredondado{
-  background-color: #ffd900;  /* amarelo */
-  transform: scale(1.25);     /* aumenta o botão */
+body.tudo-concluido .botao-arredondado {
+  background-color: #ffd900;
+  /* amarelo */
+  transform: scale(1.25);
+  /* aumenta o botão */
 }
 
 /* Quando desmarca tudo */
-body.tudo-desmarcado .botao-arredondado {     
+body.tudo-desmarcado .botao-arredondado {
   transform: scale(1);
 }
 
@@ -958,4 +1039,194 @@ body.tudo-desmarcado .botao-arredondado {
   color: #222;
   outline: none;
   box-shadow: #595858;
+}
+
+#container-listas {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 10px 0;
+  padding-right: 8px;
+}
+
+.lista-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin: 6px 0;
+  transition: all 0.3s;
+}
+
+.lista-item:hover {
+  background: rgba(90, 103, 216, 0.2);
+}
+
+.lista-item.active {
+  background: #5a67d8;
+  color: white;
+}
+
+.lista-item button {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+#nova-lista-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: #ffb400;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#nova-lista-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ===== MODAIS PERSONALIZADOS — MUITO MAIS BONITOS ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-box {
+  background: #1a1a2e;
+  color: #e0e0ff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(90,103,216,0.4);
+  border: 1px solid #5a67d8;
+  animation: slideUp 0.4s ease;
+}
+
+.modal-box h3 {
+  margin: 0 0 16px;
+  font-size: 1.6em;
+  color: #8b9eff;
+}
+
+.modal-box p {
+  margin: 16px 0;
+  line-height: 1.5;
+  color: #ccc;
+}
+
+#new-list-input {
+  width: 100%;
+  padding: 14px;
+  margin: 16px 0;
+  border: 2px solid #5a67d8;
+  border-radius: 10px;
+  background: #16213e;
+  color: white;
+  font-size: 1.1em;
+}
+
+#new-list-input:focus {
+  outline: none;
+  border-color: #8b9eff;
+  box-shadow: 0 0 15px rgba(139,158,255,0.3);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cancel {
+  background: #444;
+  color: #ddd;
+}
+
+.btn-cancel:hover {
+  background: #666;
+}
+
+.btn-primary {
+  background: #5a67d8;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #8b9eff;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== BOTÃO DE EXCLUIR LISTA — VERMELHO E LINDO ===== */
+.btn-delete-lista {
+  background: none;
+  border: none;
+  color: #e74c3c;           /* vermelho bonito */
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.btn-delete-lista:hover {
+  background: #e74c3c;
+  color: white !important;
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.btn-delete-lista svg {
+  display: block;
 }

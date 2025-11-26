@@ -55,37 +55,28 @@ botaoConcluido.addEventListener("click", () => {
         if (!confirma) return;
 
         if (existeNaoConcluida) {
-            //Marca tudo
             checkboxes.forEach((cb, i) => {
                 cb.checked = true;
                 nomes[i].classList.add("done");
             });
-
-            //Adiciona classe global do estado "tudo concluído"
             document.body.classList.add("tudo-concluido");
             document.body.classList.remove("tudo-desmarcado");
-
             showAlert("Todas as tarefas foram marcadas como concluídas!", "sucesso");
-
         } else {
-            //Desmarca tudo
             checkboxes.forEach((cb, i) => {
                 cb.checked = false;
                 nomes[i].classList.remove("done");
             });
-
-            // Adiciona classe global do estado "tudo desmarcado"
             document.body.classList.remove("tudo-concluido");
             document.body.classList.add("tudo-desmarcado");
-
             showAlert("Todas as tarefas foram desmarcadas.", "aviso");
         }
 
         updateProgress();
         atualizarProximasTarefas();
+        salvarTarefas(); // ← adicionado
     });
 });
-
 
 // Botão para editar o título
 const titulo = document.getElementById("titulo");
@@ -110,20 +101,20 @@ tituloBtn.addEventListener("click", () => {
     selectionTitle.removeAllRanges();
     selectionTitle.addRange(rangeTitle);
 
-    titulo.addEventListener("blur", () => {
+    const salvarTitulo = () => {
         titulo.contentEditable = false;
         atualizarTituloProgressao();
-    })
+        salvarTarefas(); // ← adicionado
+    };
 
+    titulo.addEventListener("blur", salvarTitulo, { once: true });
     titulo.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            titulo.contentEditable = false;
-            titulo.blur();
-            atualizarTituloProgressao();
+            salvarTitulo();
         }
-    })
-})
+    }, { once: true });
+});
 
 function capitalize(str) {
     return str
@@ -132,13 +123,10 @@ function capitalize(str) {
         .join(" ");
 }
 
-// Função só para atualizar o título da progressão
 function atualizarTituloProgressao() {
     const progressTitle = document.getElementById("progress-title");
     progressTitle.textContent = `Progresso de ${titulo.textContent}`;
 }
-
-//Funções para medir progresso de tarefas
 
 function updateProgress() {
     const tasks = list.querySelectorAll("li");
@@ -149,7 +137,6 @@ function updateProgress() {
 
     const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
-    // Circunferência do círculo
     const circumference = 2 * Math.PI * 54;
     const offset = circumference - (percent / 100) * circumference;
 
@@ -165,18 +152,17 @@ function updateProgress() {
     prioridades.textContent = `Tarefas em Prioridade: ${priorities}`;
 }
 
-//função para atualizar as tarefas exibidas em "próximas tarefas"
 function atualizarProximasTarefas() {
     const tarefas = list.querySelectorAll("li");
     const tarefasComPrazo = [];
 
     tarefas.forEach(tarefa => {
-        // Ignora tarefas concluídas
+        const checkbox = tarefa.querySelector(".checkbox");
+        if (checkbox.checked) return;
 
         const inputPrazo = tarefa.querySelector(".prazo");
         if (!inputPrazo || !inputPrazo.value) return;
 
-        // Extrai ano, mês, dia
         const [ano, mes, dia] = inputPrazo.value.split("-").map(Number);
         const dataPrazo = new Date(ano, mes - 1, dia);
 
@@ -201,14 +187,12 @@ function atualizarProximasTarefas() {
 
     proximasTres.forEach(tarefa => {
         const listaProximas = document.createElement("li");
-
         const nome = tarefa.elemento.querySelector(".nome").textContent;
         const prazo = tarefa.prazo.toLocaleDateString("pt-BR");
 
         listaProximas.textContent = `${nome} | Prazo: ${prazo}`;
         listaProximas.title = nome;
         listaProximas.tabIndex = 0;
-
         listaProximas.dataset.ref = tarefa.elemento.dataset.id;
 
         listaProximas.addEventListener("click", () => {
@@ -236,30 +220,202 @@ function tarefaExiste(nome) {
 }
 
 function showAlert(mensagem, tipo = "erro") {
-  // Verifica se já existe um alerta ativo e remove antes de criar outro
-  const alertaExistente = document.querySelector(".alerta");
-  if (alertaExistente) alertaExistente.remove();
+    const alertaExistente = document.querySelector(".alerta");
+    if (alertaExistente) alertaExistente.remove();
 
-  const alerta = document.createElement("div");
-  alerta.className = `alerta ${tipo}`;
-  alerta.textContent = mensagem;
+    const alerta = document.createElement("div");
+    alerta.className = `alerta ${tipo}`;
+    alerta.textContent = mensagem;
 
-  document.body.appendChild(alerta);
+    document.body.appendChild(alerta);
 
-  // Animação de entrada
-  setTimeout(() => alerta.classList.add("mostrar"), 10);
+    setTimeout(() => alerta.classList.add("mostrar"), 10);
 
-  // Remove automaticamente após 3 segundos
-  setTimeout(() => {
-    alerta.classList.remove("mostrar");
-    alerta.addEventListener("transitionend", () => alerta.remove());
-  }, 3000);
+    setTimeout(() => {
+        alerta.classList.remove("mostrar");
+        alerta.addEventListener("transitionend", () => alerta.remove());
+    }, 3000);
 }
 
-//Função para adicionar tarefa
+// ====================== SALVAR E CARREGAR TAREFAS ======================
+function salvarTarefas() {
+    const tarefas = [];
+    document.querySelectorAll("#lista > li").forEach(li => {
+        const desc = li.querySelector(".descricao-input");
+        tarefas.push({
+            id: li.dataset.id,
+            nome: li.querySelector(".nome").textContent.trim(),
+            prazo: li.querySelector(".prazo").value || "",
+            concluida: li.querySelector(".checkbox").checked,
+            prioridade: li.classList.contains("prioridade"),
+            descricao: desc ? desc.value : ""
+        });
+    });
+    localStorage.setItem("flowlist_tarefas", JSON.stringify(tarefas));
+    localStorage.setItem("flowlist_titulo", titulo.textContent.trim());
+}
+
+function carregarTarefasSalvas() {
+    const dados = localStorage.getItem("flowlist_tarefas");
+    if (!dados) return;
+
+    const tarefas = JSON.parse(dados);
+    list.innerHTML = "";
+    priorities = 0;
+
+    tarefas.forEach(t => {
+        const li = document.createElement("li");
+        li.dataset.id = t.id;
+
+        const taskContainer = document.createElement("div");
+        taskContainer.classList.add("task-container");
+        const taskContent = document.createElement("div");
+        taskContent.classList.add("task-content");
+
+        const descContainer = document.createElement("div");
+        descContainer.classList.add("descricao-container");
+        const descInput = document.createElement("textarea");
+        descInput.placeholder = "Descrição da tarefa...";
+        descInput.classList.add("descricao-input");
+        descInput.value = t.descricao || "";
+        descInput.addEventListener("blur", salvarTarefas);
+        descContainer.appendChild(descInput);
+        descContainer.style.display = "none";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "checkbox";
+        checkbox.checked = t.concluida;
+
+        const nome = document.createElement("span");
+        nome.classList.add("nome");
+        nome.textContent = t.nome;
+        if (t.concluida) nome.classList.add("done");
+
+        const prazo = document.createElement("input");
+        prazo.type = "date";
+        prazo.className = "prazo";
+        if (t.prazo) prazo.value = t.prazo; // ← GARANTIDO
+
+        checkbox.addEventListener("change", () => {
+            nome.classList.toggle("done", checkbox.checked);
+            li.classList.toggle("concluida", checkbox.checked);
+            updateProgress(); atualizarProximasTarefas(); salvarTarefas();
+        });
+
+        prazo.addEventListener("change", () => {
+            atualizarProximasTarefas();
+            salvarTarefas();
+        });
+
+        taskContent.appendChild(nome);
+        taskContent.appendChild(prazo);
+        taskContent.appendChild(descContainer);
+        taskContainer.appendChild(checkbox);
+        taskContainer.appendChild(taskContent);
+
+        const btnContainer = document.createElement("div");
+        btnContainer.classList.add("botoes");
+
+        // Botões (100% igual ao seu addTask)
+        const descBtn = document.createElement("button");
+        descBtn.textContent = "+";
+        descBtn.classList.add("desc-btn");
+        descBtn.addEventListener("click", () => {
+            descContainer.style.display = descContainer.style.display === "none" ? "block" : "none";
+        });
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Editar";
+        editBtn.classList.add("edit");
+        editBtn.addEventListener("click", () => {
+            const original = nome.textContent.trim();
+            nome.contentEditable = true;
+            nome.focus();
+            const range = document.createRange();
+            range.selectNodeContents(nome);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            const finalizar = () => {
+                nome.contentEditable = false;
+                const novo = capitalize(nome.textContent.trim());
+                if (Array.from(document.querySelectorAll(".nome")).filter(n => n !== nome).some(n => n.textContent.toLowerCase() === novo.toLowerCase())) {
+                    showAlert("Essa tarefa já existe!");
+                    nome.textContent = original;
+                } else {
+                    nome.textContent = novo;
+                }
+                atualizarProximasTarefas();
+                salvarTarefas();
+            };
+            nome.addEventListener("blur", finalizar, { once: true });
+            nome.addEventListener("keypress", e => { if (e.key === "Enter") { e.preventDefault(); finalizar(); } }, { once: true });
+        });
+
+        const removeBtn = document.createElement("button");
+        const removerImg = document.createElement("img");
+        removerImg.src = "Imagens/lixeira.png";
+        removeBtn.appendChild(removerImg);
+        removeBtn.classList.add("remove");
+        removeBtn.addEventListener("click", () => {
+            li.classList.add("exit");
+            li.addEventListener("animationend", () => {
+                list.removeChild(li);
+                if (li.classList.contains("prioridade")) priorities--;
+                updateProgress(); atualizarProximasTarefas(); salvarTarefas();
+            }, { once: true });
+        });
+
+        const prioridadeBtn = document.createElement("button");
+        const prioridadeImg = document.createElement("img");
+        prioridadeImg.src = "Imagens/alerta2.png";
+        prioridadeBtn.appendChild(prioridadeImg);
+        prioridadeBtn.classList.add("prioridade-btn");
+        prioridadeBtn.addEventListener("click", () => {
+            if (li.classList.contains("prioridade")) {
+                li.classList.remove("prioridade");
+                list.appendChild(li);
+                priorities--;
+            } else {
+                li.classList.add("prioridade");
+                list.prepend(li);
+                priorities++;
+            }
+            updateProgress(); atualizarProximasTarefas(); salvarTarefas();
+        });
+
+        btnContainer.appendChild(editBtn);
+        btnContainer.appendChild(removeBtn);
+        btnContainer.appendChild(prioridadeBtn);
+        btnContainer.appendChild(descBtn);
+
+        li.appendChild(taskContainer);
+        li.appendChild(btnContainer);
+
+        if (t.prioridade) {
+            li.classList.add("prioridade");
+            priorities++;
+            list.prepend(li);
+        } else {
+            list.appendChild(li);
+        }
+
+        li.classList.add("enter");
+        li.addEventListener("animationend", () => li.classList.remove("enter"), { once: true });
+    });
+
+    const tituloSalvo = localStorage.getItem("flowlist_titulo");
+    if (tituloSalvo) titulo.textContent = tituloSalvo;
+
+    updateProgress();
+    atualizarProximasTarefas();
+}
+
+// ====================== FUNÇÃO ORIGINAL addTask MODIFICADA ======================
 function addTask() {
     const taskText = capitalize(input.value.trim());
-    if (taskText === ""){
+    if (taskText === "") {
         showAlert("Insira o nome de uma tarefa para adicioná-la!", "aviso");
         return;
     };
@@ -272,29 +428,25 @@ function addTask() {
     const li = document.createElement("li");
     li.dataset.id = Date.now().toString();
 
-    // Container para checkbox + texto
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
 
     const taskContent = document.createElement("div");
     taskContent.classList.add("task-content");
 
-    // Campo de descrição (inicialmente escondido)
     const descContainer = document.createElement("div");
     descContainer.classList.add("descricao-container");
     const descInput = document.createElement("textarea");
     descInput.placeholder = "Descrição da tarefa...";
     descInput.classList.add("descricao-input");
-
+    descInput.addEventListener("blur", salvarTarefas); // ← novo
     descContainer.appendChild(descInput);
-    descContainer.style.display = "none"; // começa fechado
+    descContainer.style.display = "none";
 
-    // Checkbox
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";
 
-    // Nome da tarefa
     const nome = document.createElement("span");
     nome.classList.add("nome");
     nome.textContent = taskText;
@@ -302,20 +454,19 @@ function addTask() {
     checkbox.addEventListener("change", () => {
         nome.classList.toggle("done", checkbox.checked);
         li.classList.toggle("concluida", checkbox.checked);
-
         updateProgress();
         atualizarProximasTarefas();
+        salvarTarefas(); // ← novo
     });
 
-    // Input de prazo
     const prazo = document.createElement("input");
     prazo.type = "date";
     prazo.className = "prazo";
 
-    // Atualiza próximas tarefas quando a data muda
     prazo.addEventListener("change", () => {
         prazo.classList.toggle("done", checkbox.checked);
         atualizarProximasTarefas();
+        salvarTarefas(); // ← novo
     });
 
     taskContent.appendChild(nome);
@@ -324,21 +475,17 @@ function addTask() {
     taskContainer.appendChild(checkbox);
     taskContainer.appendChild(taskContent);
 
-    // Container de botões
     const btnContainer = document.createElement("div");
     btnContainer.classList.add("botoes");
 
-    // Botão para abrir/fechar descrição
     const descBtn = document.createElement("button");
     descBtn.textContent = "+";
     descBtn.classList.add("desc-btn");
-
     descBtn.addEventListener("click", () => {
-    descContainer.style.display =
-        descContainer.style.display === "none" ? "block" : "none";
+        descContainer.style.display =
+            descContainer.style.display === "none" ? "block" : "none";
     });
 
-    // Botão editar
     const editBtn = document.createElement("button");
     editBtn.textContent = "Editar";
     editBtn.classList.add("edit");
@@ -354,45 +501,37 @@ function addTask() {
         selection.removeAllRanges();
         selection.addRange(range);
 
-        nome.addEventListener("blur", () => {
+        const finalizarEdicao = () => {
             nome.contentEditable = false;
-            nome.textContent = capitalize(nome.textContent.trim());
-            atualizarProximasTarefas();
-        });
+            const novoTexto = capitalize(nome.textContent.trim());
 
+            const nomesExistentes = Array.from(document.querySelectorAll("#lista .nome"))
+                .filter(n => n !== nome)
+                .map(n => n.textContent.toLowerCase());
+
+            if (nomesExistentes.includes(novoTexto.toLowerCase())) {
+                showAlert("Essa tarefa já foi adicionada!");
+                nome.textContent = textoOriginal;
+                return;
+            }
+
+            nome.textContent = novoTexto;
+            atualizarProximasTarefas();
+            salvarTarefas(); // ← novo
+        };
+
+        nome.addEventListener("blur", finalizarEdicao, { once: true });
         nome.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 e.preventDefault();
-                const novoTexto = capitalize(nome.textContent.trim());
-        
-                const tarefas = document.querySelectorAll("#lista .nome");
-                
-                // lista com todos os nomes, exceto o próprio elemento
-                const nomes = Array.from(tarefas)
-                    .filter(t => t !== nome)
-                    .map(t => t.textContent.toLowerCase());
-        
-                if (nomes.includes(novoTexto.toLowerCase())) {
-                    showAlert("Essa tarefa já foi adicionada!");
-                    nome.textContent = textoOriginal;
-                    nome.blur();
-                    return;
-                }
-        
-                nome.textContent = novoTexto;
-                nome.contentEditable = false;
-                nome.blur();
-                atualizarProximasTarefas();
+                finalizarEdicao();
             }
-        });        
+        }, { once: true });
     });
 
-    // Botão remover
     const removeBtn = document.createElement("button");
     const removerImg = document.createElement("img");
     removerImg.src = "Imagens/lixeira.png";
-    removeBtn.alt = "Remover Tarefa";
-    removeBtn.classList.add("prioridade-btn");
     removeBtn.appendChild(removerImg);
     removeBtn.classList.add("remove");
 
@@ -401,22 +540,18 @@ function addTask() {
         li.addEventListener("animationend", () => {
             showAlert("Tarefa removida com sucesso!", "erro");
             list.removeChild(li);
+            if (li.classList.contains("prioridade")) priorities--;
             updateProgress();
             atualizarProximasTarefas();
+            salvarTarefas(); // ← novo
         }, { once: true });
-
-        if (li.classList.contains("prioridade")) {
-            priorities--;
-        }
     });
 
-    // Botão prioridade
     const prioridadeBtn = document.createElement("button");
     const prioridadeImg = document.createElement("img");
     prioridadeImg.src = "Imagens/alerta2.png";
-    prioridadeBtn.alt = "Adicionar Prioridade";
-    prioridadeBtn.classList.add("prioridade-btn");
     prioridadeBtn.appendChild(prioridadeImg);
+    prioridadeBtn.classList.add("prioridade-btn");
 
     prioridadeBtn.addEventListener("click", () => {
         const viraPrioridade = !li.classList.contains("prioridade");
@@ -437,6 +572,7 @@ function addTask() {
 
         updateProgress();
         atualizarProximasTarefas();
+        salvarTarefas(); // ← novo
     });
 
     btnContainer.appendChild(editBtn);
@@ -444,12 +580,10 @@ function addTask() {
     btnContainer.appendChild(prioridadeBtn);
     btnContainer.appendChild(descBtn);
 
-
-    // Monta o li final
     li.appendChild(taskContainer);
     li.appendChild(btnContainer);
-
     list.appendChild(li);
+
     showAlert("Tarefa adicionada com sucesso!", "sucesso");
 
     li.classList.add("enter");
@@ -457,21 +591,44 @@ function addTask() {
         li.classList.remove("enter");
     }, { once: true });
 
-    // Limpa input
     input.value = "";
     input.focus();
 
-    // Atualiza progresso e próximas tarefas
     updateProgress();
     atualizarProximasTarefas();
+    salvarTarefas(); // ← novo
 }
 
+// ====================== CLIQUE NA TAREFA → VAI PRO CALENDÁRIO ======================
+list.addEventListener("click", function(e) {
+    const li = e.target.closest("li");
+    if (!li || !list.contains(li)) return;
+    if (e.target.closest("button, input, textarea")) return;
 
-//Eventos para adicionar tarefas
+    const nomeTarefa = li.querySelector(".nome").textContent.trim();
+    const prazo = li.querySelector(".prazo").value || "";
+    const concluida = li.querySelector(".checkbox").checked;
+    const nomeLista = titulo.textContent.trim() || "To-Do List";
+
+    const params = new URLSearchParams({
+        id: li.dataset.id,
+        nome: nomeTarefa,
+        prazo: prazo,
+        lista: nomeLista,
+        concluida: concluida
+    });
+
+    window.location.href = `FlowCalendar.html?${params.toString()}`;
+});
+
+// ====================== EVENTOS DE ADIÇÃO E CARREGAMENTO ======================
 button.addEventListener("click", addTask);
-
 input.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-        addTask();
-    }
+    if (e.key === "Enter") addTask();
+});
+
+// Carrega tudo ao abrir a página
+window.addEventListener("load", () => {
+    carregarTarefasSalvas();
+    atualizarTituloProgressao();
 });
