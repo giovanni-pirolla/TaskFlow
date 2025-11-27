@@ -1230,3 +1230,8 @@ body.tudo-desmarcado .botao-arredondado {
 .btn-delete-lista svg {
   display: block;
 }
+
+#pequeno{
+  width: 80px;
+  height: 50px;
+}
