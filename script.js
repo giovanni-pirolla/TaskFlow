@@ -74,7 +74,7 @@ botaoConcluido.addEventListener("click", () => {
 
         updateProgress();
         atualizarProximasTarefas();
-        salvarTarefas(); // ← adicionado
+        salvarTarefas();
     });
 });
 
@@ -104,7 +104,7 @@ tituloBtn.addEventListener("click", () => {
     const salvarTitulo = () => {
         titulo.contentEditable = false;
         atualizarTituloProgressao();
-        salvarTarefas(); // ← adicionado
+        salvarTarefas();
     };
 
     titulo.addEventListener("blur", salvarTitulo, { once: true });
@@ -280,7 +280,10 @@ function carregarTarefasSalvas() {
         descInput.value = t.descricao || "";
         descInput.addEventListener("blur", salvarTarefas);
         descContainer.appendChild(descInput);
+        // Estado inicial fechado
         descContainer.style.display = "none";
+        descContainer.style.maxHeight = "0";
+        descContainer.style.opacity = "0";
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -295,7 +298,7 @@ function carregarTarefasSalvas() {
         const prazo = document.createElement("input");
         prazo.type = "date";
         prazo.className = "prazo";
-        if (t.prazo) prazo.value = t.prazo; // ← GARANTIDO
+        if (t.prazo) prazo.value = t.prazo;
 
         checkbox.addEventListener("change", () => {
             nome.classList.toggle("done", checkbox.checked);
@@ -317,17 +320,50 @@ function carregarTarefasSalvas() {
         const btnContainer = document.createElement("div");
         btnContainer.classList.add("botoes");
 
-        // Botões (100% igual ao seu addTask)
+        // === BOTÃO DE DESCRIÇÃO COM SETA QUE GIRA ===
         const descBtn = document.createElement("button");
-        descBtn.textContent = "+";
-        descBtn.classList.add("desc-btn");
+        descBtn.classList.add("desc-btn", "closed");
+
+        const arrowIcon = document.createElement("span");
+        arrowIcon.classList.add("arrow-icon");
+        arrowIcon.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+            </svg>
+        `;
+        descBtn.appendChild(arrowIcon);
+
         descBtn.addEventListener("click", () => {
-            descContainer.style.display = descContainer.style.display === "none" ? "block" : "none";
+            const isClosed = descContainer.style.display === "none" || descContainer.style.display === "";
+
+            if (isClosed) {
+                descContainer.style.display = "block";
+                descContainer.style.maxHeight = descContainer.scrollHeight + "px";
+                descContainer.style.opacity = "1";
+                descBtn.classList.remove("closed");
+                descBtn.classList.add("open");
+            } else {
+                descContainer.style.maxHeight = "0";
+                descContainer.style.opacity = "0";
+                descBtn.classList.remove("open");
+                descBtn.classList.add("closed");
+
+                descContainer.addEventListener("transitionend", () => {
+                    if (descContainer.style.maxHeight === "0px") {
+                        descContainer.style.display = "none";
+                    }
+                }, { once: true });
+            }
         });
 
         const editBtn = document.createElement("button");
-        editBtn.textContent = "Editar";
+        const editIcon = document.createElement("img");
+        editIcon.src = "imagens/editar_tarefa.png";
+        editIcon.alt = "Editar tarefa";
+        editIcon.title = "Editar tarefa";
         editBtn.classList.add("edit");
+        editBtn.appendChild(editIcon);
+
         editBtn.addEventListener("click", () => {
             const original = nome.textContent.trim();
             nome.contentEditable = true;
@@ -369,7 +405,7 @@ function carregarTarefasSalvas() {
 
         const prioridadeBtn = document.createElement("button");
         const prioridadeImg = document.createElement("img");
-        prioridadeImg.src = "Imagens/alerta2.png";
+        prioridadeImg.src = "Imagens/alerta3.png";
         prioridadeBtn.appendChild(prioridadeImg);
         prioridadeBtn.classList.add("prioridade-btn");
         prioridadeBtn.addEventListener("click", () => {
@@ -439,9 +475,11 @@ function addTask() {
     const descInput = document.createElement("textarea");
     descInput.placeholder = "Descrição da tarefa...";
     descInput.classList.add("descricao-input");
-    descInput.addEventListener("blur", salvarTarefas); // ← novo
+    descInput.addEventListener("blur", salvarTarefas);
     descContainer.appendChild(descInput);
     descContainer.style.display = "none";
+    descContainer.style.maxHeight = "0";
+    descContainer.style.opacity = "0";
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -456,7 +494,7 @@ function addTask() {
         li.classList.toggle("concluida", checkbox.checked);
         updateProgress();
         atualizarProximasTarefas();
-        salvarTarefas(); // ← novo
+        salvarTarefas();
     });
 
     const prazo = document.createElement("input");
@@ -464,9 +502,8 @@ function addTask() {
     prazo.className = "prazo";
 
     prazo.addEventListener("change", () => {
-        prazo.classList.toggle("done", checkbox.checked);
         atualizarProximasTarefas();
-        salvarTarefas(); // ← novo
+        salvarTarefas();
     });
 
     taskContent.appendChild(nome);
@@ -478,17 +515,49 @@ function addTask() {
     const btnContainer = document.createElement("div");
     btnContainer.classList.add("botoes");
 
+    // === BOTÃO DE DESCRIÇÃO COM SETA QUE GIRA (NA CRIAÇÃO) ===
     const descBtn = document.createElement("button");
-    descBtn.textContent = "+";
-    descBtn.classList.add("desc-btn");
+    descBtn.classList.add("desc-btn", "closed");
+
+    const arrowIcon = document.createElement("span");
+    arrowIcon.classList.add("arrow-icon");
+    arrowIcon.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+        </svg>
+    `;
+    descBtn.appendChild(arrowIcon);
+
     descBtn.addEventListener("click", () => {
-        descContainer.style.display =
-            descContainer.style.display === "none" ? "block" : "none";
+        const isClosed = descContainer.style.display === "none" || descContainer.style.display === "";
+
+        if (isClosed) {
+            descContainer.style.display = "block";
+            descContainer.style.maxHeight = descContainer.scrollHeight + "px";
+            descContainer.style.opacity = "1";
+            descBtn.classList.remove("closed");
+            descBtn.classList.add("open");
+        } else {
+            descContainer.style.maxHeight = "0";
+            descContainer.style.opacity = "0";
+            descBtn.classList.remove("open");
+            descBtn.classList.add("closed");
+
+            descContainer.addEventListener("transitionend", () => {
+                if (descContainer.style.maxHeight === "0px") {
+                    descContainer.style.display = "none";
+                }
+            }, { once: true });
+        }
     });
 
     const editBtn = document.createElement("button");
-    editBtn.textContent = "Editar";
+    const editIcon = document.createElement("img");
+    editIcon.src = "imagens/editar_tarefa.png";
+    editIcon.alt = "Editar tarefa";
+    editIcon.title = "Editar tarefa";
     editBtn.classList.add("edit");
+    editBtn.appendChild(editIcon);
 
     editBtn.addEventListener("click", () => {
         const textoOriginal = nome.textContent.trim();
@@ -517,7 +586,7 @@ function addTask() {
 
             nome.textContent = novoTexto;
             atualizarProximasTarefas();
-            salvarTarefas(); // ← novo
+            salvarTarefas();
         };
 
         nome.addEventListener("blur", finalizarEdicao, { once: true });
@@ -543,7 +612,7 @@ function addTask() {
             if (li.classList.contains("prioridade")) priorities--;
             updateProgress();
             atualizarProximasTarefas();
-            salvarTarefas(); // ← novo
+            salvarTarefas();
         }, { once: true });
     });
 
@@ -566,13 +635,9 @@ function addTask() {
             priorities--;
         }
 
-        li.addEventListener("transitionend", () => {
-            li.classList.remove("moving");
-        }, { once: true });
-
         updateProgress();
         atualizarProximasTarefas();
-        salvarTarefas(); // ← novo
+        salvarTarefas();
     });
 
     btnContainer.appendChild(editBtn);
@@ -596,7 +661,7 @@ function addTask() {
 
     updateProgress();
     atualizarProximasTarefas();
-    salvarTarefas(); // ← novo
+    salvarTarefas();
 }
 
 // ====================== CLIQUE NA TAREFA → VAI PRO CALENDÁRIO ======================
@@ -627,7 +692,6 @@ input.addEventListener("keypress", function (e) {
     if (e.key === "Enter") addTask();
 });
 
-// Carrega tudo ao abrir a página
 window.addEventListener("load", () => {
     carregarTarefasSalvas();
     atualizarTituloProgressao();

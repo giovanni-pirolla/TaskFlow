@@ -280,10 +280,10 @@ li {
 }
 
 li:hover{
-  background-color: #2f415f;
+  background-color: #1d2f4e;
   transition: background-color 0.3s ease;
   input[type="date"] {
-    background-color: #2f415f;
+    background-color: #1d2f4e;
     transition: background-color 0.2s ease-in-out;
     border-radius: 5px;
   }
@@ -307,7 +307,7 @@ li:hover{
 
 #lista li.prioridade {
   color: #222;
-  border-left: 10px solid #ffcc00;
+  border-left: 10px solid #ffc400;
   background-color: #ffe186;
   animation: highlight 0.6s ease;
 }
@@ -315,10 +315,10 @@ li:hover{
 #lista li.prioridade:hover {
   color: #222;
   border-left: 10px solid #ffcc00;
-  background-color: #ddba2f;
+  background-color: #fad874;
   animation: highlight 0.6s ease;
   input[type="date"] {
-    background-color: #ddba2f;
+    background-color: #fad874;
     transition: background-color 0.2s ease-in-out;
     border-radius: 5px;
   }
@@ -327,7 +327,7 @@ li:hover{
 #lista li.prioridade .checkbox {
   background-color: #ffcf3e;
   /* muda fundo do checkbox */
-  border-color: #CA8A04;
+  border-color: #ffc400;
 }
 
 #lista li.prioridade .checkbox:focus {
@@ -348,15 +348,16 @@ li:hover{
 }
 
 #lista li.prioridade button{
-  background-color: #CA8A04;
+  background-color: #ffc400;
 }
 
 #lista li.prioridade button.edit {
-  background-color: #CA8A04;
+  background-color: #ffc400;
 }
 
 #lista li.prioridade button.edit:hover {
-  background-color: #CA8A04;
+  background-color: #ffc400;
+  color:#222;
 }
 
 #lista li.enter {
@@ -372,7 +373,27 @@ li:hover{
 }
 
 #lista li.prioridade button.remove {
-  background-color: #CA8A04;
+  background-color: #ffc400;
+}
+
+#lista li.prioridade button.desc-btn {
+  background-color: #ffc400;
+  color:#222;
+}
+
+#lista li.prioridade .descricao-input{
+  border-color: #ffc400;
+  color: #222;
+}
+
+#lista li.prioridade .descricao-input:focus{
+  border-color: #ffc400;
+  color: #222;
+}
+
+#lista li.prioridade .descricao-input:hover{
+  border-color: #ffc400;
+  color: #222;
 }
 
 button.remove img {
@@ -432,7 +453,6 @@ input[type="date"]:hover {
 }
 
 input[type="date"]:focus {
-  background-color: #6366F1;
   color: #E2E8F0;
   border-radius: 5px;
   outline: none;
@@ -445,6 +465,7 @@ input[type="date"] {
   font-size: 16px;
 }
 
+/* remove o ícone de calendário o lado do input de datas */
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
@@ -479,6 +500,11 @@ button:hover {
 button.edit {
   background: #6366F1;
 }
+button.edit img{
+  width: 17px;
+  /* tamanho da imagem */
+  height: 17px;
+}
 
 button.remove {
   background: #dc3545;
@@ -506,7 +532,7 @@ span[contenteditable="true"] {
 }
 
 .prioridade-btn {
-  background-color: #CA8A04;
+  background-color: #ffb400;
   border: none;
   cursor: pointer;
   padding: 0;
@@ -518,15 +544,15 @@ span[contenteditable="true"] {
 }
 
 .prioridade-btn img {
-  width: 25px;
+  width: 20px;
   /* tamanho da imagem */
-  height: 25px;
+  height: 20px;
   object-fit: contain;
   /* garante que a imagem não distorça */
 }
 
 .prioridade-btn:hover {
-  background-color: #CA8A04;
+  background-color: #ffb400;
 }
 
 #progress-container {
@@ -981,15 +1007,52 @@ nav .minhas_listas a {
 }
 
 .descricao-container {
-  margin-top: 5px;
-  width: 100%;
+  display: none;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.3s ease;
+  max-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+  margin-top: 8px;
+}
+
+.descricao-container.open {
+  max-height: 300px;        /* valor alto o suficiente pra qualquer descrição */
+  opacity: 1;
+  padding: 12px 10px;
+  margin-top: 8px;
+}
+
+/* Botão da seta */
+.desc-btn {
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+  background: #6366F1;
+  color: white;
+}
+
+.desc-btn:hover {
+  background: #6366F1;
+}
+
+.arrow-icon svg {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Seta pra baixo (aberto) */
+.desc-btn.open .arrow-icon svg {
+  transform: rotate(180deg);
 }
 
 .descricao-input {
   width: 650px;
   min-height: 60px;
   resize: vertical;
-  border: solid #273043;
+  border: solid #6366F1;
   border-radius: 10px;
   font-size: 16px;
   transition: 0.5s;
@@ -1006,6 +1069,11 @@ nav .minhas_listas a {
   color: #E2E8F0;
 }
 
+.descricao-input:hover {
+  border: solid #6366F1;
+  color: #E2E8F0;
+}
+
 .desc-btn {
   background: #6366F1;
   color: white;
@@ -1018,7 +1086,7 @@ nav .minhas_listas a {
 
 /* Quando TODAS as tarefas estão concluídas */
 body.tudo-concluido .botao-arredondado {
-  background-color: #ffd900;
+  background-color: #ffb400;
   /* amarelo */
   transform: scale(1.25);
   /* aumenta o botão */
