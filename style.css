@@ -1,13 +1,7 @@
 #logo {
   width: 200px;
-  /* ajuste o tamanho conforme necessário */
   height: auto;
   margin-bottom: 20px;
-}
-
-#logo:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
 }
 
 @keyframes piscarBorda {
@@ -373,7 +367,7 @@ li:hover{
 }
 
 #lista li.prioridade button.remove {
-  background-color: #ffc400;
+  background-color: #dc3545;
 }
 
 #lista li.prioridade button.desc-btn {
@@ -398,7 +392,6 @@ li:hover{
 
 button.remove img {
   width: 16px;
-  /* tamanho da imagem */
   height: 16.5px;
 }
 
@@ -556,9 +549,9 @@ span[contenteditable="true"] {
 }
 
 #progress-container {
-  position: absolute;
-  top: 1px;
-  right: 20px;
+  position: fixed;
+  top: 20px;
+  right: 40px;
 
   background: #1E293B;
   width: 250px;
@@ -782,7 +775,7 @@ main {
 }
 
 #proximas-tarefas {
-  position: absolute;
+  position: fixed;
   top: 460px;
   right: 40px;
 
@@ -917,16 +910,19 @@ li.prioridade.highlight::after {
 /* Tipos de alerta opcionais */
 .alerta.sucesso {
   background-color: #4CAF50;
+  color:#111827;
   right: 27.5rem;
 }
 
 .alerta.aviso {
   background-color: #ff9800;
+  color:#111827;
   right: 26rem;
 }
 
 .alerta.erro {
   right: 30rem;
+  color:#111827;
   background-color: #f44336;
 }
 
@@ -1118,14 +1114,11 @@ body.tudo-desmarcado .botao-arredondado {
   display: flex;
   align-items: center;
   gap: 10px;
-
   position: absolute; 
   bottom: 0;         
   width: 90%;        
-  
   left: 50%;
   transform: translateX(-50%);
-
   padding-bottom: 55px; 
 }
 
@@ -1185,7 +1178,7 @@ body.tudo-desmarcado .botao-arredondado {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-left: 3px solid transparent;
+  border-left: 10px solid transparent;
   min-height: 45px; /* Garante altura mínima */
 }
 

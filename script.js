@@ -33,7 +33,7 @@ function definirListaAtual(nomeLista) {
 function salvarTarefas() {
     const listas = obterTodasListas();
     const tarefas = [];
-    
+
     document.querySelectorAll("#lista > li").forEach(li => {
         const desc = li.querySelector(".descricao-input");
         tarefas.push({
@@ -45,19 +45,19 @@ function salvarTarefas() {
             descricao: desc ? desc.value : ""
         });
     });
-    
+
     listas[listaAtual] = tarefas;
     salvarTodasListas(listas);
 }
 
 function criarNovaLista(nomeLista) {
     const listas = obterTodasListas();
-    
+
     if (listas[nomeLista]) {
         showAlert("Já existe uma lista com esse nome!", "erro");
         return false;
     }
-    
+
     listas[nomeLista] = [];
     salvarTodasListas(listas);
     renderizarListas();
@@ -70,18 +70,18 @@ function removerLista(nomeLista) {
         showAlert("A lista padrão não pode ser removida!", "erro");
         return;
     }
-    
+
     customConfirm(`Deseja realmente remover a lista "${nomeLista}"? Todas as tarefas serão perdidas.`, (confirma) => {
         if (!confirma) return;
-        
+
         const listas = obterTodasListas();
         delete listas[nomeLista];
         salvarTodasListas(listas);
-        
+
         if (listaAtual === nomeLista) {
             carregarLista("To-do List");
         }
-        
+
         renderizarListas();
         showAlert(`Lista "${nomeLista}" removida com sucesso!`, "sucesso");
     });
@@ -89,13 +89,13 @@ function removerLista(nomeLista) {
 
 function carregarLista(nomeLista) {
     definirListaAtual(nomeLista);
-    
+
     const listas = obterTodasListas();
     const tarefas = listas[nomeLista] || [];
-    
+
     list.innerHTML = "";
     priorities = 0;
-    
+
     tarefas.forEach(t => {
         const li = criarElementoLi(t);
         if (t.prioridade) {
@@ -106,7 +106,7 @@ function carregarLista(nomeLista) {
             list.appendChild(li);
         }
     });
-    
+
     titulo.textContent = nomeLista;
     atualizarTituloProgressao();
     updateProgress();
@@ -118,23 +118,23 @@ function renderizarListas() {
     const container = document.getElementById("container-listas");
     const listas = obterTodasListas();
     const nomesListas = Object.keys(listas);
-    
+
     container.innerHTML = "";
-    
+
     nomesListas.forEach(nomeLista => {
         const itemLista = document.createElement("div");
         itemLista.classList.add("item-lista");
-        
+
         if (nomeLista === listaAtual) {
             itemLista.classList.add("lista-ativa");
         }
-        
+
         const nomeSpan = document.createElement("span");
         nomeSpan.textContent = nomeLista;
         nomeSpan.classList.add("nome-lista");
-        
+
         itemLista.appendChild(nomeSpan);
-        
+
         if (nomeLista !== "To-do List") {
             const btnRemover = document.createElement("button");
             const imgRemover = document.createElement("img");
@@ -143,21 +143,21 @@ function renderizarListas() {
             btnRemover.title = "Remover lista";
             btnRemover.alt = "Remover lista";
             btnRemover.appendChild(imgRemover);
-            
+
             btnRemover.addEventListener("click", (e) => {
                 e.stopPropagation();
                 removerLista(nomeLista);
             });
-            
+
             itemLista.appendChild(btnRemover);
         }
-        
+
         itemLista.addEventListener("click", () => {
             if (nomeLista !== listaAtual) {
                 carregarLista(nomeLista);
             }
         });
-        
+
         container.appendChild(itemLista);
     });
 }
@@ -174,12 +174,12 @@ document.getElementById("nova-lista-btn").addEventListener("click", () => {
 document.getElementById("modal-criar-btn").addEventListener("click", () => {
     const input = document.getElementById("input-nome-lista");
     const nomeLista = input.value.trim();
-    
+
     if (!nomeLista) {
         showAlert("Digite um nome para a lista!", "aviso");
         return;
     }
-    
+
     if (criarNovaLista(nomeLista)) {
         document.getElementById("modal-nova-lista").classList.add("hidden");
     }
@@ -282,7 +282,7 @@ titulo.insertAdjacentElement("afterend", tituloBtn);
 
 tituloBtn.addEventListener("click", () => {
     const tituloAntigo = titulo.textContent.trim();
-    
+
     titulo.contentEditable = true;
     titulo.focus();
 
@@ -295,21 +295,21 @@ tituloBtn.addEventListener("click", () => {
     const salvarTitulo = () => {
         titulo.contentEditable = false;
         const novoTitulo = titulo.textContent.trim();
-        
+
         if (!novoTitulo) {
             titulo.textContent = tituloAntigo;
             showAlert("O nome da lista não pode estar vazio!", "erro");
             return;
         }
-        
+
         const listas = obterTodasListas();
-        
+
         if (novoTitulo !== tituloAntigo && listas[novoTitulo]) {
             titulo.textContent = tituloAntigo;
             showAlert("Já existe uma lista com esse nome!", "erro");
             return;
         }
-        
+
         if (novoTitulo !== tituloAntigo) {
             const tarefas = listas[tituloAntigo];
             delete listas[tituloAntigo];
@@ -317,7 +317,7 @@ tituloBtn.addEventListener("click", () => {
             salvarTodasListas(listas);
             definirListaAtual(novoTitulo);
         }
-        
+
         atualizarTituloProgressao();
         renderizarListas();
     };
@@ -349,10 +349,21 @@ function updateProgress() {
 
     const total = tasks.length;
     const done = doneTasks.length;
-    const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
-    const circumference = 2 * Math.PI * 54;
-    const offset = circumference - (percent / 100) * circumference;
+    // Calcular a porcentagem real para o SVG
+    const rawPercent = total > 0 ? (done / total) : 0;
+
+    // Calcular a porcentagem arredondada para exibição
+    const displayPercent = Math.round(rawPercent * 100);
+
+    // Defina o raio do seu círculo SVG aqui (deve corresponder ao r="X" do SVG)
+    const radius = 54;
+    const circumference = 2 * Math.PI * radius;
+
+    // Offset (distância do traço)
+    // Calcula o quanto falta para completar o círculo.
+    // Isso é o que realmente faz a barra progredir.
+    const offset = circumference - (rawPercent * circumference);
 
     const progressCircle = document.querySelector(".progress");
     const progressText = document.getElementById("progress-text");
@@ -360,7 +371,7 @@ function updateProgress() {
     const prioridades = document.getElementById("prioridades");
 
     progressCircle.style.strokeDashoffset = offset;
-    progressText.textContent = `${percent}%`;
+    progressText.textContent = `${displayPercent}%`;
     progression.textContent = `Tarefas Concluídas: ${done}/${total}`;
     prioridades.textContent = `Tarefas em Prioridade: ${priorities}`;
 }
@@ -470,6 +481,12 @@ function criarElementoLi(t) {
     descContainer.style.display = "none";
     descContainer.style.maxHeight = "0";
     descContainer.style.opacity = "0";
+    descInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            descInput.blur();
+        }
+    });
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -489,8 +506,13 @@ function criarElementoLi(t) {
     checkbox.addEventListener("change", () => {
         nome.classList.toggle("done", checkbox.checked);
         li.classList.toggle("concluida", checkbox.checked);
-        updateProgress(); 
-        atualizarProximasTarefas(); 
+        if(li.classList.contains("prioridade") && checkbox.checked){
+            li.classList.remove("prioridade");
+            list.appendChild(li);
+            priorities--;
+        }
+        updateProgress();
+        atualizarProximasTarefas();
         salvarTarefas();
     });
 
@@ -555,25 +577,44 @@ function criarElementoLi(t) {
         const original = nome.textContent.trim();
         nome.contentEditable = true;
         nome.focus();
+
+        // Seleciona o texto
         const range = document.createRange();
         range.selectNodeContents(nome);
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
 
+        // Função de Salvar/Finalizar Edição
         const finalizar = () => {
+            // Remove os listeners de evento para finalizar a edição de forma limpa
+            nome.removeEventListener("blur", finalizar);
+            nome.removeEventListener("keypress", handleKeypressTarefa);
+
             nome.contentEditable = false;
             const novo = capitalize(nome.textContent.trim());
+
+            // Verifica duplicidade (excluindo a tarefa atual)
             if (Array.from(document.querySelectorAll(".nome")).filter(n => n !== nome).some(n => n.textContent.toLowerCase() === novo.toLowerCase())) {
                 showAlert("Essa tarefa já existe!");
-                nome.textContent = original;
+                nome.textContent = original; // Volta ao nome original
             } else {
                 nome.textContent = novo;
             }
             atualizarProximasTarefas();
             salvarTarefas();
         };
-        nome.addEventListener("blur", finalizar, { once: true });
-        nome.addEventListener("keypress", e => { if (e.key === "Enter") { e.preventDefault(); finalizar(); } }, { once: true });
+
+        // Função para lidar com a tecla Enter na tarefa
+        const handleKeypressTarefa = e => {
+            if (e.key === "Enter") {
+                e.preventDefault(); // Impede a quebra de linha
+                finalizar();        // Finaliza e salva
+            }
+        };
+
+        // Adiciona os listeners para finalizar a edição
+        nome.addEventListener("blur", finalizar);
+        nome.addEventListener("keypress", handleKeypressTarefa);
     });
 
     const removeBtn = document.createElement("button");
@@ -586,8 +627,8 @@ function criarElementoLi(t) {
         li.addEventListener("animationend", () => {
             list.removeChild(li);
             if (li.classList.contains("prioridade")) priorities--;
-            updateProgress(); 
-            atualizarProximasTarefas(); 
+            updateProgress();
+            atualizarProximasTarefas();
             salvarTarefas();
         }, { once: true });
     });
@@ -601,14 +642,18 @@ function criarElementoLi(t) {
         if (li.classList.contains("prioridade")) {
             li.classList.remove("prioridade");
             list.appendChild(li);
-            priorities--;
+            if(priorities > 0)priorities--;
         } else {
-            li.classList.add("prioridade");
-            list.prepend(li);
-            priorities++;
+            if(!checkbox.checked){
+                li.classList.add("prioridade");
+                list.prepend(li);
+                priorities++;
+            }else{
+                showAlert("Tarefas concluídas não podem ser marcadas como prioridade!", "aviso");
+            }
         }
-        updateProgress(); 
-        atualizarProximasTarefas(); 
+        updateProgress();
+        atualizarProximasTarefas();
         salvarTarefas();
     });
 
@@ -622,7 +667,7 @@ function criarElementoLi(t) {
 
     li.classList.add("enter");
     li.addEventListener("animationend", () => li.classList.remove("enter"), { once: true });
-    
+
     return li;
 }
 
@@ -660,7 +705,7 @@ function addTask() {
     salvarTarefas();
 }
 
-list.addEventListener("click", function(e) {
+list.addEventListener("click", function (e) {
     const li = e.target.closest("li");
     if (!li || !list.contains(li)) return;
     if (e.target.closest("button, input, textarea")) return;

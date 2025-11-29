@@ -113,6 +113,11 @@ function mostrarTarefasDoDia(date) {
 
 prevBtn.onclick = () => { visibleMonth--; if (visibleMonth < 0) { visibleMonth = 11; visibleYear--; } renderCalendar(visibleYear, visibleMonth); };
 nextBtn.onclick = () => { visibleMonth++; if (visibleMonth > 11) { visibleMonth = 0; visibleYear++; } renderCalendar(visibleYear, visibleMonth); };
+todayBtn.innerHTML = `
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  </svg>
+`;
 todayBtn.onclick = () => { visibleYear = today.getFullYear(); visibleMonth = today.getMonth(); selectedDate = new Date(); renderCalendar(visibleYear, visibleMonth); mostrarTarefasDoDia(selectedDate); };
 
 carregarTarefasDoStorage();
