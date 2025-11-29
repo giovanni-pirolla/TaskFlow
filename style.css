@@ -1012,11 +1012,11 @@ nav .minhas_listas a {
   align-items: center;
 }
 
-#confirm-ok:hover {
+#confirm-ok {
   background-color: #4CAF50;
 }
 
-#confirm-cancel:hover {
+#confirm-cancel {
   background-color: #f44336;
 }
 
@@ -1287,7 +1287,7 @@ body.tudo-desmarcado .botao-arredondado {
 }
 
 .modal-box {
-  background: #1a1a2e;
+  background: #1E293B;
   padding: 30px;
   border-radius: 15px;
   width: 90%;
