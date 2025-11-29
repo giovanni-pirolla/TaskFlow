@@ -51,14 +51,13 @@
         </svg>
         Registro
       </a>
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-      <div style="display: flex;">
+      <div id="info-usuario" style="display: flex;">
         <img src="Imagens/body.webp" alt ="pequeno" id="pequeno">
-        <p style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">GIOVANNI</p> 
+        <p id="usuario" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">GIOVANNI</p> 
       </div>
     </nav>
 
-    <!-- Conteúdo principal da nav -->
+    <!-- Conteúdo principal da nav -->
     <main>
       <div class="to-do-list">
         <div class="titulo-container">
@@ -95,8 +94,6 @@
     <ul id="lista-proximas"></ul>
   </div>
 
-  <script src="script.js"></script>
-
   <div id="confirm-overlay" class="confirm-overlay hidden">
     <div class="confirm-box">
       <p id="confirm-text"></p>
@@ -106,6 +103,20 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal para criar nova lista -->
+  <div id="modal-nova-lista" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3>Nova Lista</h3>
+      <input type="text" id="input-nome-lista" placeholder="Nome da lista..." maxlength="50">
+      <div class="modal-buttons">
+        <button id="modal-criar-btn">Criar</button>
+        <button id="modal-cancelar-btn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 
 </html>

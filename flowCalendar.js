@@ -1,16 +1,25 @@
 window.tarefasDoCalendario = [];
 
 function carregarTarefasDoStorage() {
-  const dados = localStorage.getItem("flowlist_tarefas");
+  const dados = localStorage.getItem("flowlist_todas_listas");
   if (!dados) return;
-  const tarefasSalvas = JSON.parse(dados);
-  window.tarefasDoCalendario = tarefasSalvas.map(t => ({
-    id: t.id,
-    nome: t.nome.trim(),
-    prazo: t.prazo,
-    lista: localStorage.getItem("flowlist_titulo")?.trim() || "To-Do List",
-    concluida: t.concluida
-  }));
+  
+  const todasListas = JSON.parse(dados);
+  window.tarefasDoCalendario = [];
+  
+  // Percorre todas as listas e adiciona as tarefas ao calendário
+  Object.keys(todasListas).forEach(nomeLista => {
+    const tarefasDaLista = todasListas[nomeLista];
+    tarefasDaLista.forEach(t => {
+      window.tarefasDoCalendario.push({
+        id: t.id,
+        nome: t.nome.trim(),
+        prazo: t.prazo,
+        lista: nomeLista,
+        concluida: t.concluida
+      });
+    });
+  });
 }
 
 function destacarTarefaDaURL() {

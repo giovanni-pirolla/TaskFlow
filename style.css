@@ -90,7 +90,7 @@
   margin-top: 12.5px;
 }
 
-/* Efeito de foco no teclado (acessibilidade) */
+/* Efeito de foco no teclado*/
 .checkbox:focus {
   box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.4);
   border-color: #6366F1;
@@ -193,7 +193,7 @@ button img {
 
 #titulo {
   color: #E2E8F0;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 #entrada {
@@ -585,6 +585,26 @@ span[contenteditable="true"] {
   color: #E2E8F0;
 }
 
+#progress-title::-webkit-scrollbar {
+  width: 8px;
+}
+
+#progress-title::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+#progress-title::-webkit-scrollbar-thumb {
+  background: #6365f197;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+#progress-title::-webkit-scrollbar-thumb:hover {
+  background: #6366F1;
+}
+
 #progress-svg {
   transform: rotate(-90deg);
   /* começa do topo */
@@ -679,6 +699,8 @@ nav a,
 
 nav a:hover {
   color: white;
+  transition: all 0.3s ease;
+  transform: translateX(5px);
 }
 
 nav svg {
@@ -949,10 +971,6 @@ nav .minhas_listas a {
   transition: all 0.25s ease;
 }
 
-.concluido-btn-active {
-  background-color: #ffe186 !important;
-  transform: scale(1.25);
-}
 
 .confirm-overlay {
   position: fixed;
@@ -1049,7 +1067,7 @@ nav .minhas_listas a {
 }
 
 .descricao-input {
-  width: 650px;
+  width: 625px;
   min-height: 60px;
   resize: vertical;
   border: solid #6366F1;
@@ -1084,12 +1102,10 @@ nav .minhas_listas a {
   background: #6366F1;
 }
 
-/* Quando TODAS as tarefas estão concluídas */
+/* Botão quando todas as tarefas são marcadas como concluídas */
 body.tudo-concluido .botao-arredondado {
   background-color: #ffb400;
-  /* amarelo */
   transform: scale(1.25);
-  /* aumenta o botão */
 }
 
 /* Quando desmarca tudo */
@@ -1097,209 +1113,269 @@ body.tudo-desmarcado .botao-arredondado {
   transform: scale(1);
 }
 
-#taskInput {
-
-  border: solid #273043;
-  border-radius: 10px;
-  font-size: 16px;
-  transition: 0.3s;
-  background: transparent;
-  color: #222;
-  outline: none;
-  box-shadow: #595858;
-}
-
-#container-listas {
-  max-height: 60vh;
-  overflow-y: auto;
-  margin: 10px 0;
-  padding-right: 8px;
-}
-
-.lista-item {
+/*Customização das informações do usuário*/
+#info-usuario {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  margin: 6px 0;
-  transition: all 0.3s;
-}
-
-.lista-item:hover {
-  background: rgba(90, 103, 216, 0.2);
-}
-
-.lista-item.active {
-  background: #5a67d8;
-  color: white;
-}
-
-.lista-item button {
-  background: none;
-  border: none;
-  color: #ff6b6b;
-  cursor: pointer;
-  font-size: 1.2em;
-}
-
-#nova-lista-btn {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  background: #ffb400;
-  color: #000;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
-}
 
-#nova-lista-btn svg {
-  width: 20px;
-  height: 20px;
-}
+  position: absolute; 
+  bottom: 0;         
+  width: 90%;        
+  
+  left: 50%;
+  transform: translateX(-50%);
 
-/* ===== MODAIS PERSONALIZADOS — MUITO MAIS BONITOS ===== */
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
-  animation: fadeIn 0.3s ease;
-}
-
-.modal-box {
-  background: #1a1a2e;
-  color: #e0e0ff;
-  padding: 30px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(90,103,216,0.4);
-  border: 1px solid #5a67d8;
-  animation: slideUp 0.4s ease;
-}
-
-.modal-box h3 {
-  margin: 0 0 16px;
-  font-size: 1.6em;
-  color: #8b9eff;
-}
-
-.modal-box p {
-  margin: 16px 0;
-  line-height: 1.5;
-  color: #ccc;
-}
-
-#new-list-input {
-  width: 100%;
-  padding: 14px;
-  margin: 16px 0;
-  border: 2px solid #5a67d8;
-  border-radius: 10px;
-  background: #16213e;
-  color: white;
-  font-size: 1.1em;
-}
-
-#new-list-input:focus {
-  outline: none;
-  border-color: #8b9eff;
-  box-shadow: 0 0 15px rgba(139,158,255,0.3);
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.modal-buttons button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-cancel {
-  background: #444;
-  color: #ddd;
-}
-
-.btn-cancel:hover {
-  background: #666;
-}
-
-.btn-primary {
-  background: #5a67d8;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #8b9eff;
-  transform: translateY(-2px);
-}
-
-.btn-danger {
-  background: #e74c3c;
-  color: white;
-}
-
-.btn-danger:hover {
-  background: #c0392b;
-  transform: translateY(-2px);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* ===== BOTÃO DE EXCLUIR LISTA — VERMELHO E LINDO ===== */
-.btn-delete-lista {
-  background: none;
-  border: none;
-  color: #e74c3c;           /* vermelho bonito */
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  opacity: 0.7;
-}
-
-.btn-delete-lista:hover {
-  background: #e74c3c;
-  color: white !important;
-  opacity: 1;
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
-}
-
-.btn-delete-lista svg {
-  display: block;
+  padding-bottom: 55px; 
 }
 
 #pequeno{
   width: 80px;
   height: 50px;
 }
+
+#usuario{
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/*Estilização das funcionalidades de novas listas*/
+
+/* Container de listas com scroll */
+#container-listas {
+  max-height: 230px;
+  min-height: 50px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 10px 0;
+  padding-right: 5px;
+  display: block; /* Importante para o scroll funcionar */
+}
+
+/* Scroll mais bonito*/
+#container-listas::-webkit-scrollbar {
+  width: 8px;
+}
+
+#container-listas::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+#container-listas::-webkit-scrollbar-thumb {
+  background: rgba(255, 193, 7, 0.5);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+#container-listas::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 193, 7, 0.8);
+}
+
+/* Item de lista */
+.item-lista {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  min-height: 45px; /* Garante altura mínima */
+}
+
+.item-lista:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.item-lista.lista-ativa {
+  background: rgba(255, 193, 7, 0.2);
+  border-left-color: #ffc107;
+}
+
+.nome-lista {
+  flex: 1;
+  font-weight: 500;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+/* Botão de remover lista */
+.btn-remover-lista {
+  background: #dc3545;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+.btn-remover-lista svg {
+  width: 18px;
+  height: 18px;
+  color: white;
+}
+
+.btn-remover-lista:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+.btn-remover-lista:active {
+  transform: scale(0.95);
+}
+
+/* Botão de nova lista */
+#nova-lista-btn {
+  width: 100%;
+  padding: 10px;
+  background: #ffc107;
+  border: none;
+  border-radius: 8px;
+  color: #1a1a2e;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#nova-lista-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+#nova-lista-btn:hover {
+  background: #ffca28;
+  transform: translateY(-2px);
+}
+
+#nova-lista-btn:active {
+  transform: translateY(0);
+}
+
+/* Modal de nova lista */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: #1a1a2e;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-box h3 {
+  margin: 0 0 20px 0;
+  color: #ffc107;
+  font-size: 24px;
+  text-align: center;
+}
+
+#input-nome-lista {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+#input-nome-lista:focus {
+  outline: none;
+  border-color: #ffc107;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#modal-criar-btn {
+  background: #28a745;
+  color: white;
+}
+
+#modal-criar-btn:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+#modal-cancelar-btn {
+  background: #dc3545;
+  color: white;
+}
+
+#modal-cancelar-btn:hover {
+  background: #dc3545;
+  transform: translateY(-2px);
+}
+
+.modal-buttons button:active {
+  transform: translateY(0);
+}
+

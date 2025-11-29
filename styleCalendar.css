@@ -62,7 +62,6 @@ body {
   font-size: 2.4em;
   font-weight: 700;
   color: #8b9eff;
-  text-shadow: 0 0 8px #5a67d8;
 }
 
 .controls button {
@@ -180,7 +179,6 @@ body {
   text-align: center;
   color: #8b9eff;
   margin-bottom: 15px;
-  text-shadow: 0 0 10px #5a67d8;
 }
 
 #selectedDateDisplay {
@@ -219,12 +217,6 @@ body {
   border-left: 5px solid #5a67d8;
   transition: all 0.3s;
   border: 1px solid #2a3a66;
-}
-
-.task-item:hover {
-  transform: translateX(8px);
-  box-shadow: 0 8px 25px rgba(90, 103, 216, 0.3);
-  border-color: #8b9eff;
 }
 
 .task-item.done {

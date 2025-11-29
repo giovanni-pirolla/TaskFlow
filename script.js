@@ -1,7 +1,199 @@
+// Variáveis globais
 const input = document.getElementById("taskInput");
 const button = document.getElementById("addIt");
 const list = document.getElementById("lista");
+const titulo = document.getElementById("titulo");
 let priorities = 0;
+let listaAtual = "To-do List";
+
+// Funcionalidades para adicionar mais de uma lista
+function obterTodasListas() {
+    const dados = localStorage.getItem("flowlist_todas_listas");
+    if (!dados) {
+        const listasPadrao = { "To-do List": [] };
+        localStorage.setItem("flowlist_todas_listas", JSON.stringify(listasPadrao));
+        return listasPadrao;
+    }
+    return JSON.parse(dados);
+}
+
+function salvarTodasListas(listas) {
+    localStorage.setItem("flowlist_todas_listas", JSON.stringify(listas));
+}
+
+function obterListaAtual() {
+    return localStorage.getItem("flowlist_lista_atual") || "To-do List";
+}
+
+function definirListaAtual(nomeLista) {
+    listaAtual = nomeLista;
+    localStorage.setItem("flowlist_lista_atual", nomeLista);
+}
+
+function salvarTarefas() {
+    const listas = obterTodasListas();
+    const tarefas = [];
+    
+    document.querySelectorAll("#lista > li").forEach(li => {
+        const desc = li.querySelector(".descricao-input");
+        tarefas.push({
+            id: li.dataset.id,
+            nome: li.querySelector(".nome").textContent.trim(),
+            prazo: li.querySelector(".prazo").value || "",
+            concluida: li.querySelector(".checkbox").checked,
+            prioridade: li.classList.contains("prioridade"),
+            descricao: desc ? desc.value : ""
+        });
+    });
+    
+    listas[listaAtual] = tarefas;
+    salvarTodasListas(listas);
+}
+
+function criarNovaLista(nomeLista) {
+    const listas = obterTodasListas();
+    
+    if (listas[nomeLista]) {
+        showAlert("Já existe uma lista com esse nome!", "erro");
+        return false;
+    }
+    
+    listas[nomeLista] = [];
+    salvarTodasListas(listas);
+    renderizarListas();
+    showAlert(`Lista "${nomeLista}" criada com sucesso!`, "sucesso");
+    return true;
+}
+
+function removerLista(nomeLista) {
+    if (nomeLista === "To-do List") {
+        showAlert("A lista padrão não pode ser removida!", "erro");
+        return;
+    }
+    
+    customConfirm(`Deseja realmente remover a lista "${nomeLista}"? Todas as tarefas serão perdidas.`, (confirma) => {
+        if (!confirma) return;
+        
+        const listas = obterTodasListas();
+        delete listas[nomeLista];
+        salvarTodasListas(listas);
+        
+        if (listaAtual === nomeLista) {
+            carregarLista("To-do List");
+        }
+        
+        renderizarListas();
+        showAlert(`Lista "${nomeLista}" removida com sucesso!`, "sucesso");
+    });
+}
+
+function carregarLista(nomeLista) {
+    definirListaAtual(nomeLista);
+    
+    const listas = obterTodasListas();
+    const tarefas = listas[nomeLista] || [];
+    
+    list.innerHTML = "";
+    priorities = 0;
+    
+    tarefas.forEach(t => {
+        const li = criarElementoLi(t);
+        if (t.prioridade) {
+            li.classList.add("prioridade");
+            priorities++;
+            list.prepend(li);
+        } else {
+            list.appendChild(li);
+        }
+    });
+    
+    titulo.textContent = nomeLista;
+    atualizarTituloProgressao();
+    updateProgress();
+    atualizarProximasTarefas();
+    renderizarListas();
+}
+
+function renderizarListas() {
+    const container = document.getElementById("container-listas");
+    const listas = obterTodasListas();
+    const nomesListas = Object.keys(listas);
+    
+    container.innerHTML = "";
+    
+    nomesListas.forEach(nomeLista => {
+        const itemLista = document.createElement("div");
+        itemLista.classList.add("item-lista");
+        
+        if (nomeLista === listaAtual) {
+            itemLista.classList.add("lista-ativa");
+        }
+        
+        const nomeSpan = document.createElement("span");
+        nomeSpan.textContent = nomeLista;
+        nomeSpan.classList.add("nome-lista");
+        
+        itemLista.appendChild(nomeSpan);
+        
+        if (nomeLista !== "To-do List") {
+            const btnRemover = document.createElement("button");
+            const imgRemover = document.createElement("img");
+            imgRemover.src = "Imagens/lixeira.png";
+            btnRemover.classList.add("btn-remover-lista");
+            btnRemover.title = "Remover lista";
+            btnRemover.alt = "Remover lista";
+            btnRemover.appendChild(imgRemover);
+            
+            btnRemover.addEventListener("click", (e) => {
+                e.stopPropagation();
+                removerLista(nomeLista);
+            });
+            
+            itemLista.appendChild(btnRemover);
+        }
+        
+        itemLista.addEventListener("click", () => {
+            if (nomeLista !== listaAtual) {
+                carregarLista(nomeLista);
+            }
+        });
+        
+        container.appendChild(itemLista);
+    });
+}
+
+// Eventos do modal de nova lista
+document.getElementById("nova-lista-btn").addEventListener("click", () => {
+    const modal = document.getElementById("modal-nova-lista");
+    const input = document.getElementById("input-nome-lista");
+    modal.classList.remove("hidden");
+    input.value = "";
+    setTimeout(() => input.focus(), 100);
+});
+
+document.getElementById("modal-criar-btn").addEventListener("click", () => {
+    const input = document.getElementById("input-nome-lista");
+    const nomeLista = input.value.trim();
+    
+    if (!nomeLista) {
+        showAlert("Digite um nome para a lista!", "aviso");
+        return;
+    }
+    
+    if (criarNovaLista(nomeLista)) {
+        document.getElementById("modal-nova-lista").classList.add("hidden");
+    }
+});
+
+document.getElementById("modal-cancelar-btn").addEventListener("click", () => {
+    document.getElementById("modal-nova-lista").classList.add("hidden");
+});
+
+document.getElementById("input-nome-lista").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        document.getElementById("modal-criar-btn").click();
+    }
+});
 
 // Botão de lista concluída
 const botaoConcluido = document.querySelector(".botao-arredondado");
@@ -11,7 +203,6 @@ if (botaoConcluido) {
     concluidoImg.src = "Imagens/concluido.png";
     concluidoImg.alt = "Marcar Lista como Concluída";
     concluidoImg.classList.add("icone-concluido");
-
     botaoConcluido.classList.add("concluido-btn");
     botaoConcluido.appendChild(concluidoImg);
 }
@@ -79,7 +270,6 @@ botaoConcluido.addEventListener("click", () => {
 });
 
 // Botão para editar o título
-const titulo = document.getElementById("titulo");
 const tituloBtn = document.createElement("button");
 tituloBtn.classList.add("titleEdit");
 
@@ -91,20 +281,45 @@ tituloBtn.appendChild(tituloIcon);
 titulo.insertAdjacentElement("afterend", tituloBtn);
 
 tituloBtn.addEventListener("click", () => {
+    const tituloAntigo = titulo.textContent.trim();
+    
     titulo.contentEditable = true;
     titulo.focus();
 
     const rangeTitle = document.createRange();
     rangeTitle.selectNodeContents(titulo);
-
     const selectionTitle = window.getSelection();
     selectionTitle.removeAllRanges();
     selectionTitle.addRange(rangeTitle);
 
     const salvarTitulo = () => {
         titulo.contentEditable = false;
+        const novoTitulo = titulo.textContent.trim();
+        
+        if (!novoTitulo) {
+            titulo.textContent = tituloAntigo;
+            showAlert("O nome da lista não pode estar vazio!", "erro");
+            return;
+        }
+        
+        const listas = obterTodasListas();
+        
+        if (novoTitulo !== tituloAntigo && listas[novoTitulo]) {
+            titulo.textContent = tituloAntigo;
+            showAlert("Já existe uma lista com esse nome!", "erro");
+            return;
+        }
+        
+        if (novoTitulo !== tituloAntigo) {
+            const tarefas = listas[tituloAntigo];
+            delete listas[tituloAntigo];
+            listas[novoTitulo] = tarefas;
+            salvarTodasListas(listas);
+            definirListaAtual(novoTitulo);
+        }
+        
         atualizarTituloProgressao();
-        salvarTarefas();
+        renderizarListas();
     };
 
     titulo.addEventListener("blur", salvarTitulo, { once: true });
@@ -134,7 +349,6 @@ function updateProgress() {
 
     const total = tasks.length;
     const done = doneTasks.length;
-
     const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
     const circumference = 2 * Math.PI * 54;
@@ -147,7 +361,6 @@ function updateProgress() {
 
     progressCircle.style.strokeDashoffset = offset;
     progressText.textContent = `${percent}%`;
-
     progression.textContent = `Tarefas Concluídas: ${done}/${total}`;
     prioridades.textContent = `Tarefas em Prioridade: ${priorities}`;
 }
@@ -237,236 +450,12 @@ function showAlert(mensagem, tipo = "erro") {
     }, 3000);
 }
 
-// ====================== SALVAR E CARREGAR TAREFAS ======================
-function salvarTarefas() {
-    const tarefas = [];
-    document.querySelectorAll("#lista > li").forEach(li => {
-        const desc = li.querySelector(".descricao-input");
-        tarefas.push({
-            id: li.dataset.id,
-            nome: li.querySelector(".nome").textContent.trim(),
-            prazo: li.querySelector(".prazo").value || "",
-            concluida: li.querySelector(".checkbox").checked,
-            prioridade: li.classList.contains("prioridade"),
-            descricao: desc ? desc.value : ""
-        });
-    });
-    localStorage.setItem("flowlist_tarefas", JSON.stringify(tarefas));
-    localStorage.setItem("flowlist_titulo", titulo.textContent.trim());
-}
-
-function carregarTarefasSalvas() {
-    const dados = localStorage.getItem("flowlist_tarefas");
-    if (!dados) return;
-
-    const tarefas = JSON.parse(dados);
-    list.innerHTML = "";
-    priorities = 0;
-
-    tarefas.forEach(t => {
-        const li = document.createElement("li");
-        li.dataset.id = t.id;
-
-        const taskContainer = document.createElement("div");
-        taskContainer.classList.add("task-container");
-        const taskContent = document.createElement("div");
-        taskContent.classList.add("task-content");
-
-        const descContainer = document.createElement("div");
-        descContainer.classList.add("descricao-container");
-        const descInput = document.createElement("textarea");
-        descInput.placeholder = "Descrição da tarefa...";
-        descInput.classList.add("descricao-input");
-        descInput.value = t.descricao || "";
-        descInput.addEventListener("blur", salvarTarefas);
-        descContainer.appendChild(descInput);
-        // Estado inicial fechado
-        descContainer.style.display = "none";
-        descContainer.style.maxHeight = "0";
-        descContainer.style.opacity = "0";
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "checkbox";
-        checkbox.checked = t.concluida;
-
-        const nome = document.createElement("span");
-        nome.classList.add("nome");
-        nome.textContent = t.nome;
-        if (t.concluida) nome.classList.add("done");
-
-        const prazo = document.createElement("input");
-        prazo.type = "date";
-        prazo.className = "prazo";
-        if (t.prazo) prazo.value = t.prazo;
-
-        checkbox.addEventListener("change", () => {
-            nome.classList.toggle("done", checkbox.checked);
-            li.classList.toggle("concluida", checkbox.checked);
-            updateProgress(); atualizarProximasTarefas(); salvarTarefas();
-        });
-
-        prazo.addEventListener("change", () => {
-            atualizarProximasTarefas();
-            salvarTarefas();
-        });
-
-        taskContent.appendChild(nome);
-        taskContent.appendChild(prazo);
-        taskContent.appendChild(descContainer);
-        taskContainer.appendChild(checkbox);
-        taskContainer.appendChild(taskContent);
-
-        const btnContainer = document.createElement("div");
-        btnContainer.classList.add("botoes");
-
-        // === BOTÃO DE DESCRIÇÃO COM SETA QUE GIRA ===
-        const descBtn = document.createElement("button");
-        descBtn.classList.add("desc-btn", "closed");
-
-        const arrowIcon = document.createElement("span");
-        arrowIcon.classList.add("arrow-icon");
-        arrowIcon.innerHTML = `
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9l6 6 6-6"/>
-            </svg>
-        `;
-        descBtn.appendChild(arrowIcon);
-
-        descBtn.addEventListener("click", () => {
-            const isClosed = descContainer.style.display === "none" || descContainer.style.display === "";
-
-            if (isClosed) {
-                descContainer.style.display = "block";
-                descContainer.style.maxHeight = descContainer.scrollHeight + "px";
-                descContainer.style.opacity = "1";
-                descBtn.classList.remove("closed");
-                descBtn.classList.add("open");
-            } else {
-                descContainer.style.maxHeight = "0";
-                descContainer.style.opacity = "0";
-                descBtn.classList.remove("open");
-                descBtn.classList.add("closed");
-
-                descContainer.addEventListener("transitionend", () => {
-                    if (descContainer.style.maxHeight === "0px") {
-                        descContainer.style.display = "none";
-                    }
-                }, { once: true });
-            }
-        });
-
-        const editBtn = document.createElement("button");
-        const editIcon = document.createElement("img");
-        editIcon.src = "imagens/editar_tarefa.png";
-        editIcon.alt = "Editar tarefa";
-        editIcon.title = "Editar tarefa";
-        editBtn.classList.add("edit");
-        editBtn.appendChild(editIcon);
-
-        editBtn.addEventListener("click", () => {
-            const original = nome.textContent.trim();
-            nome.contentEditable = true;
-            nome.focus();
-            const range = document.createRange();
-            range.selectNodeContents(nome);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-
-            const finalizar = () => {
-                nome.contentEditable = false;
-                const novo = capitalize(nome.textContent.trim());
-                if (Array.from(document.querySelectorAll(".nome")).filter(n => n !== nome).some(n => n.textContent.toLowerCase() === novo.toLowerCase())) {
-                    showAlert("Essa tarefa já existe!");
-                    nome.textContent = original;
-                } else {
-                    nome.textContent = novo;
-                }
-                atualizarProximasTarefas();
-                salvarTarefas();
-            };
-            nome.addEventListener("blur", finalizar, { once: true });
-            nome.addEventListener("keypress", e => { if (e.key === "Enter") { e.preventDefault(); finalizar(); } }, { once: true });
-        });
-
-        const removeBtn = document.createElement("button");
-        const removerImg = document.createElement("img");
-        removerImg.src = "Imagens/lixeira.png";
-        removeBtn.appendChild(removerImg);
-        removeBtn.classList.add("remove");
-        removeBtn.addEventListener("click", () => {
-            li.classList.add("exit");
-            li.addEventListener("animationend", () => {
-                list.removeChild(li);
-                if (li.classList.contains("prioridade")) priorities--;
-                updateProgress(); atualizarProximasTarefas(); salvarTarefas();
-            }, { once: true });
-        });
-
-        const prioridadeBtn = document.createElement("button");
-        const prioridadeImg = document.createElement("img");
-        prioridadeImg.src = "Imagens/alerta3.png";
-        prioridadeBtn.appendChild(prioridadeImg);
-        prioridadeBtn.classList.add("prioridade-btn");
-        prioridadeBtn.addEventListener("click", () => {
-            if (li.classList.contains("prioridade")) {
-                li.classList.remove("prioridade");
-                list.appendChild(li);
-                priorities--;
-            } else {
-                li.classList.add("prioridade");
-                list.prepend(li);
-                priorities++;
-            }
-            updateProgress(); atualizarProximasTarefas(); salvarTarefas();
-        });
-
-        btnContainer.appendChild(editBtn);
-        btnContainer.appendChild(removeBtn);
-        btnContainer.appendChild(prioridadeBtn);
-        btnContainer.appendChild(descBtn);
-
-        li.appendChild(taskContainer);
-        li.appendChild(btnContainer);
-
-        if (t.prioridade) {
-            li.classList.add("prioridade");
-            priorities++;
-            list.prepend(li);
-        } else {
-            list.appendChild(li);
-        }
-
-        li.classList.add("enter");
-        li.addEventListener("animationend", () => li.classList.remove("enter"), { once: true });
-    });
-
-    const tituloSalvo = localStorage.getItem("flowlist_titulo");
-    if (tituloSalvo) titulo.textContent = tituloSalvo;
-
-    updateProgress();
-    atualizarProximasTarefas();
-}
-
-// ====================== FUNÇÃO ORIGINAL addTask MODIFICADA ======================
-function addTask() {
-    const taskText = capitalize(input.value.trim());
-    if (taskText === "") {
-        showAlert("Insira o nome de uma tarefa para adicioná-la!", "aviso");
-        return;
-    };
-
-    if (tarefaExiste(taskText)) {
-        showAlert("Essa tarefa já foi adicionada!");
-        return;
-    }
-
+function criarElementoLi(t) {
     const li = document.createElement("li");
-    li.dataset.id = Date.now().toString();
+    li.dataset.id = t.id;
 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
-
     const taskContent = document.createElement("div");
     taskContent.classList.add("task-content");
 
@@ -475,6 +464,7 @@ function addTask() {
     const descInput = document.createElement("textarea");
     descInput.placeholder = "Descrição da tarefa...";
     descInput.classList.add("descricao-input");
+    descInput.value = t.descricao || "";
     descInput.addEventListener("blur", salvarTarefas);
     descContainer.appendChild(descInput);
     descContainer.style.display = "none";
@@ -484,22 +474,25 @@ function addTask() {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";
+    checkbox.checked = t.concluida;
 
     const nome = document.createElement("span");
     nome.classList.add("nome");
-    nome.textContent = taskText;
-
-    checkbox.addEventListener("change", () => {
-        nome.classList.toggle("done", checkbox.checked);
-        li.classList.toggle("concluida", checkbox.checked);
-        updateProgress();
-        atualizarProximasTarefas();
-        salvarTarefas();
-    });
+    nome.textContent = t.nome;
+    if (t.concluida) nome.classList.add("done");
 
     const prazo = document.createElement("input");
     prazo.type = "date";
     prazo.className = "prazo";
+    if (t.prazo) prazo.value = t.prazo;
+
+    checkbox.addEventListener("change", () => {
+        nome.classList.toggle("done", checkbox.checked);
+        li.classList.toggle("concluida", checkbox.checked);
+        updateProgress(); 
+        atualizarProximasTarefas(); 
+        salvarTarefas();
+    });
 
     prazo.addEventListener("change", () => {
         atualizarProximasTarefas();
@@ -515,7 +508,6 @@ function addTask() {
     const btnContainer = document.createElement("div");
     btnContainer.classList.add("botoes");
 
-    // === BOTÃO DE DESCRIÇÃO COM SETA QUE GIRA (NA CRIAÇÃO) ===
     const descBtn = document.createElement("button");
     descBtn.classList.add("desc-btn", "closed");
 
@@ -560,42 +552,28 @@ function addTask() {
     editBtn.appendChild(editIcon);
 
     editBtn.addEventListener("click", () => {
-        const textoOriginal = nome.textContent.trim();
+        const original = nome.textContent.trim();
         nome.contentEditable = true;
         nome.focus();
-
         const range = document.createRange();
         range.selectNodeContents(nome);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
 
-        const finalizarEdicao = () => {
+        const finalizar = () => {
             nome.contentEditable = false;
-            const novoTexto = capitalize(nome.textContent.trim());
-
-            const nomesExistentes = Array.from(document.querySelectorAll("#lista .nome"))
-                .filter(n => n !== nome)
-                .map(n => n.textContent.toLowerCase());
-
-            if (nomesExistentes.includes(novoTexto.toLowerCase())) {
-                showAlert("Essa tarefa já foi adicionada!");
-                nome.textContent = textoOriginal;
-                return;
+            const novo = capitalize(nome.textContent.trim());
+            if (Array.from(document.querySelectorAll(".nome")).filter(n => n !== nome).some(n => n.textContent.toLowerCase() === novo.toLowerCase())) {
+                showAlert("Essa tarefa já existe!");
+                nome.textContent = original;
+            } else {
+                nome.textContent = novo;
             }
-
-            nome.textContent = novoTexto;
             atualizarProximasTarefas();
             salvarTarefas();
         };
-
-        nome.addEventListener("blur", finalizarEdicao, { once: true });
-        nome.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                finalizarEdicao();
-            }
-        }, { once: true });
+        nome.addEventListener("blur", finalizar, { once: true });
+        nome.addEventListener("keypress", e => { if (e.key === "Enter") { e.preventDefault(); finalizar(); } }, { once: true });
     });
 
     const removeBtn = document.createElement("button");
@@ -603,40 +581,34 @@ function addTask() {
     removerImg.src = "Imagens/lixeira.png";
     removeBtn.appendChild(removerImg);
     removeBtn.classList.add("remove");
-
     removeBtn.addEventListener("click", () => {
         li.classList.add("exit");
         li.addEventListener("animationend", () => {
-            showAlert("Tarefa removida com sucesso!", "erro");
             list.removeChild(li);
             if (li.classList.contains("prioridade")) priorities--;
-            updateProgress();
-            atualizarProximasTarefas();
+            updateProgress(); 
+            atualizarProximasTarefas(); 
             salvarTarefas();
         }, { once: true });
     });
 
     const prioridadeBtn = document.createElement("button");
     const prioridadeImg = document.createElement("img");
-    prioridadeImg.src = "Imagens/alerta2.png";
+    prioridadeImg.src = "Imagens/alerta3.png";
     prioridadeBtn.appendChild(prioridadeImg);
     prioridadeBtn.classList.add("prioridade-btn");
-
     prioridadeBtn.addEventListener("click", () => {
-        const viraPrioridade = !li.classList.contains("prioridade");
-
-        if (viraPrioridade) {
+        if (li.classList.contains("prioridade")) {
+            li.classList.remove("prioridade");
+            list.appendChild(li);
+            priorities--;
+        } else {
             li.classList.add("prioridade");
             list.prepend(li);
             priorities++;
-        } else {
-            li.classList.remove("prioridade");
-            list.append(li);
-            priorities--;
         }
-
-        updateProgress();
-        atualizarProximasTarefas();
+        updateProgress(); 
+        atualizarProximasTarefas(); 
         salvarTarefas();
     });
 
@@ -647,14 +619,38 @@ function addTask() {
 
     li.appendChild(taskContainer);
     li.appendChild(btnContainer);
+
+    li.classList.add("enter");
+    li.addEventListener("animationend", () => li.classList.remove("enter"), { once: true });
+    
+    return li;
+}
+
+function addTask() {
+    const taskText = capitalize(input.value.trim());
+    if (taskText === "") {
+        showAlert("Insira o nome de uma tarefa para adicioná-la!", "aviso");
+        return;
+    }
+
+    if (tarefaExiste(taskText)) {
+        showAlert("Essa tarefa já foi adicionada!");
+        return;
+    }
+
+    const tarefa = {
+        id: Date.now().toString(),
+        nome: taskText,
+        prazo: "",
+        concluida: false,
+        prioridade: false,
+        descricao: ""
+    };
+
+    const li = criarElementoLi(tarefa);
     list.appendChild(li);
 
     showAlert("Tarefa adicionada com sucesso!", "sucesso");
-
-    li.classList.add("enter");
-    li.addEventListener("animationend", () => {
-        li.classList.remove("enter");
-    }, { once: true });
 
     input.value = "";
     input.focus();
@@ -664,7 +660,6 @@ function addTask() {
     salvarTarefas();
 }
 
-// ====================== CLIQUE NA TAREFA → VAI PRO CALENDÁRIO ======================
 list.addEventListener("click", function(e) {
     const li = e.target.closest("li");
     if (!li || !list.contains(li)) return;
@@ -686,13 +681,12 @@ list.addEventListener("click", function(e) {
     window.location.href = `FlowCalendar.html?${params.toString()}`;
 });
 
-// ====================== EVENTOS DE ADIÇÃO E CARREGAMENTO ======================
 button.addEventListener("click", addTask);
 input.addEventListener("keypress", function (e) {
     if (e.key === "Enter") addTask();
 });
 
 window.addEventListener("load", () => {
-    carregarTarefasSalvas();
-    atualizarTituloProgressao();
+    listaAtual = obterListaAtual();
+    carregarLista(listaAtual);
 });
