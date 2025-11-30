@@ -8,11 +8,13 @@
   <link rel="stylesheet" href="styleCalendar.css">
 </head>
 <body>
-
+  <!-- Logo do TaskFlow -->
   <img src="Imagens/TF2-removebg-preview.png" alt="Logo" id="logo">
   <button class="close-btn" onclick="window.location.href='index.html'">X</button>
 
+  <!-- Container do Calendário -->
   <div class="container">
+    <!-- Conteúdo do Calendário -->
     <div class="calendar">
       <div class="header">
         <div class="month-title" id="monthTitle"></div>
@@ -26,6 +28,7 @@
       <div class="days" id="daysGrid"></div>
     </div>
 
+    <!-- Container ao lado do calendário para indicar as tarefas do dia escolhido -->
     <div class="tasks-sidebar">
       <div class="sidebar-title">Tarefas do Dia</div>
       <div id="selectedDateDisplay">Selecione uma data</div>
@@ -33,10 +36,14 @@
     </div>
   </div>
   <br><br>
+
+  <!-- Informações do usuário (Apenas para exemplo) -->
   <div id="info-usuario" style="display: flex;">
     <img src="Imagens/body.webp" alt ="pequeno" id="pequeno"><br>
     <p style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin-top: 15px ;">GIOVANNI</p> 
   </div>
+
+  <!-- Link para o arquivo JavaScript -->
   <script src="flowCalendar.js"></script>
 </body>
 </html>
