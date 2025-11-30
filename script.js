@@ -567,7 +567,7 @@ function criarElementoLi(t) {
 
     const editBtn = document.createElement("button");
     const editIcon = document.createElement("img");
-    editIcon.src = "imagens/editar_tarefa.png";
+    editIcon.src = "Imagens/editar_tarefa.png";
     editIcon.alt = "Editar tarefa";
     editIcon.title = "Editar tarefa";
     editBtn.classList.add("edit");
