@@ -1476,7 +1476,6 @@ body.tudo-desmarcado .botao-arredondado {
   width: 400px;
   /* Largura fixa */
   box-sizing: border-box;
-  border: 2px dashed #6366F1;
   border-radius: 8px;
   z-index: 10;
 }
