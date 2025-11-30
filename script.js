@@ -344,7 +344,7 @@ titulo.insertAdjacentElement("afterend", tituloBtn);
 tituloBtn.addEventListener("click", () => {
     const tituloAntigo = titulo.textContent.trim();
 
-    titulo.contentEditable = true; // Torna o elemento editável.
+    titulo.contentEditable = true;
     titulo.focus();
 
     // Seleciona o texto inteiro para facilitar a edição.
@@ -354,7 +354,12 @@ tituloBtn.addEventListener("click", () => {
     selectionTitle.removeAllRanges();
     selectionTitle.addRange(rangeTitle);
 
+    // função que salva e limpa os listeners
     const salvarTitulo = () => {
+        // Limpa os listeners para evitar vária execuções
+        titulo.removeEventListener("blur", salvarTitulo);
+        titulo.removeEventListener("keypress", handleKeypress);
+
         titulo.contentEditable = false;
         const novoTitulo = titulo.textContent.trim();
 
@@ -363,10 +368,10 @@ tituloBtn.addEventListener("click", () => {
             showAlert("O nome da lista não pode estar vazio!", "erro");
             return;
         }
-
+        
+        // Validação e salvamento do titulo
         const listas = obterTodasListas();
 
-        // Valida se o novo nome já existe.
         if (novoTitulo !== tituloAntigo && listas[novoTitulo]) {
             titulo.textContent = tituloAntigo;
             showAlert("Já existe uma lista com esse nome!", "erro");
@@ -374,7 +379,6 @@ tituloBtn.addEventListener("click", () => {
         }
 
         if (novoTitulo !== tituloAntigo) {
-            // Renomeia a lista no objeto de listas.
             const tarefas = listas[tituloAntigo];
             delete listas[tituloAntigo];
             listas[novoTitulo] = tarefas;
@@ -385,15 +389,21 @@ tituloBtn.addEventListener("click", () => {
         atualizarTituloProgressao();
         renderizarListas();
     };
-
-    // Finaliza a edição ao perder o foco ou apertar Enter.
-    titulo.addEventListener("blur", salvarTitulo, { once: true });
-    titulo.addEventListener("keypress", (e) => {
+    
+    // Keypress separado
+    const handleKeypress = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            salvarTitulo();
+            salvarTitulo(); // Salva e remove os listeners
+            titulo.blur(); // Remove o foco do título
         }
-    }, { once: true });
+    };
+
+    // Adiciona o blur ao titulo
+    titulo.addEventListener("blur", salvarTitulo, { once: true }); 
+
+    // Adiciona o keypress ao titulo 
+    titulo.addEventListener("keypress", handleKeypress);
 });
 
 /**
