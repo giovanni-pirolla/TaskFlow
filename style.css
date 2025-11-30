@@ -16,18 +16,18 @@
 
 @keyframes highlight {
   0% {
-    background-color: #f8c52a;
+    background-color: #fdd65f;
 
     input[type="date"] {
-      background-color: #f8c52a;
+      background-color: #fdd65f;
     }
   }
 
   100% {
-    background-color: #f8c52a;
+    background-color: #fcca33;
 
     input[type="date"] {
-      background-color: #f8c52a;
+      background-color: #fcca33;
     }
   }
 }
@@ -306,27 +306,27 @@ li:hover {
 /* Estilo para itens com prioridade */
 #lista li.prioridade {
   color: #222;
-  border-left: 10px solid #f6532a;
+  border-left: 10px solid #e4a812;
   background-color: #fdd660;
   animation: highlight 0.6s ease;
 }
 
 #lista li.prioridade:hover {
   color: #222;
-  border-left: 10px solid #f6532a;
-  background-color: #f9ca3b;
+  border-left: 10px solid #e4a812;
+  background-color: #fdd65f;
   animation: highlight 0.6s ease;
 
   input[type="date"] {
-    background-color: #f9ca3b;
+    background-color: #fdd65f;
     transition: background-color 0.2s ease-in-out;
     border-radius: 5px;
   }
 }
 
 #lista li.prioridade .checkbox {
-  background-color: #f29742;
-  border-color: #f6532a;
+  background-color: #f4c44b;
+  border-color: #e4a812;
 }
 
 #lista li.prioridade .checkbox:focus {
@@ -346,19 +346,19 @@ li:hover {
 }
 
 #lista li.prioridade button {
-  background-color: #f6532a;
+  background-color: #e4a812;
 }
 
 #lista li.prioridade button:hover {
-  background-color: #f6532a;
+  background-color: #e4a812;
 }
 
 #lista li.prioridade button.edit {
-  background-color: #f6532a;
+  background-color: #e4a812;
 }
 
 #lista li.prioridade button.edit:hover {
-  background-color: #f6532a;
+  background-color: #e4a812;
   color: #222;
 }
 
@@ -375,29 +375,29 @@ li:hover {
 }
 
 #lista li.prioridade button.remove {
-  background-color: #f6532a;
+  background-color: #e4a812;
 }
 
 #lista li.prioridade button.remove:hover {
-  background-color: #f6532a;
+  background-color: #e4a812;
 }
 
 #lista li.prioridade button.desc-btn {
-  background-color: #f6532a;
+  background-color: #e4a812;
   color: #222;
 }
 
 #lista li.prioridade button.desc-btn:hover {
-  background-color: #f6532a;
+  background-color: #e4a812;
 }
 
 #lista li.prioridade .descricao-input {
-  border-color: #f69336;
+  border-color: #edb31f;
   color: #222;
 }
 
 #lista li.prioridade .descricao-input:focus {
-  border-color: #f6532a;
+  border-color: #e4a812;
   color: #222;
 }
 
@@ -406,7 +406,7 @@ li:hover {
 }
 
 #lista li.prioridade .descricao-input:hover {
-  border-color: #f6532a;
+  border-color: #e4a812;
   color: #222;
 }
 
