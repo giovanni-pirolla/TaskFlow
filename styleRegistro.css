@@ -68,6 +68,7 @@
  .input-field {
      width: 100%;
      padding: 12px;
+     margin-left: -12px;
      margin-bottom: 15px;
      border-radius: 8px;
      border: none;
@@ -84,11 +85,12 @@
  }
 
  .register-button {
-     width: 100%;
+     width: 106%;
      padding: 12px;
      background: #6366f1;
      border: none;
      border-radius: 10px;
+     margin-left: -12px;
      cursor: pointer;
      font-size: 16px;
      color: white;
