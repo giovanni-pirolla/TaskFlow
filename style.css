@@ -1,8 +1,4 @@
-#logo {
-  width: 200px;
-  height: auto;
-  margin-bottom: 20px;
-}
+/* Animações customizadas */
 
 @keyframes piscarBorda {
 
@@ -21,10 +17,16 @@
 @keyframes highlight {
   0% {
     background-color: #f5cc50;
+    input[type="date"] {
+      background-color: #f5cc50;
+    }
   }
 
   100% {
     background-color: #ffe186;
+    input[type="date"] {
+      background-color: #ffe186;
+    }
   }
 }
 
@@ -68,7 +70,25 @@
   }
 }
 
-/* Estilo base */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos Gerais */
+#logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
 .checkbox {
   appearance: none;
   -webkit-appearance: none;
@@ -84,26 +104,22 @@
   margin-top: 12.5px;
 }
 
-/* Efeito de foco no teclado*/
 .checkbox:focus {
   box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.4);
   border-color: #6366F1;
 }
 
-/* Quando o mouse passa por cima */
 .checkbox:hover {
   border-color: #6366F1;
   background-color: #273043;
 }
 
-/* Quando marcada */
 .checkbox:checked {
   background-color: #6366F1;
   border-color: #6366F1;
   transform: scale(1.05);
 }
 
-/* Ícone de check */
 .checkbox:checked::after {
   content: "";
   position: absolute;
@@ -116,11 +132,11 @@
   transform: rotate(45deg);
 }
 
-/* Transição suave de todos os efeitos */
 .checkbox,
 .checkbox::after {
   transition: all 0.25s ease;
 }
+
 
 #titulo:focus {
   display: block;
@@ -157,7 +173,6 @@ button.titleEdit {
 
 button img {
   width: 18px;
-  /* controla o tamanho do ícone */
   height: 18px;
 }
 
@@ -233,20 +248,6 @@ button img {
   font-size: 16px;
 }
 
-.separador {
-  width: 880px;
-  border: none;
-  height: 2px;
-  /* altura da linha */
-  background-color: #ababab;
-  /* cor da linha */
-  margin-left: -10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-radius: 2px;
-  /* linha com cantos arredondados */
-}
-
 body {
   background-color: #111827;
   font-family: Arial, sans-serif;
@@ -273,9 +274,10 @@ li {
 
 }
 
-li:hover{
+li:hover {
   background-color: #1d2f4e;
   transition: background-color 0.3s ease;
+
   input[type="date"] {
     background-color: #1d2f4e;
     transition: background-color 0.2s ease-in-out;
@@ -299,59 +301,63 @@ li:hover{
   transition: background color 0.4s ease, border 0.4s ease;
 }
 
+/* Estilo para itens com prioridade */
 #lista li.prioridade {
-  color: #222;
-  border-left: 10px solid #ffc400;
-  background-color: #ffe186;
+  color: #222; 
+  border-left: 10px solid #EF4444; 
+  background-color: #f9ca3b; 
   animation: highlight 0.6s ease;
 }
 
 #lista li.prioridade:hover {
   color: #222;
-  border-left: 10px solid #ffcc00;
-  background-color: #fad874;
+  border-left: 10px solid #DC2626; 
+  background-color: #f9ca3b; 
   animation: highlight 0.6s ease;
+
   input[type="date"] {
-    background-color: #fad874;
+    background-color: #f9ca3b;
     transition: background-color 0.2s ease-in-out;
     border-radius: 5px;
   }
 }
 
 #lista li.prioridade .checkbox {
-  background-color: #ffcf3e;
-  /* muda fundo do checkbox */
-  border-color: #ffc400;
+  background-color: #F87171; 
+  border-color: #EF4444; 
 }
 
 #lista li.prioridade .checkbox:focus {
-  box-shadow: 0 0 0 3px #ffbf00;
-  border-color: #FACC15;
+  box-shadow: 0 0 0 3px #DC2626;
+  border-color: #DC2626;
 }
 
 #lista li.prioridade .checkbox:checked {
-  background-color: #FACC15;
-  border-color: #FACC15;
+  background-color: #DC2626;
+  border-color: #DC2626;
   transform: scale(1.05);
 }
 
 #lista li.prioridade input.prazo {
-  background-color: #ffe186;
-  /* muda fundo do input de data */
+  background-color: #f9ca3b; 
   color: #222;
 }
 
-#lista li.prioridade button{
-  background-color: #ffc400;
+#lista li.prioridade button {
+  background-color: #F87171; 
+}
+
+#lista li.prioridade button:hover {
+  background-color: #fb3e3e; 
 }
 
 #lista li.prioridade button.edit {
-  background-color: #ffc400;
+  background-color: #F87171;
 }
 
 #lista li.prioridade button.edit:hover {
-  background-color: #ffc400;
-  color:#222;
+  background-color: #fb3e3e;
+  color: #222;
 }
 
 #lista li.enter {
@@ -367,28 +373,42 @@ li:hover{
 }
 
 #lista li.prioridade button.remove {
-  background-color: #dc3545;
+  background-color: #F87171;
+}
+
+#lista li.prioridade button.remove:hover {
+  background-color: #fb3e3e;
 }
 
 #lista li.prioridade button.desc-btn {
-  background-color: #ffc400;
-  color:#222;
-}
-
-#lista li.prioridade .descricao-input{
-  border-color: #ffc400;
+  background-color: #F87171;
   color: #222;
 }
 
-#lista li.prioridade .descricao-input:focus{
-  border-color: #ffc400;
+#lista li.prioridade button.desc-btn:hover {
+  background-color: #fb3e3e;
+}
+
+#lista li.prioridade .descricao-input {
+  border-color: #F87171;
   color: #222;
 }
 
-#lista li.prioridade .descricao-input:hover{
-  border-color: #ffc400;
+#lista li.prioridade .descricao-input:focus {
+  border-color: #DC2626;
   color: #222;
 }
+
+#lista li.prioridade .descricao-input:hover {
+  border-color: #DC2626;
+  color: #222;
+}
+
+#lista li.prioridade .descricao-input::placeholder {
+  color: #222;
+}
+
+/* Componentes da Li */
 
 button.remove img {
   width: 16px;
@@ -454,11 +474,10 @@ input[type="date"]:focus {
 input[type="date"] {
   color: #475569;
   padding-right: 5px;
-  /* diminui o espaço para o ícone */
   font-size: 16px;
 }
 
-/* remove o ícone de calendário o lado do input de datas */
+/* Remove o ícone de calendário ao lado do input de datas */
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
@@ -493,9 +512,9 @@ button:hover {
 button.edit {
   background: #6366F1;
 }
-button.edit img{
+
+button.edit img {
   width: 17px;
-  /* tamanho da imagem */
   height: 17px;
 }
 
@@ -538,16 +557,15 @@ span[contenteditable="true"] {
 
 .prioridade-btn img {
   width: 20px;
-  /* tamanho da imagem */
   height: 20px;
   object-fit: contain;
-  /* garante que a imagem não distorça */
 }
 
 .prioridade-btn:hover {
   background-color: #ffb400;
 }
 
+/* Container de progresso */
 #progress-container {
   position: fixed;
   top: 20px;
@@ -578,6 +596,7 @@ span[contenteditable="true"] {
   color: #E2E8F0;
 }
 
+/* Scroll customizado */
 #progress-title::-webkit-scrollbar {
   width: 8px;
 }
@@ -642,12 +661,9 @@ circle {
 #progress-title {
   overflow: auto;
   max-width: 100%;
-  /* não passa da largura da div */
   word-wrap: break-word;
-  /* força a quebra quando necessário */
   overflow-wrap: break-word;
   text-align: center;
-  /* centraliza dentro da div */
 }
 
 .progress-wrapper {
@@ -675,8 +691,6 @@ p {
 }
 
 /* navbar */
-
-/* Estilo dos ícones SVG na nav */
 nav a,
 .minhas_listas p {
   display: flex;
@@ -739,7 +753,7 @@ nav a:hover {
   background-color: #6366F1;
 }
 
-/* ======== LAYOUT GERAL ======== */
+/* Layout geral*/
 .layout {
   display: flex;
   /* Deixa o nav e o main lado a lado */
@@ -763,16 +777,16 @@ nav {
   align-items: flex-start;
   gap: 15px;
   z-index: 10;
-  /* garante que fique acima do conteúdo */
 }
 
 main {
   margin-left: 240px;
-  /* espaço igual ou um pouco maior que a largura da nav */
   padding: 20px;
   flex: 1;
   position: relative;
 }
+
+/* Container de próximas tarefas */
 
 #proximas-tarefas {
   position: fixed;
@@ -823,12 +837,10 @@ main {
   width: 230px;
   font-weight: bold;
 
-  /* Evita extravasamento visual */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  /* Para tooltip (cursor de ajuda) */
   cursor: help;
 }
 
@@ -840,9 +852,7 @@ main {
 
 li.highlight {
   position: relative;
-  /* cria contexto para o pseudo-elemento */
   overflow: visible;
-  /* garante que a borda não seja cortada */
 }
 
 li.highlight::after {
@@ -856,9 +866,7 @@ li.highlight::after {
   border-radius: 8px;
   box-shadow: 0 0 10px #6366F1;
   pointer-events: none;
-  /* não bloqueia cliques */
   z-index: 10;
-  /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
 }
 
@@ -873,9 +881,7 @@ li.prioridade.highlight::after {
   border-radius: 8px;
   box-shadow: 0 0 10px #FACC15;
   pointer-events: none;
-  /* não bloqueia cliques */
   z-index: 10;
-  /* garante que fique acima do conteúdo */
   transition: 0.5s ease;
 }
 
@@ -901,28 +907,29 @@ li.prioridade.highlight::after {
   transition: opacity .3s ease, transform .3s ease;
 }
 
+/* Alerta customizado */
 .alerta.mostrar {
   opacity: 1;
   transform: translateX(-50%) translateY(5px);
   pointer-events: auto;
 }
 
-/* Tipos de alerta opcionais */
+/* Tipos de alerta customizados */
 .alerta.sucesso {
   background-color: #4CAF50;
-  color:#111827;
+  color: #111827;
   right: 27.5rem;
 }
 
 .alerta.aviso {
   background-color: #ff9800;
-  color:#111827;
+  color: #111827;
   right: 26rem;
 }
 
 .alerta.erro {
   right: 30rem;
-  color:#111827;
+  color: #111827;
   background-color: #f44336;
 }
 
@@ -936,6 +943,7 @@ nav .minhas_listas a {
   display: inline-block;
 }
 
+/* Botão para concluir todas as tarefas da lista */
 .botao-arredondado {
   background-color: #1E293B;
   /* Cor de fundo */
@@ -967,7 +975,19 @@ nav .minhas_listas a {
   transition: all 0.25s ease;
 }
 
+/* Botão quando todas as tarefas são marcadas como concluídas */
+body.tudo-concluido .botao-arredondado {
+  background-color: #ffb400;
+  transform: scale(1.25);
+}
 
+/* Botão quando todas as tarefas são desmarcadas */
+body.tudo-desmarcado .botao-arredondado {
+  transform: scale(1);
+}
+
+
+/* Aviso para confirmar/cancelar marcação das tarefas */
 .confirm-overlay {
   position: fixed;
   inset: 0;
@@ -1020,6 +1040,7 @@ nav .minhas_listas a {
   background-color: #f44336;
 }
 
+/* Container de descrição */
 .descricao-container {
   display: none;
   overflow: hidden;
@@ -1031,13 +1052,13 @@ nav .minhas_listas a {
 }
 
 .descricao-container.open {
-  max-height: 300px;        /* valor alto o suficiente pra qualquer descrição */
+  max-height: 300px;
   opacity: 1;
   padding: 12px 10px;
   margin-top: 8px;
 }
 
-/* Botão da seta */
+/* Botão para mostrar/ocultar a descrição */
 .desc-btn {
   border: none;
   padding: 6px;
@@ -1057,17 +1078,18 @@ nav .minhas_listas a {
   transition: transform 0.3s ease;
 }
 
-/* Seta pra baixo (aberto) */
 .desc-btn.open .arrow-icon svg {
   transform: rotate(180deg);
 }
 
+/* Descrição da tarefa */
 .descricao-input {
   width: 625px;
   min-height: 60px;
   resize: vertical;
-  border: solid #6366F1;
+  border: solid #4345c3;
   border-radius: 10px;
+  margin-left: -10px;
   font-size: 16px;
   transition: 0.5s;
   animation: normal;
@@ -1098,43 +1120,32 @@ nav .minhas_listas a {
   background: #6366F1;
 }
 
-/* Botão quando todas as tarefas são marcadas como concluídas */
-body.tudo-concluido .botao-arredondado {
-  background-color: #ffb400;
-  transform: scale(1.25);
-}
-
-/* Quando desmarca tudo */
-body.tudo-desmarcado .botao-arredondado {
-  transform: scale(1);
-}
-
 /*Customização das informações do usuário*/
 #info-usuario {
   display: flex;
   align-items: center;
   gap: 10px;
-  position: absolute; 
-  bottom: 0;         
-  width: 90%;        
+  position: absolute;
+  bottom: 0;
+  width: 90%;
   left: 50%;
   transform: translateX(-50%);
-  padding-bottom: 55px; 
+  padding-bottom: 55px;
 }
 
-#pequeno{
+#pequeno {
   width: 80px;
   height: 50px;
 }
 
-#usuario{
+#usuario {
   margin-top: 10px;
   margin-left: 10px;
 }
 
 /*Estilização das funcionalidades de novas listas*/
 
-/* Container de listas com scroll */
+/* Container de listas */
 #container-listas {
   max-height: 230px;
   min-height: 50px;
@@ -1142,10 +1153,10 @@ body.tudo-desmarcado .botao-arredondado {
   overflow-x: hidden;
   margin: 10px 0;
   padding-right: 5px;
-  display: block; /* Importante para o scroll funcionar */
+  display: block;
 }
 
-/* Scroll mais bonito*/
+/* Scroll customizado*/
 #container-listas::-webkit-scrollbar {
   width: 8px;
 }
@@ -1179,7 +1190,8 @@ body.tudo-desmarcado .botao-arredondado {
   cursor: pointer;
   transition: all 0.3s ease;
   border-left: 10px solid transparent;
-  min-height: 45px; /* Garante altura mínima */
+  min-height: 45px;
+  /* Garante altura mínima */
 }
 
 .item-lista:hover {
@@ -1267,7 +1279,7 @@ body.tudo-desmarcado .botao-arredondado {
   transform: translateY(0);
 }
 
-/* Modal de nova lista */
+/* Aviso para digitar o nome da nova lista */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1293,17 +1305,6 @@ body.tudo-desmarcado .botao-arredondado {
   width: 90%;
   max-width: 400px;
   animation: modalSlideIn 0.3s ease;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .modal-box h3 {
@@ -1372,3 +1373,40 @@ body.tudo-desmarcado .botao-arredondado {
   transform: translateY(0);
 }
 
+/* Placeholder para quando a lista vazia */
+.empty-list-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: absolute; 
+    top: 50%; 
+    left: 42%; 
+    transform: translate(-50%, -50%);
+    color: #6366F1;
+    text-align: center;
+    list-style: none;
+    width: 400px; /* Largura fixa */
+    box-sizing: border-box;
+    border: 2px dashed #6366F1; 
+    border-radius: 8px; 
+    z-index: 10;
+}
+
+/* Estilo pro ícone SVG dentro do placeholder */
+.placeholder-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  color: #6366F1;
+  stroke: #6366F1;
+}
+
+/* Estilo pra mensagem */
+.empty-list-placeholder p {
+  color: #6366F1;
+  font-size: 2.1em;
+  font-style: italic;
+  margin: 0;
+}

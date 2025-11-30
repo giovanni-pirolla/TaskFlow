@@ -1,4 +1,16 @@
-/* css/flowcalendar.css */
+/* Animações customizadas */
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1)
+  }
+  50% {
+    transform: scale(1.5)
+  }
+}
+
+/* Estilização geral */
+
 * {
   margin: 0;
   padding: 0;
@@ -10,10 +22,11 @@ body {
   background: #0f0f1a;
   color: #e0e0ff;
   min-height: 100vh;
-  padding-top: 90px; /* Espaço para a logo */
-  padding-bottom: 80px; /* Espaço para info do usuário */
+  padding-top: 90px; 
+  padding-bottom: 80px; 
 }
 
+/* Logo */
 #logo {
 
   position: fixed;
@@ -25,6 +38,7 @@ body {
   z-index: 100;
 }
 
+/* Botões e componentes do calendário*/
 .close-btn {
   position: fixed;
   top: 15px;
@@ -38,6 +52,7 @@ body {
   text-shadow: 0 0 15px #5a67d8;
 }
 
+/* Container do calendário (calendário + exibição das tarefas) */
 .container {
   display: flex;
   gap: 30px;
@@ -51,7 +66,7 @@ body {
   background: #1a1a2e;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-  padding: 25px; /* Reduzido de 30px */
+  padding: 25px; 
   overflow: hidden;
 }
 
@@ -59,24 +74,25 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px; /* Reduzido de 25px */
+  margin-bottom: 20px; 
 }
 
 .month-title {
-  font-size: 2em; /* Reduzido de 2.4em */
+  font-size: 2em; 
   font-weight: 700;
   color: #8b9eff;
 }
 
+/* Botões do calendário */
 .controls button {
   background: #16213e;
   color: #e0e0ff;
   border: 1px solid #334466;
-  width: 40px; /* Reduzido de 44px */
+  width: 40px; 
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.2em; /* Reduzido de 1.4em */
+  font-size: 1.2em;
   margin: 0 6px;
   transition: all 0.3s;
 }
@@ -87,7 +103,6 @@ body {
   transform: scale(1.12);
 }
 
-/* Centralizar ícone no botão Today */
 .controls .primary {
   background: #5a67d8;
   border: none;
@@ -96,12 +111,13 @@ body {
   justify-content: center;
 }
 
+/* Customização das informações do calendário (dias da semana e datas) */
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
   font-weight: 600;
-  margin-bottom: 10px; /* Reduzido de 12px */
+  margin-bottom: 10px;
   color: #a0a8ff;
   font-size: 0.95em;
 }
@@ -109,15 +125,15 @@ body {
 .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px; /* Reduzido de 10px */
+  gap: 8px;
 }
 
 .day {
-  height: 70px; /* Reduzido de 82px */
+  height: 70px; 
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1em; /* Reduzido de 1.25em */
+  font-size: 1.1em; 
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s;
@@ -153,8 +169,8 @@ body {
 .day.has-tasks::after {
   content: '';
   position: absolute;
-  bottom: 8px; /* Reduzido de 10px */
-  width: 8px; /* Reduzido de 9px */
+  bottom: 8px; 
+  width: 8px;
   height: 8px;
   background: #ff6b6b;
   border-radius: 50%;
@@ -162,45 +178,42 @@ body {
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1)
-  }
-  50% {
-    transform: scale(1.5)
-  }
-}
 
+/* Customização da sidebar pra customização de tarefas */
+
+/* Sidebar das tarefas */
 .tasks-sidebar {
-  width: 350px; /* Reduzido de 380px */
+  width: 350px; 
   background: #1a1a2e;
   border-radius: 20px;
-  padding: 20px; /* Reduzido de 25px */
+  padding: 20px; 
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
   border: 1px solid #2a3a66;
 }
 
 .sidebar-title {
-  font-size: 1.5em; /* Reduzido de 1.7em */
+  font-size: 1.5em; 
   text-align: center;
   color: #8b9eff;
-  margin-bottom: 12px; /* Reduzido de 15px */
+  margin-bottom: 12px;
 }
 
 #selectedDateDisplay {
-  font-size: 1.5em; /* Reduzido de 1.7em */
+  font-size: 1.5em; 
   font-weight: bold;
   text-align: center;
   color: #e0e0ff;
-  margin-bottom: 18px; /* Reduzido de 20px */
+  margin-bottom: 18px; 
 }
 
+/* Lista de tarefas do dia selecionado */
 #tasksList {
-  max-height: 50vh; /* Reduzido de 60vh */
+  max-height: 50vh; 
   overflow-y: auto;
   padding-right: 5px;
 }
 
+/* Scroll customizado */
 #tasksList::-webkit-scrollbar {
   width: 6px;
 }
@@ -220,14 +233,14 @@ body {
   border-radius: 10px;
 }
 
+/* Itens da sidebar de tarefas */
 .task-item {
   background: #16213e;
-  padding: 14px; /* Reduzido de 16px */
-  margin-bottom: 12px; /* Reduzido de 14px */
+  padding: 14px; 
+  margin-bottom: 12px; 
   border-radius: 12px;
-  border-left: 5px solid #5a67d8;
+  border-left: 12px solid #5a67d8;
   transition: all 0.3s;
-  border: 1px solid #2a3a66;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -235,14 +248,14 @@ body {
 
 .task-item.done {
   opacity: 0.55;
-  border-left-color: #48bb78;
+  border-left: 12px solid #48bb78;
   background: #0f1a1a;
   text-decoration: line-through;
 }
 
 .task-name {
   font-weight: 600;
-  font-size: 1.1em; /* Reduzido de 1.15em */
+  font-size: 1.1em; 
   color: #e0e0ff;
   line-height: 1.4;
   max-width: 100%;
@@ -253,9 +266,9 @@ body {
 }
 
 .task-list {
-  font-size: 0.9em; /* Reduzido de 0.92em */
+  font-size: 0.9em; 
   color: #a0a8ff;
-  margin-top: 5px; /* Reduzido de 6px */
+  margin-top: 5px; 
 }
 
 .no-tasks {
@@ -265,7 +278,7 @@ body {
   margin: 50px 0;
 }
 
-/* Info do usuário fixo no rodapé */
+/* Informações do usuário (apenas de exemplo) */
 #info-usuario {
   display: flex;
   align-items: center;
@@ -283,7 +296,7 @@ body {
 }
 
 #pequeno {
-  width: 50px; /* Reduzido de 80px */
+  width: 50px;
   height: 50px;
   border-radius: 50%;
   object-fit: cover;

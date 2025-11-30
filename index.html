@@ -12,8 +12,10 @@
 <body>
   <div class="layout">
     <nav>
+      <!-- Logo do TaskFlow -->
       <img src="Imagens/TF2-removebg-preview.png" alt="Logo" id="logo">
 
+      <!-- Indicador visual com svg para indicar as listas criadas pelo usuário -->
       <div class="minhas_listas">
         <p>
           <svg viewBox="0 0 24 24" fill="currentColor">
@@ -25,7 +27,7 @@
           Minhas Listas:
         </p>
 
-        <!-- LISTAS DINÂMICAS AQUI -->
+        <!-- Listas Criadas pelo usuário (a "To-Do List é sempre a padrão") -->
         <div id="container-listas"></div>
 
         <!-- Botão amarelo de nova lista -->
@@ -37,6 +39,7 @@
         </button>
       </div>
 
+      <!-- Indicador visual com svg para indicar o FlowCalendar e redirecionar o usuário para seu link -->
       <a href="FlowCalendar.html">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path
@@ -44,6 +47,8 @@
         </svg>
         Flow Calendar
       </a>
+
+      <!-- Indicador visual com svg para indicar a tela de registro do site e redirecionar o usuário para seu link -->
       <a href="Registro.html">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path
@@ -51,13 +56,15 @@
         </svg>
         Registro
       </a>
+
+      <!-- Informações do usuário (Apenas para exemplo) -->
       <div id="info-usuario" style="display: flex;">
         <img src="Imagens/body.webp" alt ="pequeno" id="pequeno">
         <p id="usuario" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">GIOVANNI</p> 
       </div>
     </nav>
 
-    <!-- Conteúdo principal da nav -->
+    <!-- Conteúdo principal da página (lista, progresso, próximas tarefas) -->
     <main>
       <div class="to-do-list">
         <div class="titulo-container">
@@ -116,6 +123,7 @@
     </div>
   </div>
 
+  <!-- Link para o arquivo JavaScript -->
   <script src="script.js"></script>
 </body>
 
