@@ -483,7 +483,9 @@ function atualizarProximasTarefas() {
         hoje.setHours(0, 0, 0, 0);
 
         const diferencaDias = Math.ceil((dataPrazo - hoje) / (1000 * 60 * 60 * 24));
-        if (diferencaDias < 0) return; // Ignora tarefas atrasadas/vencidas.
+        if (diferencaDias < 0){
+            return; // Ignora tarefas atrasadas/vencidas.
+        } 
 
         tarefasComPrazo.push({
             elemento: tarefa,
@@ -567,7 +569,7 @@ function criarElementoLi(t) {
     const li = document.createElement("li");
     li.dataset.id = t.id;
 
-    // ... (Criação de containers e elementos básicos como checkbox, nome, prazo) ...
+    // Criação de containers e elementos básicos como checkbox, nome, prazo, etc.
 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
@@ -607,16 +609,48 @@ function criarElementoLi(t) {
     prazo.type = "date";
     prazo.className = "prazo";
     if (t.prazo) prazo.value = t.prazo;
+    
+    // Função pra verificar atraso
+    const checkAtraso = (prazoValue, isConcluida) => {
+        // Remove a classe antes de reavaliar
+        li.classList.remove("atrasada"); 
+        
+        if (prazoValue && !isConcluida) {
+            const [ano, mes, dia] = prazoValue.split("-").map(Number);
+            const dataPrazo = new Date(ano, mes - 1, dia);
+
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0); // Zera hora para comparação correta de dias.
+
+            const diferencaDias = Math.ceil((dataPrazo - hoje) / (1000 * 60 * 60 * 24));
+
+            if (diferencaDias < 0) {
+                li.classList.add("atrasada");
+            }
+        }
+    };
+    
+    checkAtraso(t.prazo, t.concluida);
 
     // Lógica de alteração do checkbox.
     checkbox.addEventListener("change", () => {
-        nome.classList.toggle("done", checkbox.checked);
-        li.classList.toggle("concluida", checkbox.checked);
-        if(li.classList.contains("prioridade") && checkbox.checked){
-            li.classList.remove("prioridade");
-            list.appendChild(li); // Move para o final se for concluída.
-            if(priorities > 0)priorities--;
+        const isChecked = checkbox.checked;
+        
+        nome.classList.toggle("done", isChecked);
+        li.classList.toggle("concluida", isChecked);
+        
+        // Verifica o atraso ao marcar/desmarcar
+        checkAtraso(prazo.value, isChecked);
+        
+        // Lógica de prioridade
+        if (li.classList.contains("prioridade")) {
+            if (isChecked) {
+                li.classList.remove("prioridade");
+                list.appendChild(li); // Move para o final
+                if(priorities > 0) priorities--;
+            }
         }
+        
         updateProgress();
         atualizarProximasTarefas();
         salvarTarefas();
@@ -624,10 +658,15 @@ function criarElementoLi(t) {
 
     // Lógica de alteração do prazo.
     prazo.addEventListener("change", () => {
+        // Reavalia o status de atraso imediatamente
+        checkAtraso(prazo.value, checkbox.checked); 
+        
+        // Recarrega a lista para reavaliar a classe "atrasada" e atualizar listas de prazos
         atualizarProximasTarefas();
         salvarTarefas();
     });
 
+    // Adiciona os elementos criados ao li.
     taskContent.appendChild(nome);
     taskContent.appendChild(prazo);
     taskContent.appendChild(descContainer);
@@ -702,7 +741,7 @@ function criarElementoLi(t) {
             nome.contentEditable = false;
             const novo = capitalize(nome.textContent.trim());
 
-            // Verifica duplicidade.
+            // Verifica se há nomes repetidos
             if (Array.from(document.querySelectorAll(".nome")).filter(n => n !== nome).some(n => n.textContent.toLowerCase() === novo.toLowerCase())) {
                 showAlert("Essa tarefa já existe!");
                 nome.textContent = original;
@@ -738,9 +777,9 @@ function criarElementoLi(t) {
             updateProgress();
             atualizarProximasTarefas();
             salvarTarefas();
-            // CHAMA CARREGAR LISTA para verificar se está vazia e mostrar o placeholder.
+            // Verifica se a lista está vazia pra mostrar o placeholder.
             if (list.children.length === 0) {
-                 carregarLista(listaAtual); // Recarrega a lista para mostrar o placeholder
+                carregarLista(listaAtual); // Recarrega a lista para mostrar o placeholder
             }
         }, { once: true });
     });
@@ -757,12 +796,12 @@ function criarElementoLi(t) {
             list.appendChild(li); // Remove prioridade e move para o fim.
             if(priorities > 0)priorities--;
         } else {
-            if(!checkbox.checked){
+            if(!checkbox.checked && !li.classList.contains("atrasada")){
                 li.classList.add("prioridade");
                 list.prepend(li); // Adiciona prioridade e move para o topo.
                 priorities++;
             }else{
-                showAlert("Tarefas concluídas não podem ser marcadas como prioridade!", "aviso");
+                showAlert("Tarefas concluídas ou atrasadas não podem ser marcadas como prioridade!", "aviso");
             }
         }
         updateProgress();

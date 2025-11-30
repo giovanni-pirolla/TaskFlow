@@ -16,16 +16,18 @@
 
 @keyframes highlight {
   0% {
-    background-color: #f5cc50;
+    background-color: #f8c52a;
+
     input[type="date"] {
-      background-color: #f5cc50;
+      background-color: #f8c52a;
     }
   }
 
   100% {
-    background-color: #ffe186;
+    background-color: #f8c52a;
+
     input[type="date"] {
-      background-color: #ffe186;
+      background-color: #f8c52a;
     }
   }
 }
@@ -303,16 +305,16 @@ li:hover {
 
 /* Estilo para itens com prioridade */
 #lista li.prioridade {
-  color: #222; 
-  border-left: 10px solid #EF4444; 
-  background-color: #f9ca3b; 
+  color: #222;
+  border-left: 10px solid #f6532a;
+  background-color: #fdd660;
   animation: highlight 0.6s ease;
 }
 
 #lista li.prioridade:hover {
   color: #222;
-  border-left: 10px solid #DC2626; 
-  background-color: #f9ca3b; 
+  border-left: 10px solid #f6532a;
+  background-color: #f9ca3b;
   animation: highlight 0.6s ease;
 
   input[type="date"] {
@@ -323,40 +325,40 @@ li:hover {
 }
 
 #lista li.prioridade .checkbox {
-  background-color: #F87171; 
-  border-color: #EF4444; 
+  background-color: #f29742;
+  border-color: #f6532a;
 }
 
 #lista li.prioridade .checkbox:focus {
-  box-shadow: 0 0 0 3px #DC2626;
-  border-color: #DC2626;
+  box-shadow: 0 0 0 3px #fa6743;
+  border-color: #fa6743;
 }
 
 #lista li.prioridade .checkbox:checked {
-  background-color: #DC2626;
-  border-color: #DC2626;
+  background-color: #fa6743;
+  border-color: #fa6743;
   transform: scale(1.05);
 }
 
 #lista li.prioridade input.prazo {
-  background-color: #f9ca3b; 
+  background-color: #fdd660;
   color: #222;
 }
 
 #lista li.prioridade button {
-  background-color: #F87171; 
+  background-color: #f6532a;
 }
 
 #lista li.prioridade button:hover {
-  background-color: #fb3e3e; 
+  background-color: #f6532a;
 }
 
 #lista li.prioridade button.edit {
-  background-color: #F87171;
+  background-color: #f6532a;
 }
 
 #lista li.prioridade button.edit:hover {
-  background-color: #fb3e3e;
+  background-color: #f6532a;
   color: #222;
 }
 
@@ -373,39 +375,123 @@ li:hover {
 }
 
 #lista li.prioridade button.remove {
-  background-color: #F87171;
+  background-color: #f6532a;
 }
 
 #lista li.prioridade button.remove:hover {
-  background-color: #fb3e3e;
+  background-color: #f6532a;
 }
 
 #lista li.prioridade button.desc-btn {
-  background-color: #F87171;
+  background-color: #f6532a;
   color: #222;
 }
 
 #lista li.prioridade button.desc-btn:hover {
-  background-color: #fb3e3e;
+  background-color: #f6532a;
 }
 
 #lista li.prioridade .descricao-input {
-  border-color: #F87171;
+  border-color: #f69336;
   color: #222;
 }
 
 #lista li.prioridade .descricao-input:focus {
-  border-color: #DC2626;
-  color: #222;
-}
-
-#lista li.prioridade .descricao-input:hover {
-  border-color: #DC2626;
+  border-color: #f6532a;
   color: #222;
 }
 
 #lista li.prioridade .descricao-input::placeholder {
   color: #222;
+}
+
+#lista li.prioridade .descricao-input:hover {
+  border-color: #f6532a;
+  color: #222;
+}
+
+#lista li.prioridade .descricao-input::placeholder {
+  color: #222;
+}
+
+/* Estilo para itens atrasados */
+#lista li.atrasada {
+  color: #0e0e0e;
+  border-left: 10px solid #DC2626;
+  background-color: #F87171;
+}
+
+#lista li.atrasada:hover {
+  color: #0e0e0e;
+  border-left: 10px solid #DC2626;
+  background-color: #f66464;
+
+  input[type="date"] {
+    background-color: #f66464;
+    color: #0e0e0e;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 5px;
+  }
+}
+
+#lista li.atrasada .checkbox {
+  background-color: #F87171;
+  border-color: #DC2626;
+}
+
+#lista li.atrasada .checkbox:focus {
+  box-shadow: 0 0 0 3px #B91C1C;
+  border-color: #DC2626;
+}
+
+#lista li.atrasada input.prazo {
+  background-color: #F87171;
+  color: #930505;
+  font-weight: bolder;
+}
+
+#lista li.atrasada button {
+  background-color: #DC2626;
+  color: #fff;
+}
+
+#lista li.atrasada button:hover {
+  background-color: #DC2626;
+  color: #fff;
+}
+
+#lista li.atrasada button.edit,
+#lista li.atrasada button.remove,
+#lista li.atrasada button.desc-btn {
+  background-color: #DC2626;
+  color: #fff;
+}
+
+#lista li.atrasada button.edit:hover,
+#lista li.atrasada button.remove:hover,
+#lista li.atrasada button.desc-btn:hover {
+  background-color: #DC2626;
+}
+
+#lista li.atrasada .descricao-input {
+  border-color: #EF4444;
+  background-color: #f47d7d;
+  color: #0e0e0e;
+}
+
+#lista li.atrasada .descricao-input:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 1px #DC2626;
+}
+
+#lista li.atrasada .descricao-input:hover {
+  border-color: #DC2626;
+  background-color: #f66464;
+}
+
+#lista li.atrasada .descricao-input::placeholder {
+  color: #222;
+  opacity: 0.7;
 }
 
 /* Componentes da Li */
@@ -1375,23 +1461,24 @@ body.tudo-desmarcado .botao-arredondado {
 
 /* Placeholder para quando a lista vazia */
 .empty-list-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    position: absolute; 
-    top: 50%; 
-    left: 42%; 
-    transform: translate(-50%, -50%);
-    color: #6366F1;
-    text-align: center;
-    list-style: none;
-    width: 400px; /* Largura fixa */
-    box-sizing: border-box;
-    border: 2px dashed #6366F1; 
-    border-radius: 8px; 
-    z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  transform: translate(-50%, -50%);
+  color: #6366F1;
+  text-align: center;
+  list-style: none;
+  width: 400px;
+  /* Largura fixa */
+  box-sizing: border-box;
+  border: 2px dashed #6366F1;
+  border-radius: 8px;
+  z-index: 10;
 }
 
 /* Estilo pro ícone SVG dentro do placeholder */
