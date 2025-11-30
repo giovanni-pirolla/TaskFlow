@@ -11,7 +11,7 @@ O código-fonte do TaskFlow está disponível no GitHub e é composto por **HTML
 ### Clonando o repositório
 
 ```bash
-git clone https://github.com/SEU-USUARIO/taskflow.git
+git clone https://github.com/giovanni-pirolla/TaskFlow.git
 cd taskflow
 ```
 
