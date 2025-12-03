@@ -64,7 +64,7 @@ Passos básicos:
 
 - Giovanni Perazzoli Silva Pirolla
 
-- Davi Levi Lemos Soares
+- Davi Levy Lemos Soares
 
 - Daniel Lemes de Castro Deus
 
