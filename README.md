@@ -51,7 +51,7 @@ Passos básicos:
 
 ✅ Acompanhamento do progresso de conclusão.
 
-✅ Interface responsiva e minimalista.
+✅ Interface moderna e minimalista.
 
 ✅ Edição de nomes das listas e exclusão total das mesmas.
 
